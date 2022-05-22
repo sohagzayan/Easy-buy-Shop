@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 import * as yup from 'yup';
 import addUserIcons from "../assets/icons/add-user.png";
 import Footer from "../components/Footer/Footer";
@@ -36,7 +37,9 @@ const onSubmit = async (data) => {
         setError(error.message)
       }
     }else{
-      alert("password Conform password not match")
+      setError("Your password and  conform password don't match")
+      swal("Your password and  conform password don't match!");
+
     }
   };
 

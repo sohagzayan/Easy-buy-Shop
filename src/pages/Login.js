@@ -1,14 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
 import * as yup from "yup";
 import keyImage from "../assets/icons/key.png";
 import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
-
+import { useAuthContext } from "../context/AuthContextProvider";
 const SignUp = () => {
+  const [error , setError] = useState('')
+    const {login} = useAuthContext()
     const navigate = useNavigate();
     const location = useLocation()
     const from = location.state?.from?.pathname || '/';
@@ -26,9 +29,16 @@ const SignUp = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
-    console.log("on submited");
+  const { username, email, password, firstName, ConformPassword } = data
+    try {
+        await login(email , password)
+        swal("Good job!", "Your Login success!", "success");
+        navigate(from , {replace : true})
+        setError('')
+    } catch (error) {
+        setError(error.message)
+    }
   };
-//   navigate(from , {replace : true})
   return (
     <>
       <Headers />
@@ -65,7 +75,7 @@ const SignUp = () => {
                       Forgot password?
                     </a>
                   </label>
-                  <p className="text-secondary text-sm">Error sms Here</p>
+                  <p className="text-secondary text-sm">{error}</p>
 
                   <div class="form-control mt-2">
                     <button class="btn btn-primary text-white ">Login</button>

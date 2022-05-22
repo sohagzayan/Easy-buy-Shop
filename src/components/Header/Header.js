@@ -1,9 +1,32 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import swal from 'sweetalert';
 import { useAuthContext } from "../../context/AuthContextProvider";
 
 const Header = () => {
-  const { username } = useAuthContext();
+  const { username , logOut } = useAuthContext();
+
+  const handleLogout = async()=>{
+    swal({
+      title: "Are you sure?",
+      text: "LogOut user and !",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        logOut()
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  }
+  
+  
   return (
     <div class="navbar ">
       <div class="navbar-start">
@@ -33,23 +56,23 @@ const Header = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/">Blogs</NavLink>
+              <NavLink to="/blogs">Blogs</NavLink>
             </li>
             <li>
-              <NavLink to="/">My Portfolio</NavLink>
+              <NavLink to="/myProtFolio">My Portfolio</NavLink>
             </li>
-            {username && (
+            {username &&
               <li>
-                <NavLink to="/">DashBoart</NavLink>
+                <NavLink to="/dashBoart">DashBoart</NavLink>
               </li>
-            )}
+            }
           </ul>
         </div>
         <a
           class="btn btn-ghost normal-case text-xl text-primary font-semibold"
           href="/"
         >
-          Hardware{" "}
+          Hardware
           <span className="text-secondary font-bold text-2xl">Fair </span>
         </a>
       </div>
@@ -59,20 +82,24 @@ const Header = () => {
             <NavLink to="/">Home</NavLink>
           </li>
           <li className="text-primary px-3 font-bold ">
-            <NavLink to="/">Blogs</NavLink>
+            <NavLink to="/blogs">Blogs</NavLink>
           </li>
           <li className="text-primary  px-3 font-bold ">
-            <NavLink to="/">My Portfolio</NavLink>
+            <NavLink to="/myProtFolio">My Portfolio</NavLink>
           </li>
-          <li className="text-primary px-3 font-bold ">
-            <NavLink to="/">DashBoart</NavLink>
+          {
+            username &&
+            <li className="text-primary px-3 font-bold ">
+            <NavLink to="/dashBoart">DashBoart</NavLink>
           </li>
+
+          }
         </ul>
       </div>
       <div class="navbar-end">
         {username ? (
           <div>
-            <span className="bg-secondary text-white font-bold px-4 py-2 rounded-lg cursor-pointer">LogOut</span>
+            <span onClick={handleLogout} className="bg-secondary text-white font-bold px-4 py-2 rounded-lg cursor-pointer">LogOut</span>
           </div>
         ) : (
           <div>
