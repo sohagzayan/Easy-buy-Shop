@@ -10,10 +10,10 @@ const OurReview = () => {
         {img : user3 , username : 'Clementine Bauch' , position : "user" , rating : '3' , reviewMessage : 'An existing Discord account is already using this number. Please remove it before it can be used with a new account.' , date : "16 jon 2022" }
     ]
     return (
-        <div>
-            <div>
-                <h2>Our Clients Reviews</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, harum?</p> 
+        <div className='mt-20'>
+            <div className="text-center">
+                <h2 className='text-3xl font-bold text-secondary mb-2'>Our Clients Reviews</h2>
+                <p className='text-sm text-primary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, harum?</p> 
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10'>
                     {
