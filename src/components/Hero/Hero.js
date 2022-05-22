@@ -4,7 +4,7 @@ import computer from '../../assets/images/technical-support.png';
 
 const Hero = () => {
     return (
-        <div class="hero min-h-screen ">
+        <div class="hero">
         <div class="hero-content flex-col lg:flex-row-reverse">
           <img src={computer} class=" max-w-sm md:max-w-lg rounded-lg p-5" alt='img'/>
           <div className=''>

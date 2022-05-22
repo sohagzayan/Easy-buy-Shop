@@ -1,9 +1,10 @@
 import React from "react";
 import cappabolitis from "../../assets/images/capa.jpg";
 import Signature from "../../assets/images/Signature.png";
+
 const Capabilities = () => {
   return (
-    <div class="hero min-h-screen ">
+    <div class="hero mt-10 ">
       <div class="hero-content flex-col lg:flex-row-reverse">
         <img src={cappabolitis} class="max-w-lg rounded-lg " alt="img"/>
         <div>

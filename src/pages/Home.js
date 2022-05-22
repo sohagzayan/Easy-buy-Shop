@@ -5,7 +5,7 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
 import OurParts from "../components/OurParts/OurParts";
-import OurReview from "../components/OurReview/OurReview";
+import OurReviewPart from "../components/OurReviewPart/OurReviewPart";
 
 const Home = () => {
   return (
@@ -21,7 +21,8 @@ const Home = () => {
       <div className="container mx-auto px-5 py-3">
         <OurParts />
         <BusinessSummary />
-        <OurReview />
+        {/* <OurReview /> */}
+        <OurReviewPart />
         <Capabilities />
         <Footer />
       </div>
