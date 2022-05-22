@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from 'react-router-dom';
 const Header = () => {
   return (
     <div class="navbar ">
@@ -28,19 +28,19 @@ const Header = () => {
             class="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li >
-              <a>My Order</a>
+              <NavLink to="/">My Order</NavLink>
             </li>
             <li>
-              <a>Add A Review</a>
+              <NavLink to="/">Add A Review</NavLink>
             </li>
             <li>
-              <a>My Profile</a>
+              <NavLink to="/">My Profile</NavLink>
             </li>
             <li>
-              <a>Blog</a>
+              <NavLink to="/">Blog</NavLink>
             </li>
             <li>
-              <a>My Portfolio</a>
+              <NavLink to="/">My Portfolio</NavLink>
             </li>
           </ul>
         </div>
@@ -49,31 +49,31 @@ const Header = () => {
         </a>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <ul class="menu  menu-horizontal p-0">
-          <li className="text-primary font-bold ">
-            <a>My Order</a>
+        <ul class="  menu-horizontal p-0">
+          <li className="text-primary px-3 font-bold ">
+            <NavLink to="/">My Order</NavLink>
           </li>
-          <li className="text-primary font-bold ">
-            <a>Add A Review</a>
+          <li className="text-primary  px-3 font-bold ">
+            <NavLink to="/">Add A Review</NavLink>
           </li>
-          <li className="text-primary font-bold ">
-            <a>My Profile</a>
+          <li className="text-primary px-3 font-bold ">
+            <NavLink to="/">My Profile</NavLink>
           </li>
-          <li className="text-primary font-bold " >
-            <a>Blog</a>
+          <li className="text-primary px-3 font-bold " >
+            <NavLink to="/">Blog</NavLink>
           </li>
-          <li className="text-primary font-bold ">
-            <a>My Portfolio</a>
+          <li className="text-primary px-3 font-bold ">
+            <NavLink to="/">My Portfolio</NavLink>
           </li>
         </ul>
       </div>
       <div class="navbar-end">
-        <a href="/" class=" text-primary font-bold mr-6 text-lg">
+        <NavLink to="/login" className=" text-primary font-bold mr-6 text-lg">
           Login
-        </a>
-        <a href="/" class="px-4 py-2 rounded-lg btn-secondary text-white font-bold ">
+        </NavLink>
+        <NavLink to="/signup" className="px-4 py-2 rounded-lg btn-secondary text-white font-bold ">
          Sign Up
-        </a>
+        </NavLink>
       </div>
     </div>
   );
