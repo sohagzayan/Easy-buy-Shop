@@ -1,9 +1,11 @@
 import React from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContextProvider";
+
 const Header = () => {
+  const { username } = useAuthContext();
   return (
     <div class="navbar ">
-
       <div class="navbar-start">
         <div class="dropdown">
           <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -22,58 +24,72 @@ const Header = () => {
               />
             </svg>
           </label>
-          
+
           <ul
             tabindex="0"
             class="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li >
-              <NavLink to="/">My Order</NavLink>
+            <li>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/">Add A Review</NavLink>
-            </li>
-            <li>
-              <NavLink to="/">My Profile</NavLink>
-            </li>
-            <li>
-              <NavLink to="/">Blog</NavLink>
+              <NavLink to="/">Blogs</NavLink>
             </li>
             <li>
               <NavLink to="/">My Portfolio</NavLink>
             </li>
+            {username && (
+              <li>
+                <NavLink to="/">DashBoart</NavLink>
+              </li>
+            )}
           </ul>
         </div>
-        <a class="btn btn-ghost normal-case text-xl text-primary font-semibold" href="/">
-        Hardware <span className="text-secondary font-bold text-2xl">Fair </span>
+        <a
+          class="btn btn-ghost normal-case text-xl text-primary font-semibold"
+          href="/"
+        >
+          Hardware{" "}
+          <span className="text-secondary font-bold text-2xl">Fair </span>
         </a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="  menu-horizontal p-0">
           <li className="text-primary px-3 font-bold ">
-            <NavLink to="/">My Order</NavLink>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li className="text-primary px-3 font-bold ">
+            <NavLink to="/">Blogs</NavLink>
           </li>
           <li className="text-primary  px-3 font-bold ">
-            <NavLink to="/">Add A Review</NavLink>
-          </li>
-          <li className="text-primary px-3 font-bold ">
-            <NavLink to="/">My Profile</NavLink>
-          </li>
-          <li className="text-primary px-3 font-bold " >
-            <NavLink to="/">Blog</NavLink>
-          </li>
-          <li className="text-primary px-3 font-bold ">
             <NavLink to="/">My Portfolio</NavLink>
+          </li>
+          <li className="text-primary px-3 font-bold ">
+            <NavLink to="/">DashBoart</NavLink>
           </li>
         </ul>
       </div>
       <div class="navbar-end">
-        <NavLink to="/login" className=" text-primary font-bold mr-6 text-lg">
-          Login
-        </NavLink>
-        <NavLink to="/signup" className="px-4 py-2 rounded-lg btn-secondary text-white font-bold ">
-         Sign Up
-        </NavLink>
+        {username ? (
+          <div>
+            <span className="bg-secondary text-white font-bold px-4 py-2 rounded-lg cursor-pointer">LogOut</span>
+          </div>
+        ) : (
+          <div>
+            <NavLink
+              to="/login"
+              className=" text-primary font-bold mr-6 text-lg"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="px-4 py-2 rounded-lg btn-secondary text-white font-bold "
+            >
+              Sign Up
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

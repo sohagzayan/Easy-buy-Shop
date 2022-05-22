@@ -1,11 +1,45 @@
-import React from "react";
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useState } from "react";
 import GoogleButton from "react-google-button";
-import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import * as yup from 'yup';
 import addUserIcons from "../assets/icons/add-user.png";
 import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
-
+import { useAuthContext } from '../context/AuthContextProvider';
 const SignUp = () => {
+  const [error , setError] = useState('')
+ const {username , sinUp , googleLogin} = useAuthContext()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/';
+  const navigate = useNavigate();
+  let schema = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required().min(6).max(20),
+    ConformPassword: yup.string().required(),
+    email: yup.string().required("Please enter your email !").email(),
+  });
+
+// navigate("/register/login");
+const {register, formState: { errors }, handleSubmit,} = useForm({resolver: yupResolver(schema),});
+  
+
+const onSubmit = async (data) => {
+  const { username, email, password, firstName, ConformPassword } = data
+    if(password === ConformPassword){
+      try {
+        await sinUp(email , password , username )
+        navigate("/login");
+        setError('')
+      } catch (error) {
+        setError(error.message)
+      }
+    }else{
+      alert("password Conform password not match")
+    }
+  };
+
   return (
     <>
       <Headers />
@@ -22,50 +56,57 @@ const SignUp = () => {
             </div>
             <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
               <div class="card-body">
-                <div class="form-control">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <input
                     type="text"
                     placeholder="Your Name"
-                    class="input input-bordered focus:outline-secondary"
+                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    {...register("username")}
                   />
-                </div>
-                <div class="form-control">
-                  <input
+                     <p className=" text-secondary">{errors.username?.message}</p>
+                     <input
                     type="text"
                     placeholder="email"
-                    class="input input-bordered focus:outline-secondary"
+                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    {...register("email")}
                   />
-                </div>
-                <div class="form-control">
-                  <input
+                    <p className=" text-secondary">{errors.email?.message}</p>
+                     <input
                     type="text"
                     placeholder="Conform password"
-                    class="input input-bordered focus:outline-secondary"
+                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    {...register("password")}
+
                   />
-                </div>
-                <div class="form-control ">
+                     <p className=" text-secondary">{errors.ConformPassword?.message}</p>
+                
+                
+         
                   <input
                    
                     type="text"
                     placeholder="password"
-                    className="input  input-bordered focus:outline-secondary"
+                    className="input  input-bordered w-full mb-2 focus:outline-secondary"
+                    {...register("ConformPassword")}
                   />
+                     <p className=" text-secondary">{errors.password?.message}</p>
                   <label class="label">
                     <a href="#" class="label-text-alt link link-hover">
                       Forgot password?
                     </a>
                   </label>
-                </div>
-                <p className="text-secondary text-sm">Error sms Here</p>
+                  <p className="text-secondary text-sm">{error}</p>
                 <div class="form-control mt-2">
-                  <button class="btn btn-primary">Login</button>
+                  <button class="btn btn-primary text-white">Sign Up</button>
                 </div>
+                </form>
                 <div className="w-[300px]">
                   <GoogleButton
                  style={{width : "320px"}}
                  className="rounded-lg"
-                    onClick={() => {
-                      console.log("Google button clicked");
+                    onClick={ async() => {
+                     await googleLogin()
+                     navigate("/login");
                     }}
                   />
                 </div>
