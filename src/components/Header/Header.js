@@ -44,34 +44,34 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <a class="btn btn-ghost normal-case text-xl text-base-100 font-semibold" href="/">
-        <span className="text-secondary font-bold px-2">H</span>ardware <span className="text-secondary font-bold text-2xl">Fair </span>
+        <a class="btn btn-ghost normal-case text-xl text-primary font-semibold" href="/">
+        Hardware <span className="text-secondary font-bold text-2xl">Fair </span>
         </a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu  menu-horizontal p-0">
-          <li className="text-neutral font-bold ">
+          <li className="text-primary font-bold ">
             <a>My Order</a>
           </li>
-          <li className="text-neutral font-bold ">
+          <li className="text-primary font-bold ">
             <a>Add A Review</a>
           </li>
-          <li className="text-neutral font-bold ">
+          <li className="text-primary font-bold ">
             <a>My Profile</a>
           </li>
-          <li className="text-neutral font-bold " >
+          <li className="text-primary font-bold " >
             <a>Blog</a>
           </li>
-          <li className="text-neutral font-bold ">
+          <li className="text-primary font-bold ">
             <a>My Portfolio</a>
           </li>
         </ul>
       </div>
       <div class="navbar-end">
-        <a href="/" class=" text-neutral font-bold mr-6 text-lg">
+        <a href="/" class=" text-primary font-bold mr-6 text-lg">
           Login
         </a>
-        <a href="/" class="px-4 py-2 rounded-lg btn-secondary font-bold ">
+        <a href="/" class="px-4 py-2 rounded-lg btn-secondary text-white font-bold ">
          Sign Up
         </a>
       </div>

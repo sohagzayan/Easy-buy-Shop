@@ -1,29 +1,5 @@
 .hero-wrapper {
-  background-image: linear-gradient(to right, #1b2634, #181d29);
+  background-image: url("./assets/images/bg.png");
   width: 100%;
-
   position: relative;
-  overflow-x: hidden;
-}
-
-.stylesColor {
-  position: absolute;
-  width: 200px;
-  height: 150px;
-  border-top: 2px solid #fd4a44;
-  border-left: 2px solid #fd4a44;
-  top: 0;
-  left: 0;
-  opacity: 0.7;
-}
-.stylesColor::before {
-  content: "";
-  top: -90px;
-  left: -100px;
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background-color: #fd4a44;
-  filter: blur(90px);
-  opacity: 0.6;
 }

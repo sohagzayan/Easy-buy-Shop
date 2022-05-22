@@ -1,18 +1,30 @@
-import React from 'react';
-import Header from '../components/Header/Header';
-import Hero from '../components/Hero/Hero';
+import React from "react";
+import BusinessSummary from "../components/BusinessSummary/BusinessSummary";
+import Footer from "../components/Footer/Footer";
+import Header from "../components/Header/Header";
+import Hero from "../components/Hero/Hero";
+import OurParts from "../components/OurParts/OurParts";
+import OurReview from "../components/OurReview/OurReview";
 
 const Home = () => {
-    return (
-        <div className='hero-wrapper'>
-            <div className="stylesColor"></div>
-            <div className="stylesColor2"></div>
-            <div className='container mx-auto px-5 py-3'>
-                <Header />
-                <Hero />
-            </div>
+  return (
+    <div className="">
+      <div className=" ">
+        <div className="hero-wrapper">
+          <div className="container mx-auto px-5 py-3">
+            <Header />
+            <Hero />
+          </div>
         </div>
-    );
+      </div>
+      <div className="container mx-auto px-5 py-3">
+        <OurParts />
+        <BusinessSummary />
+        <OurReview />
+        <Footer />
+      </div>
+    </div>
+  );
 };
 
 export default Home;
