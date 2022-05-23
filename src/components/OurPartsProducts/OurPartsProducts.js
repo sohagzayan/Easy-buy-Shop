@@ -1,7 +1,7 @@
 import React from "react";
-
+import { NavLink } from 'react-router-dom';
 const OurPartsProducts = ({ item }) => {
-  const { image , name , details , price , quantity} = item;
+  const { image , name , details , price , quantity , minimumOrder  , _id} = item;
   return (
     <div className="bg-base-100 border-2 rounded-2xl shadow-lg">
       <div className="p-4 flex flex-col justify-between items-center">
@@ -10,11 +10,15 @@ const OurPartsProducts = ({ item }) => {
         </div>
         <div>
             <h2 className="text-primary ">{name}</h2>
-            <span className="text-2xl text-secondary font-bold">৳ {price}</span>
+            <div className="flex flex-col my-2">
+              <span className="text-primary font-medium">Minimum Order Quantity : <span className="text-2xl font-bold text-secondary">{minimumOrder}</span></span>
+              <span className="text-primary font-medium">Available Quantity : <span className="text-2xl font-bold text-secondary">{quantity}</span></span>
+            </div>
+          
             <p className="text-sm font-light text-primary">{details}</p>
             <div className="flex items-center justify-between mt-5">
-                <p className="text-primary">Quantity : <span className="text-2xl text-secondary font-bold">{quantity}</span></p>
-                <button className="bg-secondary text-white font-bold px-4 py-2 rounded-lg">Purchase</button>
+            <span className="text-2xl text-secondary font-bold">৳ {price}</span>
+                <NavLink to={`/purchase/${_id}`} className="bg-secondary text-white font-bold px-4 py-2 rounded-lg">Purchase</NavLink>
             </div>
         </div>
       </div>

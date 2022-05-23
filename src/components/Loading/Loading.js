@@ -1,9 +1,8 @@
 import React from 'react';
-import loadingImage from '../../assets/image/loading.gif';
 const Loading = () => {
     return (
         <div className='flex justify-center items-center h-screen'>
-            <img src={loadingImage} alt="" />
+            <img src="https://raw.githubusercontent.com/Codelessly/FlutterLoadingGIFs/master/packages/cupertino_activity_indicator.gif"alt="" />
         </div>
     );
 };

@@ -1,13 +1,18 @@
-import './App.css';
-import { AuthContextProvider } from './context/AuthContextProvider';
-import AllRoutes from './router/AllRoutes';
+import { QueryClient, QueryClientProvider } from "react-query";
+import "./App.css";
+import { AuthContextProvider } from "./context/AuthContextProvider";
+import AllRoutes from "./router/AllRoutes";
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <div>
-      <AuthContextProvider>
-        <AllRoutes />
-      </AuthContextProvider>
-
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <AllRoutes />
+        </AuthContextProvider>
+      </QueryClientProvider>
     </div>
   );
 }

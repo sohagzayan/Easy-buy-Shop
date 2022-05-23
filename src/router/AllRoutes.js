@@ -5,6 +5,7 @@ import Blogs from "../pages/Blogs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import MyProtFolio from "../pages/MyProtFolio";
+import Purchase from "../pages/Purchase";
 import SignUp from "../pages/SignUp";
 const AllRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AllRoutes = () => {
       <Route path="/dashBoart" element={<DashBoart />} >
         
       </Route>
+      <Route path="/purchase/:id" element={<Purchase />} />
     </Routes>
   );
 };
