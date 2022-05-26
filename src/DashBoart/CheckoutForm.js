@@ -6,11 +6,13 @@ import React, { useEffect, useState } from 'react';
 const CheckoutForm = ({data}) => {
     const [cardError , setCardError] = useState('')
     const [success , setSuccess] = useState('')
+    const [processing ,setPerocessing] = useState(false)
+    const [succesTransationId , setSuccesTransationId] = useState('')
     const [clientSecret, setClientSecret] = useState('');
     const stripe = useStripe();
     const elements = useElements();
 
-    const {price , email , name , date} = data
+    const { _id, price , email , name } = data
 
 
     useEffect(()=>{
@@ -35,6 +37,7 @@ const CheckoutForm = ({data}) => {
 
     
     const handleSubmit = async(e)=>{
+        
         setSuccess('')
         e.preventDefault()
         if(!stripe || !elements){
@@ -56,6 +59,8 @@ const CheckoutForm = ({data}) => {
             setCardError('')
         }
 
+        setPerocessing(true)
+
         const {paymentIntent, error : intentError} = await stripe.confirmCardPayment(
             clientSecret,
             {
@@ -72,11 +77,30 @@ const CheckoutForm = ({data}) => {
 
           if(intentError){
             setCardError(intentError.message)
+            setPerocessing(false)
             // console.log(intentError);
           }else{
             setCardError('')
-            console.log(paymentIntent);
+            setSuccesTransationId(paymentIntent.id)
             setSuccess('Cong Your Payment is completed')
+            const paymnetInfo = {
+                transactionId : paymentIntent.id,
+                productId : _id
+            }
+            fetch(`http://localhost:5000/api/purchase/${_id}`,{
+                method : "PUT",
+                headers : {
+                    'content-type' : 'application/json',
+                    'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
+                 },
+
+                 body : JSON.stringify({transactionId : paymentIntent.id , productId : _id})
+            }).then((res)=> res.json())
+            .then(data => {
+                setPerocessing(false)
+                console.log(data)
+            })
+
           }
     }
    
@@ -90,7 +114,14 @@ const CheckoutForm = ({data}) => {
         </button>
       </form>
         <p className='text-secondary'>{cardError}</p>
-        <p className='text-green-400'>{success}</p>
+        <div className=''>
+            <p className='text-green-400'>{success}</p>
+            {
+                succesTransationId &&
+                <h2 className='text-green-500 font-bold text-xl'>Your TrazationId  {succesTransationId}</h2>
+
+            }
+        </div>
        </>
     );
 };

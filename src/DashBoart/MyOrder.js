@@ -26,7 +26,7 @@ const MyProducts = () => {
         }
       })
       .then((data) => setMyOrder(data));
-  }, [username]);
+  }, [username , myOrder]);
 
   return (
     <div className="p-4 mt-5">
