@@ -5,11 +5,14 @@ import React, { useEffect, useState } from 'react';
 
 const CheckoutForm = ({data}) => {
     const [cardError , setCardError] = useState('')
+    const [success , setSuccess] = useState('')
     const [clientSecret, setClientSecret] = useState('');
     const stripe = useStripe();
     const elements = useElements();
 
-    const {price} = data
+    const {price , email , name , date} = data
+
+
     useEffect(()=>{
         
         fetch('http://localhost:5000/api/purchase/payment',{
@@ -32,9 +35,10 @@ const CheckoutForm = ({data}) => {
 
     
     const handleSubmit = async(e)=>{
+        setSuccess('')
         e.preventDefault()
         if(!stripe || !elements){
-            return
+            return;
         }         
         
         const card = elements.getElement(CardElement)
@@ -51,6 +55,29 @@ const CheckoutForm = ({data}) => {
         }else{
             setCardError('')
         }
+
+        const {paymentIntent, error : intentError} = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: {
+                card: card,
+                billing_details: {
+                  name: name,
+                  email : email,
+                
+                },
+              },
+            },
+          );
+
+          if(intentError){
+            setCardError(intentError.message)
+            // console.log(intentError);
+          }else{
+            setCardError('')
+            console.log(paymentIntent);
+            setSuccess('Cong Your Payment is completed')
+          }
     }
    
 
@@ -63,6 +90,7 @@ const CheckoutForm = ({data}) => {
         </button>
       </form>
         <p className='text-secondary'>{cardError}</p>
+        <p className='text-green-400'>{success}</p>
        </>
     );
 };
