@@ -8,7 +8,7 @@ const OurReviewPart = () => {
 
   const [reviewsData , setReviewsData] = useState([])
   useEffect(()=>{
-       fetch(`http://localhost:5000/api/review`)
+       fetch(`https://tranquil-shelf-42201.herokuapp.com/api/review`)
        .then(data => data.json())
        .then(res =>setReviewsData(res))
   },[reviewsData])

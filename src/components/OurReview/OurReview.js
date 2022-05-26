@@ -7,7 +7,7 @@ import Reviews from '../Reviews/Reviews';
 const OurReview = () => {
     const [reviewsData , setReviewsData] = useState([])
     useEffect(()=>{
-         axios.post(`http://localhost:5000/api/review`)
+         axios.post(`https://tranquil-shelf-42201.herokuapp.com/api/review`)
          .then(data => console.log(data) )
     },[])
     

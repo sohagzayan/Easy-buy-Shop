@@ -10,7 +10,7 @@ const MyProducts = () => {
   const { username } = useAuthContext();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/purchase?email=${username.email}`, {
+    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase?email=${username.email}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

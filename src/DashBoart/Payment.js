@@ -1,5 +1,5 @@
 import {
-    Elements
+  Elements
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React from "react";
@@ -14,7 +14,7 @@ const Payment = () => {
   const { id } = useParams();
 
   const { isLoading, error, data } = useQuery(["orderSingle", id], () =>
-    fetch(`http://localhost:5000/api/purchase/${id}`,{
+    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase/${id}`,{
         method : "GET",
         headers : {
             authorization : `Bearer ${localStorage.getItem('accessToken')}`

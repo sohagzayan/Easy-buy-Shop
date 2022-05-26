@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { useAuthContext } from "../../context/AuthContextProvider";
 
 const Header = () => {
   const { username, logOut } = useAuthContext();
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     swal({
@@ -20,6 +21,8 @@ const Header = () => {
         });
         logOut();
         localStorage.removeItem('accessToken')
+        navigate('/login')
+
       } else {
         swal("Your imaginary file is safe!");
       }

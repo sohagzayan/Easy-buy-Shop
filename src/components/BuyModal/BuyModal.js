@@ -34,7 +34,7 @@ const BuyModal = ({yourQuantity , price}) => {
       orderAmount : yourQuantity,
       date :formattedDate
     };
-    await axios.post(`http://localhost:5000/api/purchase`, purchaseData);
+    await axios.post(`https://tranquil-shelf-42201.herokuapp.com/api/purchase`, purchaseData);
     swal("Your Order Success");
   };
   return (

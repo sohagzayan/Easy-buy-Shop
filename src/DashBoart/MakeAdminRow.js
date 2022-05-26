@@ -6,7 +6,7 @@ const MakeAdminRow = ({user , refetch}) => {
     const {email, date , role , _id} = user
 
     const makeAdmin = async()=>{
-      await fetch(`http://localhost:5000/api/admin/${email}`,{
+      await fetch(`https://tranquil-shelf-42201.herokuapp.com/api/admin/${email}`,{
         method: 'PUT',
         body: JSON.stringify({role : role === 'user' ? 'admin' : 'user'}),
         headers: {
@@ -35,7 +35,7 @@ const MakeAdminRow = ({user , refetch}) => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        axios.delete(`http://localhost:5000/api/user/${_id}`)
+        axios.delete(`https://tranquil-shelf-42201.herokuapp.com/api/user/${_id}`)
         refetch()
       } else {
         swal("Your imaginary file is safe!");

@@ -9,7 +9,7 @@ const MyProfile = () => {
   const { username } = useAuthContext();
   const [userP, setUserP] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/user/${username.email}`, {
+    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/user/${username.email}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

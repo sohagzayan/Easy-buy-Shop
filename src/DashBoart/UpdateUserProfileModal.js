@@ -45,7 +45,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
 
 
         try {
-          await fetch(`http://localhost:5000/api/user/${username.email}`, {
+          await fetch(`https://tranquil-shelf-42201.herokuapp.com/api/user/${username.email}`, {
             method: "PUT",
             body: JSON.stringify(newPost),
             headers: {
@@ -69,7 +69,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
 
 
 
-      await fetch(`http://localhost:5000/api/user/${username.email}`, {
+      await fetch(`https://tranquil-shelf-42201.herokuapp.com/api/user/${username.email}`, {
         method: "PUT",
         body: JSON.stringify({
           education,

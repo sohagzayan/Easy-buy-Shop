@@ -5,7 +5,7 @@ const ManageAllOrder = () => {
 
   const [manageOrder , setManageOrder] = useState([])
   useEffect(()=>{
-    fetch(`http://localhost:5000/api/purchase` , {
+    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase` , {
       method : "GET",
       headers : {
         authorization : `Bearer ${localStorage.getItem('accessToken')}`
@@ -16,7 +16,7 @@ const ManageAllOrder = () => {
     .then(data => setManageOrder(data))
   },[manageOrder])
   
-
+  console.log(manageOrder);
     return (
         <table className='px-4 mt-5'>
         <tr>
@@ -26,6 +26,7 @@ const ManageAllOrder = () => {
           <th>Email</th>
           <th>Address</th>
           <th>Pay</th>
+          <th>Action</th>
         </tr>
 
         {

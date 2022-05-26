@@ -1,12 +1,13 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
+import swal from 'sweetalert';
 
 
 
 const CheckoutForm = ({data}) => {
     const [cardError , setCardError] = useState('')
     const [success , setSuccess] = useState('')
-    const [processing ,setPerocessing] = useState(false)
+    const [processing , setProcessing] = useState(false)
     const [succesTransationId , setSuccesTransationId] = useState('')
     const [clientSecret, setClientSecret] = useState('');
     const stripe = useStripe();
@@ -17,7 +18,7 @@ const CheckoutForm = ({data}) => {
 
     useEffect(()=>{
         
-        fetch('http://localhost:5000/api/purchase/payment',{
+        fetch('https://tranquil-shelf-42201.herokuapp.com/api/purchase/payment',{
             method: 'POST',
             body: JSON.stringify({
                 price
@@ -35,6 +36,7 @@ const CheckoutForm = ({data}) => {
     
     },[price])
 
+    
     
     const handleSubmit = async(e)=>{
         
@@ -59,7 +61,7 @@ const CheckoutForm = ({data}) => {
             setCardError('')
         }
 
-        setPerocessing(true)
+        setProcessing(true)
 
         const {paymentIntent, error : intentError} = await stripe.confirmCardPayment(
             clientSecret,
@@ -77,9 +79,10 @@ const CheckoutForm = ({data}) => {
 
           if(intentError){
             setCardError(intentError.message)
-            setPerocessing(false)
+            setProcessing(false)
             // console.log(intentError);
           }else{
+
             setCardError('')
             setSuccesTransationId(paymentIntent.id)
             setSuccess('Cong Your Payment is completed')
@@ -87,23 +90,29 @@ const CheckoutForm = ({data}) => {
                 transactionId : paymentIntent.id,
                 productId : _id
             }
-            fetch(`http://localhost:5000/api/purchase/${_id}`,{
+            fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase/${_id}`,{
                 method : "PUT",
                 headers : {
                     'content-type' : 'application/json',
                     'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
                  },
 
-                 body : JSON.stringify({transactionId : paymentIntent.id , productId : _id})
+                 body : JSON.stringify({transactionId : paymentIntent.id , productId : _id , payed : 'pending'})
+
             }).then((res)=> res.json())
             .then(data => {
-                setPerocessing(false)
+                setProcessing(false)
+                swal("payment Success ");
                 console.log(data)
             })
 
           }
+          
     }
-   
+    // if(processing){
+    //     return <Loading />
+    // }
+  
 
     return (
        <>

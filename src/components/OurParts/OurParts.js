@@ -7,7 +7,7 @@ const OurParts = () => {
 
 
     const { isLoading, error, data:partsData } = useQuery('toolsData', () =>
-     axios.get(`http://localhost:5000/api/tools`)
+     axios.get(`https://tranquil-shelf-42201.herokuapp.com/api/tools`)
   )
 
   

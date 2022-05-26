@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 import * as yup from "yup";
 import keyImage from "../assets/icons/key.png";
 import Footer from "../components/Footer/Footer";
@@ -11,46 +11,44 @@ import Headers from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
 import useToken from "../hock/useToken";
 const SignUp = () => {
-  const [error , setError] = useState('')
-  const {login , googleLogin , username} = useAuthContext()
+  const [error, setError] = useState("");
+  const { login, googleLogin, username } = useAuthContext();
 
   const navigate = useNavigate();
-  const location = useLocation()
-  const from = location.state?.from?.pathname || '/';
-  
-  const [token , isLoading] = useToken(username)
-   
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
+  const [token, isLoading] = useToken(username);
 
   let schema = yup.object().shape({
     password: yup.string().required().min(6).max(20),
     email: yup.string().required("Please enter your email !").email(),
   });
-  
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
   const onSubmit = async (data) => {
-  const { username, email, password, firstName, ConformPassword } = data
+    const { username, email, password, firstName, ConformPassword } = data;
     try {
-        await login(email , password)
-        swal("Good job!", "Your Login success!", "success");
-        
-        setError('')
+      await login(email, password);
+      swal("Good job!", "Your Login success!", "success");
+
+      setError("");
     } catch (error) {
-        setError(error.message)
+      setError(error.message);
     }
   };
-const handleLoginWithGoogle = async ()=>{
-  await googleLogin()
-  // navigate(from , {replace : true})
-}
+  const handleLoginWithGoogle = async () => {
+    await googleLogin();
+    // navigate(from , {replace : true})
+  };
 
-if(token){
-  navigate(from , {replace : true})
-}
+  if (token) {
+    navigate(from, { replace: true });
+  }
   return (
     <>
       <Headers />
