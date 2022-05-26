@@ -9,36 +9,48 @@ import keyImage from "../assets/icons/key.png";
 import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
+import useToken from "../hock/useToken";
 const SignUp = () => {
   const [error , setError] = useState('')
-    const {login} = useAuthContext()
-    const navigate = useNavigate();
-    const location = useLocation()
-    const from = location.state?.from?.pathname || '/';
+  const {login , googleLogin , username} = useAuthContext()
+
+  const navigate = useNavigate();
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/';
+  
+  const [token , isLoading] = useToken(username)
+   
 
 
   let schema = yup.object().shape({
     password: yup.string().required().min(6).max(20),
     email: yup.string().required("Please enter your email !").email(),
   });
-
+  
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
-
   const onSubmit = async (data) => {
   const { username, email, password, firstName, ConformPassword } = data
     try {
         await login(email , password)
         swal("Good job!", "Your Login success!", "success");
-        navigate(from , {replace : true})
+        
         setError('')
     } catch (error) {
         setError(error.message)
     }
   };
+const handleLoginWithGoogle = async ()=>{
+  await googleLogin()
+  // navigate(from , {replace : true})
+}
+
+if(token){
+  navigate(from , {replace : true})
+}
   return (
     <>
       <Headers />
@@ -86,9 +98,7 @@ const SignUp = () => {
                   <GoogleButton
                     style={{ width: "320px" }}
                     className="rounded-lg"
-                    onClick={() => {
-                      console.log("Google button clicked");
-                    }}
+                    onClick={handleLoginWithGoogle}
                   />
                 </div>
                 <p>

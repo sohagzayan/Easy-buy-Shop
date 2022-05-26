@@ -8,9 +8,6 @@ const PrivateRoute = ({ children }) => {
   if(loading){
     return <Loading />
   }
-  console.log(username);
-  
-  console.log("this is private route");
 
   
   return username ? (

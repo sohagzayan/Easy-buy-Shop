@@ -7,9 +7,7 @@ const authContext = createContext()
 
     const [username , setUsername] = useState('')
     const [loading , setLoading] = useState(true)
-    console.log(username);
 
-console.log(username);
     const sinUp = async(email , password , userdisplayname)=>{
        await  createUserWithEmailAndPassword(auth , email , password )
 

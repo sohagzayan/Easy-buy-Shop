@@ -9,11 +9,14 @@ import OurReviewPart from "../components/OurReviewPart/OurReviewPart";
 
 const Home = () => {
   return (
+    <>
+        <Header />
+ 
     <div className="">
       <div className=" ">
         <div className="hero-wrapper">
+      
           <div className="container mx-auto px-5 py-3">
-            <Header />
             <Hero />
           </div>
         </div>
@@ -27,6 +30,7 @@ const Home = () => {
         <Footer />
       </div>
     </div>
+    </>
   );
 };
 

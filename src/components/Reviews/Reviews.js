@@ -1,54 +1,79 @@
 import React from "react";
+import { AiFillStar } from 'react-icons/ai';
 
 const Reviews = ({ item }) => {
-  console.log(item);
-  const { img, username, date, reviewMessage, rating, position } = item;
+  const blankImage = 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'
+  const { image, name, date, reviewMessage, rating, position ,  dese } = item;
+  const ratingParse = parseInt(rating)
+
+
+  const GetRating = (rating)=>{
+      if(rating <= 1){
+
+        return <div className="flex items-center">
+                <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+                <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+                <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+                <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+                <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+        </div>
+      }else if(rating <= 2){
+        return <div className="flex items-center">
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+      </div>
+      }else if(rating <= 3){
+        return <div className="flex items-center">
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+      </div>
+      }else if(rating <= 4){
+        return <div className="flex items-center">
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-slate-300" /> </span>
+      </div>
+      }else if(rating <= 5){
+        return <div className="flex items-center">
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+        <span> <AiFillStar className="text-2xl text-secondary" /> </span>
+      </div>
+      }
+  }
   return (
     <div className="m-4 p-4 bg-[#FFFFFF] shadow-xl shadow-[#D1D0DF] rounded-md">
       <div >
         <div className="flex justify-between items-center text-left">
           <div className="flex ">
             <div className="mr-3">
-              <img width="50px" className="rounded-full" src={img} alt="" />
+              <img width="50px" className="rounded-full" src={image ? image : blankImage} alt="" />
             </div>
             <div>
-              <span className="text-primary font-bold ">{username}</span>
+              <span className="text-primary font-bold ">{name}</span>
               <p className="text-sm text-left font-light">{position}</p>
             </div>
           </div>
           <div>
             <div class="rating">
-              <input
-                type="radio"
-                name="rating-2"
-                class="mask mask-star-2 bg-secondary"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                class="mask mask-star-2 bg-secondary"
-                checked
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                class="mask mask-star-2 bg-secondary"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                class="mask mask-star-2 bg-secondary"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                class="mask mask-star-2 bg-secondary"
-              />
+              {
+                GetRating(ratingParse)
+              }
             </div>
           </div>
         </div>
         <div className="my-8 text-primary text-left">
-          <p>{reviewMessage}</p>
+          <p>{dese}</p>
         </div>
         <p className="font-bold text-primary text-left">{date}</p>
       </div>

@@ -9,9 +9,12 @@ import addUserIcons from "../assets/icons/add-user.png";
 import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
 import { useAuthContext } from '../context/AuthContextProvider';
+import useToken from '../hock/useToken';
+
+
 const SignUp = () => {
   const [error , setError] = useState('')
- const {username , sinUp , googleLogin} = useAuthContext()
+  const {username , sinUp , googleLogin} = useAuthContext()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/';
   const navigate = useNavigate();
@@ -22,9 +25,10 @@ const SignUp = () => {
     email: yup.string().required("Please enter your email !").email(),
   });
 
-// navigate("/register/login");
 const {register, formState: { errors }, handleSubmit,} = useForm({resolver: yupResolver(schema),});
   
+const [toekn] = useToken(username)
+
 
 const onSubmit = async (data) => {
   const { username, email, password, firstName, ConformPassword } = data
@@ -43,6 +47,10 @@ const onSubmit = async (data) => {
     }
   };
 
+  const handleGoogleLogin = async()=>{
+    await googleLogin()
+    // navigate("/login");
+  }
   return (
     <>
       <Headers />
@@ -107,10 +115,7 @@ const onSubmit = async (data) => {
                   <GoogleButton
                  style={{width : "320px"}}
                  className="rounded-lg"
-                    onClick={ async() => {
-                     await googleLogin()
-                     navigate("/login");
-                    }}
+                    onClick={handleGoogleLogin}
                   />
                 </div>
                 <p>AlReady Have a Account ? <NavLink className="text-secondary font-bold text-lg" to="/login">Login</NavLink></p>
