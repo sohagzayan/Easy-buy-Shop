@@ -18,4 +18,4 @@ Project details
 
 - and this project use fairbase and also add jwt token with localStorage
 
-- this project is full MERN STack project ..
+- this project is full MERN STack project .
