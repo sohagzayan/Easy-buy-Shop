@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import swal from 'sweetalert';
 
-const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) => {
+const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username , setUserP ,image}) => {
   
   // console.log(educationU);
   const [file , setFile] = useState(null)
+  const [profileImage , setProfileImage] = useState('')
     const [education , setEducation] = useState(educationU)
     const [location , setLocation] = useState(locationU)
     const [linkDin , setLinkDin] = useState(linkDinU)
@@ -16,6 +17,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
       setEducation(educationU)
       setLocation(locationU)
       setLinkDin(linkDinU)
+      setProfileImage(image)
     },[educationU ,locationU , linkDinU])
     
     const handleUpdateUser = async (e) => {
@@ -24,7 +26,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
             education,
             location,
             linkDin,
-            image : ''
+            image : profileImage
           }
         
         if (file) {
@@ -33,7 +35,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
           const fileName = Date.now() + file.name;
           data.append("name", fileName);
           data.append("file", file);
-          newPost.image = fileName;
+          // newPost.image = fileName;
     
           try {
       
@@ -55,6 +57,7 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
           })
             .then((res) => res.json())
             .then((data) => {
+              setUserP([])
               swal("success to update your profile");
             });
     
@@ -91,21 +94,27 @@ const UpdateUserProfileModal = ({ educationU, locationU , linkDinU, username}) =
   return (
     <div>
     
-      <input type="checkbox" id="my-modal" class="modal-toggle" />
-      <div class="modal">
-        <div class="modal-box">
-        <label for="my-modal" class="btn btn-sm btn-circle absolute bg-secondary text-white border-secondary right-2 top-2">✕</label>
-          <h3 class="font-bold text-lg">
+      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+        <label htmlFor="my-modal" className="btn btn-sm btn-circle absolute bg-secondary text-white border-secondary right-2 top-2">✕</label>
+          <h3 className="font-bold text-lg text-center">
             update Your Details
           </h3>
         
         <form onSubmit={handleUpdateUser}>
-          <input  type="file" className="my-3" onChange={(e)=> setFile(e.target.files[0])} />
-            <input required  readOnly s value={username?.displayName} type="text" placeholder="Your Name" class="input input-bordered bg-slate-300 text-primary font-bold text-xl input-info w-full mb-4 mt-4" />
-            <input required readOnly value={username?.email} type="email" placeholder="Your Email" class="input input-bordered input-info w-full bg-slate-300 text-primary  font-bold text-xl   mb-4" />
-            <input required  onChange={(e)=> setEducation(e.target.value)} value={education} type="text" placeholder="Your Education" class="input input-bordered input-info  text-primary font-bold text-xl w-full  mb-4" />
-            <input required  onChange={(e)=> setLocation(e.target.value)} value={location} type="text" placeholder="Your Location" class="input input-bordered input-info w-full  text-primary font-bold text-xl  mb-4" />
-            <input required  onChange={(e)=> setLinkDin(e.target.value)} value={linkDin} type="text" placeholder="Your LinkDin url" class="input input-bordered input-info w-full  text-primary font-bold text-xl mb-4" />
+        <label className="text-lg text-primary font-bold px-2" htmlFor="/">Profile image url</label>
+           <input value={profileImage} className="input input-bordered bg-slate-300 text-primary font-bold text-xl input-info w-full mb-1 mt-1"  type="text" required  onChange={(e)=> setProfileImage(e.target.value)} placeholder="Profile Image" />
+           {/* <label className="text-lg text-primary font-bold px-2" htmlFor="/">Name</label> */}
+            <input required  readOnly s value={username?.displayName} type="text" placeholder="Your Name" className="input input-bordered bg-slate-300 text-primary font-bold text-xl input-info w-full mb-1 mt-1" />
+            {/* <label className="text-lg text-primary font-bold px-2" htmlFor="/">Email</label> */}
+            <input required readOnly value={username?.email} type="email" placeholder="Your Email" className="input input-bordered input-info w-full bg-slate-300 text-primary  font-bold text-xl   mb-1" />
+            {/* <label className="text-lg text-primary font-bold px-2" htmlFor="/">Education</label> */}
+            <input required  onChange={(e)=> setEducation(e.target.value)} value={education} type="text" placeholder="Your Education" className="input input-bordered input-info  text-primary font-bold text-xl w-full  mb-1" />
+            {/* <label className="text-lg text-primary font-bold px-2" htmlFor="/">Location</label> */}
+            <input required  onChange={(e)=> setLocation(e.target.value)} value={location} type="text" placeholder="Your Location" className="input input-bordered input-info w-full  text-primary font-bold text-xl  mb-1" />
+            <label className="text-lg text-primary font-bold px-2" htmlFor="/">Linkedin url</label>
+            <input required  onChange={(e)=> setLinkDin(e.target.value)} value={linkDin} type="text" placeholder="Your LinkDin url" className="input input-bordered input-info w-full  text-primary font-bold text-xl mb-1" />
             <button className="btn btn-secondary text-white font-bold">Update Details</button>
         </form>
         

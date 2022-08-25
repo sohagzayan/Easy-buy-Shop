@@ -35,9 +35,9 @@ const AddUserReview = () => {
                 <span className='text-primary text-2xl mb-3 inline-block'>Give a Review </span>
                <div className='flex my-4'>
                
-                <div class="rating">
+                <div className="rating">
                     {
-                        possibleRate.map(rate =>  <input onClick={()=> setSelectedRate(rate)}  value='2'  type="radio" name="rating-4" class="mask mask-star-2 bg-green-500" />)
+                        possibleRate.map(rate =>  <input onClick={()=> setSelectedRate(rate)}  value='2'  type="radio" name="rating-4" className="mask mask-star-2 bg-green-500" />)
                     }
                </div>
                 

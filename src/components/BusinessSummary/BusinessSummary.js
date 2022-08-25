@@ -11,7 +11,7 @@ const BusinessSummary = () => {
             <div>
                 <h2 className='text-3xl font-bold mb-2'>Why choose <span className='text-secondary'>Us</span></h2>
                  <span className='text-2xl font-medium mb-2 inline-block'>Many Business Trust Us</span>
-                <p className='text-sm text-primary'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, reiciendis.</p>
+                <p className='text-sm text-primary'>A choice that makes the difference</p>
                 <div className='grid grid-cols-1 gap-3 mt-7 md:grid-cols-2 lg:grid-cols-3'>
                     <div className='bg-[#E8E8FF] m-5 py-3 flex flex-col items-center rounded-lg '>
                         <img  width="100px" className="mb-3" src={help} alt="" />

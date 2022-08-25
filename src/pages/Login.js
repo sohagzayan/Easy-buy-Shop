@@ -12,8 +12,8 @@ import { useAuthContext } from "../context/AuthContextProvider";
 import useToken from "../hock/useToken";
 const SignUp = () => {
   const [error, setError] = useState("");
-  const { login, googleLogin, username } = useAuthContext();
-
+  const { login, googleLogin, username , ForGotPassWord } = useAuthContext();
+  const [email , setEmail] = useState('')
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -49,46 +49,63 @@ const SignUp = () => {
   if (token) {
     navigate(from, { replace: true });
   }
+
+  // ForGotPassWord
+  // const handleForgotPassword = async()=>{
+  //   console.log(email);
+  //   try {
+      
+  //     await ForGotPassWord(email)
+  //     swal("Check Your Gmail please");
+  //     setError('')
+  //   } catch (error) {
+  //     setError(error.message)
+  //   }
+    
+  // }
+
+
   return (
     <>
       <Headers />
       <div className="my-10">
-        <div class="hero ">
-          <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Login Now</h1>
-              <p class="py-6">
+        <div className="hero ">
+          <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="text-center flex flex-col items-center">
+              <h1 className="text-5xl font-bold">Login Now</h1>
+              <p className="py-6">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem
               </p>
               <img width="200px" src={keyImage} alt="" />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-              <div class="card-body">
+            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+              <div className="card-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <input
-                    type="text"
+                      
+                    type="email"
                     placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    className="input input-bordered w-full mb-2 focus:outline-secondary"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="password"
-                    class="input input-bordered w-full focus:outline-secondary"
+                    className="input input-bordered w-full focus:outline-secondary"
                     {...register("password")}
                   />
                   <p className=" text-secondary">{errors.password?.message}</p>
-                  <label class="label">
-                    <a href="/" class="label-text-alt link link-hover">
+                  <NavLink to="/forgotPassword"  className="label cursor-pointer">
+                   
                       Forgot password?
-                    </a>
-                  </label>
+                 
+                  </NavLink>
                   <p className="text-secondary text-sm">{error}</p>
 
-                  <div class="form-control mt-2">
-                    <button class="btn btn-primary text-white ">Login</button>
+                  <div className="form-control mt-2">
+                    <button className="btn btn-primary text-white ">Login</button>
                   </div>
                 </form>
 

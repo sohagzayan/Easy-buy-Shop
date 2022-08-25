@@ -29,17 +29,17 @@ const MyProfile = () => {
     <div className="p-4 pt-5 flex">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl text-primary font-bold">My Profile Info</h2>
-        <div class="  bg-base-100 flex  shadow-sm">
+        <div className="  bg-base-100 flex  shadow-sm">
           <div className="p-6">
             <img
             width="200px"
-              src={userP[0]?.image ? MF+userP[0]?.image : null}
+              src={userP[0]?.image}
               alt="Shoes"
-              class="rounded-4"
+              className="rounded-4"
             />
           </div>
 
-          <div class="card-body  ">
+          <div className="card-body  ">
             <ul>
               <li className="mb-2">
                 <span className="text-xl font-bold text-primary">Name </span>
@@ -64,16 +64,20 @@ const MyProfile = () => {
               </li>
 
               <li className="mb-2 flex items-center mt-4">
-                <a href="/">
+                <a href={userP[0]?.linkDin} target="_blank" rel="noreferrer">
                   <FaLinkedinIn className="text-2xl text-primary mr-2" />
                 </a>
               </li>
             </ul>
             {/* handleUpdateUser */}
-            <label for="my-modal" class="btn modal-button bg-primary text-white">
+            <label htmlFor="my-modal" className="btn modal-button bg-primary text-white">
               Update Your Details
+   
             </label>
-            <UpdateUserProfileModal  educationU={userP[0]?.education} locationU={userP[0]?.location} linkDinU={userP[0]?.linkDin}  username={username} />
+            {
+              userP.length && 
+            <UpdateUserProfileModal  educationU={userP[0]?.education}  image={userP[0]?.image} locationU={userP[0]?.location} linkDinU={userP[0]?.linkDin} setUserP={setUserP}  username={username} />
+            }
           </div>
         </div>
       </div>

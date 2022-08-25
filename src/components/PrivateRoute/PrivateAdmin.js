@@ -15,7 +15,7 @@ const PrivateAdmin = ({ children }) => {
   console.log(loading , adminLoading);
 
     if(!username || !admin){
-        <Navigate to="/login"  state={{from : location}} ></Navigate>
+        <Navigate to="/login" replace='true'  state={{from : location}} ></Navigate>
     }
   
   return children

@@ -37,8 +37,8 @@ const MakeAdmin = () => {
 
   return (
     <div className="px-4 mt-6">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="">
           <thead>
             <tr>
               <th></th>

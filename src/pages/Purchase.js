@@ -49,15 +49,17 @@ const Purchase = () => {
         
       },[yourQuantity])
 
+      let totalPrice = yourQuantity * parseInt(price)
+
   return (
     <>
       <Header />
       <div className="mt-7 container mx-auto px-8">
-        <div class="lg:card-side bg-base-100 shadow-md">
-          <img className="max-w-sm px-5 mb-3" src={image ? MF + image : null} alt="Album" />
+        <div className="lg:card-side bg-base-100 shadow-md">
+          <img className="max-w-sm px-5 mb-3" src={image} alt="Album" />
 
-          <div class="px-5">
-            <h2 class="card-title mb-2 text-primary font-bold">{name}</h2>
+          <div className="px-5">
+            <h2 className="card-title mb-2 text-primary font-bold">{name}</h2>
             <p className="font-light">{details}</p>
             <div className="flex flex-col">
               <span className="text-lg text-primary ">
@@ -82,23 +84,26 @@ const Purchase = () => {
               </h2>
               <hr />
              
-                <label class="label">
-                  <span class="label-text">Your Order Amount</span>
+                <label className="label">
+                  <span className="label-text">Your Order Amount</span>
                 </label>
                 <input
                   type="number"
                   placeholder="Amount quantity"
-                  class="input input-bordered w-full max-w-xs"
+                  className="input input-bordered w-full max-w-xs"
                   value={yourQuantity}
                   onChange={handleQuntity}
                 />
-                <p className="mt-2 font-bold text-primary">Total Price : {yourQuantity * parseInt(price)} </p>
+                <p className="mt-2 font-bold text-primary">Total Price : {totalPrice} </p>
             
             </div>
             <p className="text-xl text-secondary">{parsesError}</p>
-            <div class="flex pb-5 justify-end">
-              <label for="my-modal-6" class={parsesError ? "btn bg-slate-400 font-bold text-white pointer-events-none  " : "btn btn-secondary font-bold text-white "}>Buy Now</label>
-              <BuyModal yourQuantity={yourQuantity} price={price} />
+            <div className="flex pb-5 justify-end">
+              <label htmlFor="my-modal-6" className={parsesError ? "btn bg-slate-400 font-bold text-white pointer-events-none  " : "btn btn-secondary font-bold text-white "}>Buy Now</label>
+              {
+                singleData?._id &&
+              <BuyModal yourQuantity={yourQuantity} price={totalPrice} setSingleData={setSingleData} />
+              }
             </div>
           </div>
         </div>

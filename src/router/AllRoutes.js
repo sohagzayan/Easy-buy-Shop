@@ -13,6 +13,7 @@ import MyOrder from "../DashBoart/MyOrder";
 import MyProfile from "../DashBoart/MyProfile";
 import Payment from "../DashBoart/Payment";
 import Blogs from "../pages/Blogs";
+import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import MyProtFolio from "../pages/MyProtFolio";
@@ -26,6 +27,7 @@ const AllRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/myProtFolio" element={<MyProtFolio />} />
       <Route path="/dashBoart" element={ <PrivateAdmin><DashBoart /></PrivateAdmin>} >

@@ -4,9 +4,9 @@ import Signature from "../../assets/images/Signature.png";
 
 const Capabilities = () => {
   return (
-    <div class="hero mt-10 ">
-      <div class="hero-content flex-col lg:flex-row-reverse">
-        <img src={cappabolitis} class="max-w-lg rounded-lg " alt="img"/>
+    <div className="hero mt-10 ">
+      <div className="hero-content flex-col lg:flex-row-reverse">
+        <img src={cappabolitis} className="md:max-w-lg max-w-sm rounded-lg " alt="img"/>
         <div>
           <h2 className="text-3xl mb-3 font-bold text-secondary">Our Capabilities</h2>
           <p className="text-md mb-3">

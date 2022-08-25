@@ -65,7 +65,7 @@ const Reviews = ({ item }) => {
             </div>
           </div>
           <div>
-            <div class="rating">
+            <div className="rating">
               {
                 GetRating(ratingParse)
               }

@@ -55,37 +55,37 @@ const onSubmit = async (data) => {
     <>
       <Headers />
       <div className="my-10">
-        <div class="hero ">
-          <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Sign Up Now</h1>
-              <p class="py-6">
+        <div className="hero ">
+          <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="text-center flex flex-col items-center">
+              <h1 className="text-5xl font-bold">Sign Up Now</h1>
+              <p className="py-6">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem
               </p>
               <img width="200px" src={addUserIcons} alt="" />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-              <div class="card-body">
+            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+              <div className="card-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <input
                     type="text"
                     placeholder="Your Name"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    className="input input-bordered w-full mb-2 focus:outline-secondary"
                     {...register("username")}
                   />
                      <p className=" text-secondary">{errors.username?.message}</p>
                      <input
                     type="text"
                     placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    className="input input-bordered w-full mb-2 focus:outline-secondary"
                     {...register("email")}
                   />
                     <p className=" text-secondary">{errors.email?.message}</p>
                      <input
                     type="text"
                     placeholder="Conform password"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    className="input input-bordered w-full mb-2 focus:outline-secondary"
                     {...register("password")}
 
                   />
@@ -101,14 +101,14 @@ const onSubmit = async (data) => {
                     {...register("ConformPassword")}
                   />
                      <p className=" text-secondary">{errors.password?.message}</p>
-                  <label class="label">
-                    <a href="#" class="label-text-alt link link-hover">
+                  <label className="label">
+                    <a href="#" className="label-text-alt link link-hover">
                       Forgot password?
                     </a>
                   </label>
                   <p className="text-secondary text-sm">{error}</p>
-                <div class="form-control mt-2">
-                  <button class="btn btn-primary text-white">Sign Up</button>
+                <div className="form-control mt-2">
+                  <button className="btn btn-primary text-white">Sign Up</button>
                 </div>
                 </form>
                 <div className="w-[300px]">

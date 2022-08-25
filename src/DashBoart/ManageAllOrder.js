@@ -18,7 +18,7 @@ const ManageAllOrder = () => {
   
   console.log(manageOrder);
     return (
-        <table className='px-4 mt-5'>
+        <table className=''>
         <tr>
           <th>Date</th>
           <th>Price</th>

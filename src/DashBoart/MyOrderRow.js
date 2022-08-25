@@ -13,6 +13,7 @@ const MyOrderRow = ({ order }) => {
     _id,
     payed,
     transactionId,
+    
   } = order;
 
   const handleDeleteProduct = ()=>{
@@ -49,7 +50,12 @@ const MyOrderRow = ({ order }) => {
       <td>{email}</td>
       <td>{transactionId}</td>
       <td>
-        <button onClick={handleDeleteProduct} className="text-secondary mr-2 cursor-pointer ">Cancel</button>
+        {
+          payed ?
+          null
+          :
+          <button onClick={handleDeleteProduct} className="text-secondary mr-2 cursor-pointer ">Cancel</button>
+        }
         {payed ? (
           <span className=" cursor-pointer font-bold text-green-400">
             Payed

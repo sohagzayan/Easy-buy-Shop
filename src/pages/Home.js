@@ -4,6 +4,7 @@ import Capabilities from "../components/Capabilities/Capabilities";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
+import OpeningTable from "../components/OpaningTable/OpaingTable";
 import OurParts from "../components/OurParts/OurParts";
 import OurReviewPart from "../components/OurReviewPart/OurReviewPart";
 
@@ -27,6 +28,7 @@ const Home = () => {
         {/* <OurReview /> */}
         <OurReviewPart />
         <Capabilities />
+        <OpeningTable />
         <Footer />
       </div>
     </div>

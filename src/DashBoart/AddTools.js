@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import swal from "sweetalert";
 
 const AddTools = () => {
   const [name, setName] = useState("");
@@ -8,14 +9,9 @@ const AddTools = () => {
   const [price, setPrice] = useState("");
   const [minimumOrder, setMinimumOrder] = useState("");
   const [file, setFile] = useState(null);
-  const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/"
+  const [toolsImage , setToolsImage] = useState('')
+  const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/";
 
-  
-
-
-
-
-  
   const handleUser = async (e) => {
     e.preventDefault();
     const newPost = {
@@ -23,32 +19,40 @@ const AddTools = () => {
       details,
       quantity,
       price,
-      minimumOrder
+      minimumOrder,
+      image : toolsImage
     };
     if (file) {
-   
       const data = new FormData();
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file", file);
-      newPost.image = fileName;
+      // newPost.image = fileName;
 
       try {
-  
-        const imgInfo = await axios.post("https://tranquil-shelf-42201.herokuapp.com/upload", data);
+        const imgInfo = await axios.post(
+          "https://tranquil-shelf-42201.herokuapp.com/upload",
+          data
+        );
       } catch (error) {
-       console.log(error) 
+        console.log(error);
       }
     }
 
     try {
-      const data = await axios.post("https://tranquil-shelf-42201.herokuapp.com/api/tools", newPost);
+      const data = await axios.post(
+        "https://tranquil-shelf-42201.herokuapp.com/api/tools",
+        newPost
+      );
       setFile(null);
-      setName('')
-      setDetails('')
-      setQuantity('')
-      setPrice('')
-      setMinimumOrder('')
+      setName("");
+      setDetails("");
+      setQuantity("");
+      setPrice("");
+      setMinimumOrder("");
+      setToolsImage("")
+      swal("Add Tools SuccessFull");
+
     } catch (error) {
       console.log(error);
     }
@@ -57,25 +61,25 @@ const AddTools = () => {
     <div>
       <div>
         <div>
-          <div class="hero mt-10">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-              <div class="text-center lg:text-left">
-                <h1 class="text-4xl font-bold">Add Products/tools</h1>
-                <p class="py-3">
+          <div className="hero mt-10">
+            <div className="hero-content flex-col lg:flex-row-reverse">
+              <div className="text-center lg:text-left">
+                <h1 className="text-4xl font-bold">Add Products/tools</h1>
+                <p className="py-3">
                   excepturi exercitationem quasi. In deleniti eaque aut
                   repudiandae et a id nisi.
                 </p>
               </div>
-              <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                <div class="card-body">
-                {/* <img width="300px" src={item ? MF + item.image : null } alt="" /> */}
+              <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <div className="card-body">
+                  {/* <img width="300px" src={item ? MF + item.image : null } alt="" /> */}
                   <form onSubmit={handleUser}>
-                  <input required className="mb-4" type="file" onChange={(e)=> setFile(e.target.files[0])} />
+                 
                     <input
                       required
                       type="text"
                       placeholder="Title"
-                      class="input w-full mb-2 input-bordered"
+                      className="input w-full mb-2 input-bordered"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
@@ -83,7 +87,7 @@ const AddTools = () => {
                       required
                       type="number"
                       placeholder="Minimum Order Quantity"
-                      class="input w-full mb-2 input-bordered"
+                      className="input w-full mb-2 input-bordered"
                       value={minimumOrder}
                       onChange={(e) => setMinimumOrder(e.target.value)}
                     />
@@ -91,30 +95,38 @@ const AddTools = () => {
                       required
                       type="number"
                       placeholder="Available Quantity"
-                      class="input w-full mb-2 input-bordered"
+                      className="input w-full mb-2 input-bordered"
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                     />
                     <input
-                       required
+                      required
                       type="number"
                       placeholder="Price"
-                      class="input w-full mb-2 input-bordered"
+                      className="input w-full mb-2 input-bordered"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                     />
+                    <input
+                      required
+                      className="input w-full mb-2 input-bordered"
+                      type="text"
+                      placeholder="Image link Here"
+                      onChange={(e) => setToolsImage(e.target.value)}
+                      value={toolsImage}
+                    />
+                    
                     <textarea
                       required
-                      class="textarea textarea-secondary w-full"
+                      className="textarea textarea-secondary w-full"
                       placeholder="Bio"
                       value={details}
-                      onChange={(e)=>setDetails(e.target.value)}
+                      onChange={(e) => setDetails(e.target.value)}
                     ></textarea>
-                     <button class="btn btn-secondary text-white">
+                    <button className="btn btn-secondary text-white">
                       ADD PRODUCT
                     </button>
                   </form>
-             
                 </div>
               </div>
             </div>
@@ -126,3 +138,6 @@ const AddTools = () => {
 };
 
 export default AddTools;
+
+
+

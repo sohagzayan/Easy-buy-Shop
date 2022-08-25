@@ -4,11 +4,12 @@ const OurPartsProducts = ({ item }) => {
   const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/"
 
   const { image , name , details , price , quantity , minimumOrder  , _id} = item;
+  console.log(image);
   return (
     <div className="bg-base-100 border-2 rounded-2xl shadow-lg">
       <div className="p-4 flex flex-col justify-between items-center">
         <div style={{height : '300px', overflow : 'hidden'}} className="mb-3">
-          <img className="max-w-sm" src={image ? MF + image : null} alt="" />
+          <img className="max-w-sm" src={image} alt="imges" />
           {/* <img className="w-sm" src={image} alt="" /> */}
         </div>
         <div>

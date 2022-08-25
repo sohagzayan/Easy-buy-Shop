@@ -67,19 +67,36 @@ const OurReviewPart = () => {
           Our Clients Reviews
         </h2>
         <p className="text-sm text-primary mb-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
-          harum?
+        The solution for reliable & honest feedback
         </p>
 
         <Swiper
           spaceBetween={40}
           slidesPerView={3}
+          breakpoints={{
+            300: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 40,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 50,
+            },
+          }}
           onSlideChange={() => ("slide change")}
           onSwiper={(swiper) => (swiper)}
         >
-          {reviewsData?.map((item) => (
-            <SwiperSlide>
-              <Reviews item={item} />{" "}
+          {reviewsData?.map((item , index) => (
+            <SwiperSlide key={index}>
+              <Reviews item={item} />
             </SwiperSlide>
           ))}
         </Swiper>

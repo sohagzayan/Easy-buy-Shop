@@ -52,8 +52,8 @@ const MakeAdminRow = ({user , refetch}) => {
         <td>{date}</td>
         <td>{email}</td>
         <td>{role}</td>
-        <td onClick={makeAdmin}><button class="btn btn-sm bg-primary border-primary text-white">{role === 'admin' ? "Make User😑" : "Make Admin🦾"}</button></td>
-        <td ><button onClick={handleDeleteUser} class="btn bg-secondary border-secondary btn-xs text-white">Delete</button></td>
+        <td onClick={makeAdmin}><button className="btn btn-sm bg-primary border-primary text-white">{role === 'admin' ? "Make User😑" : "Make Admin🦾"}</button></td>
+        <td ><button onClick={handleDeleteUser} className="btn bg-secondary border-secondary btn-xs text-white">Delete</button></td>
        
       </tr>
     );

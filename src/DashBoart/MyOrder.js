@@ -26,12 +26,12 @@ const MyProducts = () => {
         }
       })
       .then((data) => setMyOrder(data));
-  }, [username , myOrder]);
+  }, [username , myOrder , logOut , navigate]);
 
   return (
     <div className="p-4 mt-5">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>

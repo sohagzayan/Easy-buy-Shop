@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import * as yup from "yup";
 import { useAuthContext } from "../../context/AuthContextProvider";
 
-const BuyModal = ({yourQuantity , price}) => {
+const BuyModal = ({yourQuantity , price , setSingleData}) => {
   const formattedDate = format(new Date() , 'PP')
   const [orderAmount , setOrderAmount] = useState(0)
   const { username } = useAuthContext();
@@ -36,26 +36,27 @@ const BuyModal = ({yourQuantity , price}) => {
     };
     await axios.post(`https://tranquil-shelf-42201.herokuapp.com/api/purchase`, purchaseData);
     swal("Your Order Success");
+    setSingleData({})
   };
   return (
     <>
-      <input type="checkbox" id="my-modal-6" class="modal-toggle" />
-      <div class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box">
+      <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <div className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
           <label
-            for="my-modal-6"
-            class="btn btn-sm btn-circle btn-secondary absolute right-2 top-2"
+            htmlFor="my-modal-6"
+            className="btn btn-sm btn-circle btn-secondary absolute right-2 top-2"
           >
             ✕
           </label>
-          <h3 class="font-bold text-lg mb-5">Conform Your Order Please </h3>
+          <h3 className="font-bold text-lg mb-5">Conform Your Order Please </h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
             required
               type="text"
               placeholder="Name"
               value={username.displayName}
-              class="input mb-3 input-bordered input-secondary w-full "
+              className="input mb-3 input-bordered input-secondary w-full "
               {...register("name")}
             />
             <p className=" text-secondary">{errors.Name?.message}</p>
@@ -64,7 +65,7 @@ const BuyModal = ({yourQuantity , price}) => {
               type="text"
               placeholder="Email"
               value={username.email}
-              class="input mb-3 input-bordered input-secondary w-full"
+              className="input mb-3 input-bordered input-secondary w-full"
               {...register("email")}
             />
             <p className=" text-secondary">{errors.email?.message}</p>
@@ -73,7 +74,7 @@ const BuyModal = ({yourQuantity , price}) => {
             required
               type="text"
               placeholder="Address"
-              class="input mb-3 input-bordered input-secondary w-full "
+              className="input mb-3 input-bordered input-secondary w-full "
               {...register("address")}
             />
             <p className=" text-secondary">{errors.address?.message}</p>
@@ -82,7 +83,7 @@ const BuyModal = ({yourQuantity , price}) => {
             required
               type="text"
               placeholder="Phone Number"
-              class="input mb-3 input-bordered input-secondary w-full "
+              className="input mb-3 input-bordered input-secondary w-full "
               {...register("phoneNumber")}
             />
             <p className=" text-secondary">{errors.phoneNumber?.message}</p>

@@ -29,24 +29,24 @@ const ManageAllProdutsCard = ({data}) => {
     }
   return (
     <div className="mb-6">
-      <div class="card card-side flex md:flex-row flex-col bg-base-100 shadow-xl">
+      <div className="card card-side flex md:flex-row flex-col bg-base-100 shadow-xl">
        
           <img
            width="200px"
-            src={image ? MF + image : null}
+            src={image}
             alt="Movie"
           />
    
-        <div class="card-body">
-          <h2 class="card-title">{name}</h2>
+        <div className="card-body">
+          <h2 className="card-title">{name}</h2>
           <p>{details}</p>
           <span>Price : {price}</span>
-          <div class="card-actions justify-end">
+          <div className="card-actions justify-end">
           <div className="flex flex-col">
           <span>Available : {quantity}</span>
           <span>MinimumOrder : {minimumOrder}</span>
           </div>
-            <button onClick={handleDeleteProducts} class="btn btn-secondary text-white items-center">DELETE</button>
+            <button onClick={handleDeleteProducts} className="btn btn-secondary text-white items-center">DELETE</button>
           </div>
         </div>
       </div>
