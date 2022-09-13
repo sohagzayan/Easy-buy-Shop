@@ -10,12 +10,15 @@ const MyProducts = () => {
   const { username } = useAuthContext();
 
   useEffect(() => {
-    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase?email=${username.email}`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://tranquil-shelf-42201.herokuapp.com/api/purchase?email=${username.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => {
         if (res.status === 401 || res.status === 403) {
           logOut();
@@ -26,29 +29,27 @@ const MyProducts = () => {
         }
       })
       .then((data) => setMyOrder(data));
-  }, [username , myOrder]);
+  }, [username, myOrder]);
 
   return (
-    <div className="p-4 mt-5">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Date</th>
-              <th>Total price</th>
-              <th>email</th>
-              <th>Trazation ID</th>
-              <th>action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {myOrder.map((order) => (
-              <MyOrderRow order={order} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div class="table-wrapper">
+      <table class="fl-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Total Price</th>
+            <th>Email</th>
+            <th>TRAZATION ID</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {myOrder.map((order) => (
+            <MyOrderRow order={order} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

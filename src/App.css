@@ -1,5 +1,5 @@
 .hero-wrapper {
-  background-image: url("./assets/images/bg.png");
+  background-image: linear-gradient(to left, #383459, 20%, #101126);
   width: 100%;
   position: relative;
 }
@@ -45,4 +45,55 @@ tr:nth-child(even) {
 }
 .iconsStar .in-hover {
   color: rgba(255, 207, 135, 0.3);
+}
+
+/* fashion */
+
+.fashion {
+  position: relative;
+  overflow: hidden;
+}
+.inner {
+  transition: all 0.7s ease-in;
+}
+.fashion:hover > .inner {
+  transform: scale(1.1);
+  transition: all 0.7s ease-in;
+}
+.fashion:hover:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #09be8b;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transform: scale(0.4);
+  opacity: 0;
+  transition: all 1s linear;
+
+  animation: fashionAnimation 1.5s ease-in forwards;
+}
+
+.repair {
+  background-image: url("./assets/images/banner.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@keyframes fashionAnimation {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(7);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
 }

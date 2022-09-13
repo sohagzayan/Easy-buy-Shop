@@ -36,26 +36,24 @@ const MakeAdmin = () => {
   }
 
   return (
-    <div className="px-4 mt-6">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Date</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Make Admin</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUser?.map((user , index) => (
-              <MakeAdminRow key={index} refetch={refetch} user={user} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div class="table-wrapper">
+      <table class="fl-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Make Admin</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allUser?.map((user, index) => (
+            <MakeAdminRow key={index} refetch={refetch} user={user} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

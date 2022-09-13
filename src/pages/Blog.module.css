@@ -1,0 +1,21 @@
+.blogCard {
+  width: 100%;
+  height: 270px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 15px 15px 0 0;
+}
+
+.blogCard1 {
+  background-image: url("../assets/images/blog-4_239ddfeb-e121-41e1-bda0-5516ce719db3.webp");
+}
+.blogCard2 {
+  background-image: url("../assets/images/blog-6_76123683-3079-43db-8bf6-599d685995f2.webp");
+}
+.blogCard3 {
+  background-image: url("../assets/images/home2-banner7.webp");
+}
+.blogCard4 {
+  background-image: url("../assets/images/home2-banner6.webp");
+}

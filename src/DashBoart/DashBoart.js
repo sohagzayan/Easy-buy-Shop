@@ -2,9 +2,9 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
+import Table from "../components/Table/Table";
 import { useAuthContext } from "../context/AuthContextProvider";
 import useAdmin from "../hock/useAdmin";
-
 const DashBoart = () => {
   const { username } = useAuthContext();
   const [admin] = useAdmin(username);
@@ -17,10 +17,11 @@ const DashBoart = () => {
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col ">
           <Outlet />
+          {/* <Table /> */}
         </div>
         <div class="drawer-side">
-          <label for="my-drawer-2" class="drawer-overlay"></label>
-          <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+          <label for="my-drawer-2 " class="drawer-overlay"></label>
+          <ul class="menu p-4 overflow-y-auto w-60 bg-own-ternary text-own-white">
             <li>
               <NavLink to="myProfile">My Profile</NavLink>
             </li>
@@ -60,7 +61,7 @@ const DashBoart = () => {
           </ul>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

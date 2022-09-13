@@ -1,22 +1,21 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import swal from 'sweetalert';
-import * as yup from 'yup';
+import swal from "sweetalert";
+import * as yup from "yup";
 import addUserIcons from "../assets/icons/add-user.png";
 import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
-import { useAuthContext } from '../context/AuthContextProvider';
-import useToken from '../hock/useToken';
-
+import { useAuthContext } from "../context/AuthContextProvider";
+import useToken from "../hock/useToken";
 
 const SignUp = () => {
-  const [error , setError] = useState('')
-  const {username , sinUp , googleLogin} = useAuthContext()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || '/';
+  const [error, setError] = useState("");
+  const { username, sinUp, googleLogin } = useAuthContext();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   let schema = yup.object().shape({
     username: yup.string().required(),
@@ -25,32 +24,34 @@ const SignUp = () => {
     email: yup.string().required("Please enter your email !").email(),
   });
 
-const {register, formState: { errors }, handleSubmit,} = useForm({resolver: yupResolver(schema),});
-  
-const [toekn] = useToken(username)
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) });
 
+  const [toekn] = useToken(username);
 
-const onSubmit = async (data) => {
-  const { username, email, password, firstName, ConformPassword } = data
-    if(password === ConformPassword){
+  const onSubmit = async (data) => {
+    const { username, email, password, firstName, ConformPassword } = data;
+    if (password === ConformPassword) {
       try {
-        await sinUp(email , password , username )
+        await sinUp(email, password, username);
         navigate("/login");
-        setError('')
+        setError("");
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
-    }else{
-      setError("Your password and  conform password don't match")
+    } else {
+      setError("Your password and  conform password don't match");
       swal("Your password and  conform password don't match!");
-
     }
   };
 
-  const handleGoogleLogin = async()=>{
-    await googleLogin()
+  const handleGoogleLogin = async () => {
+    await googleLogin();
     // navigate("/login");
-  }
+  };
   return (
     <>
       <Headers />
@@ -58,68 +59,75 @@ const onSubmit = async (data) => {
         <div class="hero ">
           <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Sign Up Now</h1>
-              <p class="py-6">
+              <h1 class="text-5xl font-bold text-own-primary">Sign Up Now</h1>
+              <p class="py-6 text-own-text">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem
               </p>
               <img width="200px" src={addUserIcons} alt="" />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-own-ternary">
               <div class="card-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <input
                     type="text"
                     placeholder="Your Name"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary mb-3"
                     {...register("username")}
                   />
-                     <p className=" text-secondary">{errors.username?.message}</p>
-                     <input
+                  <p className=" text-secondary">{errors.username?.message}</p>
+                  <input
                     type="text"
                     placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary mb-3"
                     {...register("email")}
                   />
-                    <p className=" text-secondary">{errors.email?.message}</p>
-                     <input
+                  <p className=" text-secondary">{errors.email?.message}</p>
+                  <input
                     type="text"
                     placeholder="Conform password"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary mb-3"
                     {...register("password")}
-
                   />
-                     <p className=" text-secondary">{errors.ConformPassword?.message}</p>
-                
-                
-         
+                  <p className=" text-secondary">
+                    {errors.ConformPassword?.message}
+                  </p>
+
                   <input
-                   
                     type="text"
                     placeholder="password"
-                    className="input  input-bordered w-full mb-2 focus:outline-secondary"
+                    className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary "
                     {...register("ConformPassword")}
                   />
-                     <p className=" text-secondary">{errors.password?.message}</p>
+                  <p className=" text-secondary">{errors.password?.message}</p>
                   <label class="label">
                     <a href="#" class="label-text-alt link link-hover">
                       Forgot password?
                     </a>
                   </label>
                   <p className="text-secondary text-sm">{error}</p>
-                <div class="form-control mt-2">
-                  <button class="btn btn-primary text-white">Sign Up</button>
-                </div>
+                  <div class="form-control mt-2">
+                    <button class="bg-own-primary text-own-white py-2 rounded-md text-white mb-3">
+                      Sign Up
+                    </button>
+                  </div>
                 </form>
                 <div className="w-[300px]">
                   <GoogleButton
-                 style={{width : "320px"}}
-                 className="rounded-lg"
+                    style={{ width: "320px" }}
+                    className="rounded-lg"
                     onClick={handleGoogleLogin}
                   />
                 </div>
-                <p>AlReady Have a Account ? <NavLink className="text-secondary font-bold text-lg" to="/login">Login</NavLink></p>
-
+                <p className="text-own-white">
+                  AlReady Have a Account ?{" "}
+                  <NavLink
+                    className="text-own-primary font-bold text-lg"
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </p>
               </div>
             </div>
           </div>

@@ -56,27 +56,27 @@ const SignUp = () => {
         <div class="hero ">
           <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Login Now</h1>
-              <p class="py-6">
+              <h1 class="text-5xl font-bold text-own-primary ">Login Now</h1>
+              <p class="py-6 text-own-text">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem
               </p>
               <img width="200px" src={keyImage} alt="" />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-own-ternary">
               <div class="card-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <input
                     type="text"
                     placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-primary mb-3"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
                   <input
                     type="text"
-                    placeholder="password"
-                    class="input input-bordered w-full focus:outline-secondary"
+                    placeholder="Password"
+                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary"
                     {...register("password")}
                   />
                   <p className=" text-secondary">{errors.password?.message}</p>
@@ -88,7 +88,9 @@ const SignUp = () => {
                   <p className="text-secondary text-sm">{error}</p>
 
                   <div class="form-control mt-2">
-                    <button class="btn btn-primary text-white ">Login</button>
+                    <button class=" bg-own-primary text-own-white py-2 rounded-md text-white ">
+                      Login
+                    </button>
                   </div>
                 </form>
 
@@ -99,10 +101,10 @@ const SignUp = () => {
                     onClick={handleLoginWithGoogle}
                   />
                 </div>
-                <p>
+                <p className="text-own-white">
                   Not Have a account ?{" "}
                   <NavLink
-                    className="text-secondary font-bold text-lg"
+                    className="text-own-primary font-bold text-lg"
                     to="/SignUp"
                   >
                     SignUp
