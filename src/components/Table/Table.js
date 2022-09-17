@@ -1,8 +1,8 @@
 import React from "react";
 const Table = () => {
   return (
-    <div class="table-wrapper">
-      <table class="fl-table">
+    <div className="table-wrapper">
+      <table className="fl-table">
         <thead>
           <tr>
             <th>Header 1</th>

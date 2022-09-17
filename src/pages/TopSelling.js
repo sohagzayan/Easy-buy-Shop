@@ -12,13 +12,11 @@ const TopSelling = () => {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () =>
-    axios.get(`https://tranquil-shelf-42201.herokuapp.com/api/tools`)
-  );
-
+  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
   if (isLoading) {
     return <Loading />;
   }
+
   return (
     <>
       <Header />
@@ -35,9 +33,7 @@ const TopSelling = () => {
           </div>
           <div className="flex justify-around sm:flex-row flex-col  items-center ">
             <div>
-              <label htmlFor="" className="text-own-white mr-2">
-                Sort By :
-              </label>
+              <label className="text-own-white mr-2">Sort By :</label>
               <select
                 name=""
                 id=""

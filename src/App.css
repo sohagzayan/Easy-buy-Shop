@@ -97,3 +97,31 @@ tr:nth-child(even) {
     opacity: 0;
   }
 }
+
+.modal {
+  background-color: #383459 !important;
+  color: white !important;
+}
+
+/* login */
+
+.login {
+  background-image: url("./assets/login bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  position: relative;
+}
+.login::after {
+  content: "";
+  position: absolute;
+  background-image: linear-gradient(to right, #272a37, #272a37, 85%, #282a376c);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* z-index: 10; */
+}

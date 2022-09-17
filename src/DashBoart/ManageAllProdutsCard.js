@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import swal from "sweetalert";
-const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/";
+const MF = "http://localhost:5000/upload/";
 const ManageAllProdutsCard = ({ data }) => {
   const { image, name, price, details, minimumOrder, quantity, _id } = data;
   console.log(data);
@@ -18,9 +18,7 @@ const ManageAllProdutsCard = ({ data }) => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        axios.delete(
-          `https://tranquil-shelf-42201.herokuapp.com/api/tools/${_id}`
-        );
+        axios.delete(`http://localhost:5000/api/tools/${_id}`);
       } else {
         swal("Your imaginary file is safe!");
       }

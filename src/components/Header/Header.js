@@ -1,12 +1,18 @@
+import Cookies from "js-cookie";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import Icons from "../.././assets/icons/guarantee.png";
 import { useAuthContext } from "../../context/AuthContextProvider";
+import { useCurrentUserQuery } from "../../store/API/user";
 
 const Header = () => {
   const { username, logOut } = useAuthContext();
+  const usernames = true;
   const navigate = useNavigate();
+  const userid = Cookies.get("id");
+  const response = useCurrentUserQuery(userid);
+  console.log(response?.data?.status === "success");
 
   const handleLogout = async () => {
     swal({
@@ -20,7 +26,8 @@ const Header = () => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        logOut();
+        Cookies.remove("id");
+        Cookies.remove("access");
         localStorage.removeItem("accessToken");
         navigate("/login");
       } else {
@@ -30,30 +37,30 @@ const Header = () => {
   };
 
   return (
-    <div class="shadow-sm  sticky top-0 z-50 bg-[#101126]">
+    <div className="shadow-sm  sticky top-0 z-50 bg-[#101126]">
       <div className="navbar   container mx-auto">
-        <div class="navbar-start">
-          <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost lg:hidden">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex="0" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-secondary"
+                className="h-5 w-5 text-secondary"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
               </svg>
             </label>
 
             <ul
-              tabindex="0"
-              class="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              tabIndex="0"
+              className="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
                 <NavLink to="/">Homes</NavLink>
@@ -64,55 +71,93 @@ const Header = () => {
               <li>
                 <NavLink to="/myProtFolio">My Portfolio</NavLink>
               </li>
-              {username && (
-                <li>
-                  <NavLink to="/dashBoart">DashBoart</NavLink>
-                </li>
-              )}
+              <li>
+                <NavLink to="/dashBoart">DashBoart</NavLink>
+              </li>
             </ul>
           </div>
           <a
-            class="btn btn-ghost normal-case text-xl text-own-white font-semibold"
+            className="btn btn-ghost normal-case text-xl text-own-white font-semibold"
             href="/"
           >
             <img width="25px" className="mr-2" src={Icons} alt="icons" />{" "}
             Quality <span className="text-own-secondary">C</span> ookie
           </a>
         </div>
-        <div class="navbar-center hidden lg:flex">
-          <ul class="  menu-horizontal p-0">
+        <div className="navbar-center hidden lg:flex">
+          <ul className="  menu-horizontal p-0">
             <li className="text-own-white px-3 font-semibold ">
-              <NavLink to="/">Home</NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                Home
+              </NavLink>
             </li>
             <li className="text-own-white px-3 font-semibold ">
-              <NavLink to="/topselling">Top Selling</NavLink>
+              <NavLink
+                to="/topselling"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                Top Selling
+              </NavLink>
             </li>
             <li className="text-own-white px-3 font-semibold ">
-              <NavLink to="/blogs">Blogs</NavLink>{" "}
+              <NavLink
+                to="/blogs"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                Blogs
+              </NavLink>{" "}
             </li>
             <li className="text-own-white  px-3 font-semibold ">
-              <NavLink to="/repair">Repair</NavLink>
+              <NavLink
+                to="/repair"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                Repair
+              </NavLink>
             </li>
             <li className="text-own-white  px-3 font-semibold ">
-              <NavLink to="/bookmark">Bookmark</NavLink>
+              <NavLink
+                to="/bookmark"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                Bookmark
+              </NavLink>
             </li>
 
-            {username && (
-              <li className="text-own-white px-3 font-semibold ">
-                <NavLink to="/dashBoart">DashBoart</NavLink>
-              </li>
-            )}
+            <li className="text-own-white px-3 font-semibold ">
+              <NavLink
+                to="/dashBoart"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : " "
+                }
+              >
+                DashBoart
+              </NavLink>
+            </li>
           </ul>
         </div>
-        <div class="navbar-end">
+        <div className="navbar-end">
           <div>
             <label
-              for="my-drawer-2"
-              class="px-5 py-2 swap drawer-button lg:hidden swap-rotate"
+              htmlFor="my-drawer-2"
+              className="px-5 py-2 swap drawer-button lg:hidden swap-rotate"
             >
               <input type="checkbox" />
               <svg
-                class="swap-off fill-current"
+                className="swap-off fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
                 height="32"
@@ -122,7 +167,7 @@ const Header = () => {
               </svg>
 
               <svg
-                class="swap-on fill-current"
+                className="swap-on fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
                 height="32"
@@ -132,7 +177,7 @@ const Header = () => {
               </svg>
             </label>
           </div>
-          {username ? (
+          {response?.data?.status === "success" ? (
             <div>
               <span
                 onClick={handleLogout}

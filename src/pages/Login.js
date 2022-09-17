@@ -1,46 +1,87 @@
+/* External Import */
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import * as yup from "yup";
-import keyImage from "../assets/icons/key.png";
+import axios from "axios";
+import cookie from "js-cookie";
+/* Internal Import */
+import React, { useState } from "react";
 import Footer from "../components/Footer/Footer";
+import keyImage from "../assets/icons/key.png";
 import Headers from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
 import useToken from "../hock/useToken";
-const SignUp = () => {
-  const [error, setError] = useState("");
-  const { login, googleLogin, username } = useAuthContext();
+import { useCurrentUserQuery } from "../store/API/user";
+import Cookies from "js-cookie";
+import { GrFacebookOption } from "react-icons/gr";
+import { FcGoogle } from "react-icons/fc";
 
+const SignUp = () => {
+  /* Hocks  */
+  const { login, googleLogin, username } = useAuthContext();
+  const [token, isLoading] = useToken(username);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  /* Orders  */
   const from = location.state?.from?.pathname || "/";
+  const accessToken = Cookies.get("access");
+  const userId = Cookies.get("id");
+  const response = useCurrentUserQuery(userId);
+  console.log(response);
 
-  const [token, isLoading] = useToken(username);
-
+  /* Form validation Yap schema  */
   let schema = yup.object().shape({
     password: yup.string().required().min(6).max(20),
     email: yup.string().required("Please enter your email !").email(),
   });
 
+  /* Form validation Yap Resolver  */
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
+
+  /** Login User Handler */
   const onSubmit = async (data) => {
-    const { username, email, password, firstName, ConformPassword } = data;
+    const { email, password } = data;
+
+    const url = "http://localhost:5000/api/user/login";
     try {
-      await login(email, password);
-      swal("Good job!", "Your Login success!", "success");
+      await axios
+        .post(url, { email, password })
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === 500) {
+            if (
+              res.data.message ===
+              "Pleace Verify Your Account then again try to login"
+            ) {
+              console.log("verify ---");
+              swal("Please verify your account and try again");
+            }
+            console.log("still Error");
+          } else {
+            cookie.set("token", res.data.Access_Token);
+            cookie.set("id", res.data.userId);
+            console.log("not Error");
+          }
+        })
+        .catch((error) => console.log(error));
 
       setError("");
     } catch (error) {
+      if (error.message) {
+        console.log(error.message);
+      }
       setError(error.message);
     }
   };
+
   const handleLoginWithGoogle = async () => {
     await googleLogin();
     // navigate(from , {replace : true})
@@ -49,73 +90,99 @@ const SignUp = () => {
   if (token) {
     navigate(from, { replace: true });
   }
+
   return (
     <>
       <Headers />
-      <div className="my-10">
-        <div class="hero ">
-          <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold text-own-primary ">Login Now</h1>
-              <p class="py-6 text-own-text">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem
-              </p>
-              <img width="200px" src={keyImage} alt="" />
-            </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-own-ternary">
-              <div class="card-body">
+      <div className="">
+        <div className="login">
+          <div className="relative">
+            <p className="text-own-white absolute top-2 right-5 z-10">
+              Not a member?{" "}
+              <NavLink
+                className="text-own-primary font-bold text-lg"
+                to="/SignUp"
+              >
+                Sign up now
+              </NavLink>
+            </p>
+            <div className=" sm:w-[60%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
+              <div className=" z-20 relative">
+                <h2 className="text-own-white font-semibold text-3xl mb-3">
+                  Sign in to QualityCookie
+                </h2>
+                <div className="flex sm:flex-row flex-col sm:items-center mb-5">
+                  <button
+                    className=" bg-[#1a73e8] text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
+                    onClick={handleLoginWithGoogle}
+                  >
+                    <span className="block">Sign In Your Google Account</span>
+                    <span className="block bg-own-white text-2xl py-2 px-3 rounded-r-md">
+                      <FcGoogle className="" />
+                    </span>
+                  </button>
+                  <a
+                    href=""
+                    className="bg-[#1a73e8] p-2 rounded-md sm:inline-block hidden"
+                  >
+                    <GrFacebookOption className="text-own-white text-2x " />
+                  </a>
+                  <a href="">
+                    <span className="sm:hidden inline-block text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
+                      Facebook
+                    </span>
+                  </a>
+                </div>
+                <div class="flex flex-col w-full]">
+                  <div class="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary">
+                    OR
+                  </div>
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                  <label htmlFor="" className="text-own-white mb-1">
+                    Username or Email Address
+                  </label>
                   <input
                     type="text"
                     placeholder="email"
-                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-primary mb-3"
+                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-3"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="" className="text-own-white">
+                      Password
+                    </label>
+                    <label className=" inline-block">
+                      <a href="/" className=" text-own-primary">
+                        Forgot password?
+                      </a>
+                    </label>
+                  </div>
                   <input
                     type="text"
                     placeholder="Password"
-                    class="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary w-full focus:outline-own-secondary"
+                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light"
                     {...register("password")}
                   />
                   <p className=" text-secondary">{errors.password?.message}</p>
-                  <label class="label">
-                    <a href="/" class="label-text-alt link link-hover">
-                      Forgot password?
-                    </a>
-                  </label>
+
                   <p className="text-secondary text-sm">{error}</p>
 
-                  <div class="form-control mt-2">
-                    <button class=" bg-own-primary text-own-white py-2 rounded-md text-white ">
-                      Login
+                  <div className=" mt-2">
+                    <button className=" bg-own-primary text-own-white py-2 rounded-md text-white px-24 mt-3 ">
+                      Sign In
                     </button>
                   </div>
                 </form>
 
-                <div className="w-[300px]">
-                  <GoogleButton
-                    style={{ width: "320px" }}
-                    className="rounded-lg"
-                    onClick={handleLoginWithGoogle}
-                  />
-                </div>
-                <p className="text-own-white">
-                  Not Have a account ?{" "}
-                  <NavLink
-                    className="text-own-primary font-bold text-lg"
-                    to="/SignUp"
-                  >
-                    SignUp
-                  </NavLink>
-                </p>
+                {/* <div className="w-[300px]"></div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

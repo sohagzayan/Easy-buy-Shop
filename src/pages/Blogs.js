@@ -39,7 +39,7 @@ const Blogs = () => {
           </div>
         </div>
         <div>
-          <div className="container mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+          <div className="container mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 mt-20">
             <div className="border-2 border-[#1E2738] rounded-sm">
               <div className={`${classes.blogCard} ${classes.blogCard1}`}>
                 <img src={BlogImage1} alt="" className="invisible" />
@@ -53,7 +53,7 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button class="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
@@ -71,7 +71,7 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button class="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
@@ -89,7 +89,7 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button class="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
@@ -107,7 +107,7 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button class="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>

@@ -10,20 +10,16 @@ const MyProducts = () => {
   const { username } = useAuthContext();
 
   useEffect(() => {
-    fetch(
-      `https://tranquil-shelf-42201.herokuapp.com/api/purchase?email=${username.email}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+    fetch(`http://localhost:5000/api/purchase?email=gdsohag360`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => {
         if (res.status === 401 || res.status === 403) {
-          logOut();
           localStorage.removeItem("accessToken");
-          navigate("/");
+          // navigate("/");
         } else {
           return res.json();
         }
@@ -32,8 +28,8 @@ const MyProducts = () => {
   }, [username, myOrder]);
 
   return (
-    <div class="table-wrapper">
-      <table class="fl-table">
+    <div className="table-wrapper">
+      <table className="fl-table">
         <thead>
           <tr>
             <th></th>
@@ -45,9 +41,9 @@ const MyProducts = () => {
           </tr>
         </thead>
         <tbody>
-          {myOrder.map((order) => (
+          {/* {myOrder.map((order) => (
             <MyOrderRow order={order} />
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>

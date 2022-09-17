@@ -14,7 +14,7 @@ const OurPartsProducts = ({ item }) => {
       </div>
       <div className="flex  justify-between items-center">
         <div className="p-1 relative after:absolute after:w-[100%] after:h-[100%] after:bg-[#2D3748] after:top-0 after:left-0 after:-z-0 mr-2 after:opacity-20">
-          <img width="" className="relative z-10" src={Demo1} alt="" />
+          <img width="" className="relative z-10" src={image} alt="" />
         </div>
         <div className="p-2 px-3">
           <h2 className="text-own-white mb-2">

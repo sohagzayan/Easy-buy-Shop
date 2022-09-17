@@ -4,6 +4,7 @@ import IphoneCategory from "../components/IphoneCategory/IphoneCategory";
 import NotFound from "../components/NotFound/NotFound";
 import PrivateAdmin from "../components/PrivateRoute/PrivateAdmin";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import ServiceCare from "../components/ServiceCare/ServiceCare";
 import AddTools from "../DashBoart/AddTools";
 import AddUserReview from "../DashBoart/AddUserReview";
 import DashBoart from "../DashBoart/DashBoart";
@@ -17,11 +18,11 @@ import Blogs from "../pages/Blogs";
 import BookMark from "../pages/BookMark";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import MyProtFolio from "../pages/MyProtFolio";
 import Purchase from "../pages/Purchase";
 import Repair from "../pages/Repair";
 import SignUp from "../pages/SignUp";
 import TopSelling from "../pages/TopSelling";
+
 const AllRoutes = () => {
   // const [admin] = useAdmin(username)
   return (
@@ -30,7 +31,10 @@ const AllRoutes = () => {
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blogs" element={<Blogs />} />
-      <Route path="/repair" element={<Repair />} />
+      <Route path="/repair" element={<Repair />}>
+        <Route index={true} element={<ServiceCare />} />
+        <Route path="category/iphone" element={<IphoneCategory />} />
+      </Route>
       <Route path="/topselling" element={<TopSelling />} />
       <Route path="/bookmark" element={<BookMark />} />
       <Route
@@ -50,7 +54,6 @@ const AllRoutes = () => {
         <Route path="addUserReview" element={<AddUserReview />} />
         <Route path="makeAdmin" element={<MakeAdmin />} />
         <Route path="manageProducts" element={<ManageAllProducts />} />
-
         <Route path="payment/:id" element={<Payment />} />
         {/* <Route path="manageAllOrder" element={<ManageAllOrder />} /> */}
       </Route>

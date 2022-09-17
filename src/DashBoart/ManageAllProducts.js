@@ -4,7 +4,7 @@ const ManageAllProducts = () => {
   const [manageAllData, setmMnageAllData] = useState();
 
   useEffect(() => {
-    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/tools`)
+    fetch(`http://localhost:5000/api/tools`)
       .then((res) => res.json())
       .then((data) => setmMnageAllData(data));
   }, [manageAllData]);

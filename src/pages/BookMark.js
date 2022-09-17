@@ -12,9 +12,7 @@ const BookMark = () => {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () =>
-    axios.get(`https://tranquil-shelf-42201.herokuapp.com/api/tools`)
-  );
+  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
 
   if (isLoading) {
     return <Loading />;
@@ -36,9 +34,7 @@ const BookMark = () => {
             </div>
             <div className="w-[60%] mx-auto ">
               <div>
-                <label htmlFor="" className="text-own-white mr-2">
-                  Sort By :
-                </label>
+                <label className="text-own-white mr-2">Sort By :</label>
                 <select
                   name=""
                   id=""

@@ -1,121 +1,166 @@
 import axios from "axios";
+import chest from "../assets/images/chest.png";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
+import * as yup from "yup";
+import swal from "sweetalert";
 
 const AddTools = () => {
-  const [name, setName] = useState("");
-  const [details, setDetails] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
-  const [minimumOrder, setMinimumOrder] = useState("");
-  const [file, setFile] = useState(null);
-  const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/";
+  const imagebbKey = "0b8c4fea4eba3001acb5a66d0574e4b5";
+
+  const schema = yup
+    .object({
+      name: yup.string().required(),
+      details: yup.string().required(),
+      quantity: yup.number().required(),
+      price: yup.number().required(),
+      minimumOrder: yup.number().required(),
+    })
+    .required();
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (data) => {
+    const images = data.image[0];
+    const formData = new FormData();
+    formData.append("image", images);
+    const url = `https://api.imgbb.com/1/upload?key=${imagebbKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          console.log(result.data.url);
+          const newPost = {
+            name: data.name,
+            details: data.details,
+            quantity: data.quantity,
+            price: data.price,
+            minimumOrder: data.minimumOrder,
+            image: result.data.url,
+          };
+          try {
+            axios.post("http://localhost:5000/api/tools", newPost);
+            console.log("success");
+            swal("Good job!", "Your New Tools Added SuccessFully", "success");
+            reset();
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
+  };
 
   const handleUser = async (e) => {
     e.preventDefault();
-    const newPost = {
-      name,
-      details,
-      quantity,
-      price,
-      minimumOrder,
-    };
-    if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.image = fileName;
-
-      try {
-        const imgInfo = await axios.post(
-          "https://tranquil-shelf-42201.herokuapp.com/upload",
-          data
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    try {
-      const data = await axios.post(
-        "https://tranquil-shelf-42201.herokuapp.com/api/tools",
-        newPost
-      );
-      setFile(null);
-      setName("");
-      setDetails("");
-      setQuantity("");
-      setPrice("");
-      setMinimumOrder("");
-    } catch (error) {
-      console.log(error);
-    }
   };
   return (
     <div>
       <div>
         <div>
-          <div class="hero mt-10">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-              <div class="text-center lg:text-left">
-                <h1 class="text-4xl font-bold text-own-white">
-                  Add Products/tools
-                </h1>
-                <p class="py-3 text-own-white">
-                  excepturi exercitationem quasi. In deleniti eaque aut
-                  repudiandae et a id nisi.
-                </p>
+          <div className="hero mt-10">
+            <div className="hero-content flex-col lg:flex-row-reverse">
+              <div className="text-center lg:text-left">
+                <div className="">
+                  <img className="w-[200px] mx-auto" src={chest} alt="" />
+                </div>
+                <div className="text-center">
+                  <h1 className="text-4xl font-bold text-own-white">
+                    Add Products/tools
+                  </h1>
+                  <p className="py-3 text-own-white">
+                    excepturi exercitationem quasi. In deleniti eaque aut
+                    repudiandae et a id nisi.
+                  </p>
+                </div>
               </div>
-              <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-own-ternary">
-                <div class="card-body  ">
+              <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-own-ternary">
+                <div className="card-body  ">
                   {/* <img width="300px" src={item ? MF + item.image : null } alt="" /> */}
-                  <form onSubmit={handleUser}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <input
                       required
-                      className="mb-4"
+                      className="mb-4 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-own-primary cursor-pointer text-own-primary focus:outline-none bg-[#141A28] dark:border-gray-600 dark:placeholder-gray-400  "
                       type="file"
-                      onChange={(e) => setFile(e.target.files[0])}
+                      {...register("image")}
                     />
+
                     <input
-                      required
+                      {...register("name")}
                       type="text"
                       placeholder="Title"
-                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-normal w-full focus:outline-own-secondary mb-3 "
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-light w-full focus:outline-own-secondary mb-2 "
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="name"
+                      render={({ message }) => (
+                        <p className="text-[#F23030] mb-1">{message}</p>
+                      )}
                     />
                     <input
-                      required
+                      {...register("minimumOrder")}
                       type="number"
                       placeholder="Minimum Order Quantity"
-                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-normal w-full focus:outline-own-secondary mb-3 "
-                      value={minimumOrder}
-                      onChange={(e) => setMinimumOrder(e.target.value)}
+                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-light w-full focus:outline-own-secondary mb-3 "
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="minimumOrder"
+                      render={({ message }) => (
+                        <p className="text-[#F23030] mb-1">{message}</p>
+                      )}
                     />
                     <input
-                      required
+                      {...register("quantity")}
                       type="number"
                       placeholder="Available Quantity"
-                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-normal w-full focus:outline-own-secondary mb-3 "
-                      value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
+                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-light w-full focus:outline-own-secondary mb-3 "
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="quantity"
+                      render={({ message }) => (
+                        <p className="text-[#F23030] mb-1">{message}</p>
+                      )}
                     />
                     <input
-                      required
+                      {...register("price")}
                       type="number"
                       placeholder="Price"
-                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-normal w-full focus:outline-own-secondary mb-3 "
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
+                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-light w-full focus:outline-own-secondary mb-3 "
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="price"
+                      render={({ message }) => (
+                        <p className="text-[#F23030] mb-1">{message}</p>
+                      )}
                     />
                     <textarea
-                      required
-                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-normal w-full focus:outline-own-secondary mb-3 "
+                      {...register("details")}
+                      className="input text-own-primary font-semibold text-lg bg-[#141a28] placeholder:text-own-primary placeholder:font-light w-full focus:outline-own-secondary mb-3 "
                       placeholder="Bio"
-                      value={details}
-                      onChange={(e) => setDetails(e.target.value)}
                     ></textarea>
-                    <button class="btn bg-own-primary text-own-white border-transparent text-white">
+                    <ErrorMessage
+                      errors={errors}
+                      name="details"
+                      render={({ message }) => (
+                        <p className="text-[#F23030] mb-1">{message}</p>
+                      )}
+                    />
+                    <button className="btn bg-own-primary text-own-white border-transparent text-white">
                       ADD PRODUCT
                     </button>
                   </form>

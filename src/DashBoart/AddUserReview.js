@@ -19,7 +19,7 @@ const AddUserReview = () => {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     await axios
-      .post(`https://tranquil-shelf-42201.herokuapp.com/api/review`, reviewPost)
+      .post(`http://localhost:5000/api/review`, reviewPost)
       .then((res) => res);
     setDase("");
     swal("add to review success");
@@ -34,7 +34,7 @@ const AddUserReview = () => {
           Give a Review{" "}
         </span>
         <div className="flex my-4">
-          <div class="rating">
+          <div className="rating">
             {possibleRate.map((rate) => (
               <input
                 onClick={() => setSelectedRate(rate)}

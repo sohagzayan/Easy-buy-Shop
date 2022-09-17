@@ -4,20 +4,15 @@ import { useAuthContext } from "../context/AuthContextProvider";
 import UpdateUserProfileModal from "./UpdateUserProfileModal";
 
 const MyProfile = () => {
-  const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/";
-
   const { username } = useAuthContext();
   const [userP, setUserP] = useState([]);
   useEffect(() => {
-    fetch(
-      `https://tranquil-shelf-42201.herokuapp.com/api/user/${username.email}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+    fetch(`http://localhost:5000/api/user/gdsohag360`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setUserP(data));
   }, [userP]);
@@ -29,17 +24,17 @@ const MyProfile = () => {
     <div className="p-4 pt-5 flex">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl text-own-primary font-bold">My Profile Info</h2>
-        <div class="  bg-own-ternary flex  shadow-sm">
+        <div className="  bg-own-ternary flex  shadow-sm">
           <div className="p-6">
             <img
               width="200px"
-              src={userP[0]?.image ? MF + userP[0]?.image : null}
+              src={userP[0]?.image}
               alt="Shoes"
-              class="rounded-4"
+              className="rounded-4"
             />
           </div>
 
-          <div class="card-body  ">
+          <div className="card-body  ">
             <ul>
               <li className="mb-2">
                 <span className="text-xl font-bold text-own-primary ">
@@ -75,8 +70,8 @@ const MyProfile = () => {
             </ul>
             {/* handleUpdateUser */}
             <label
-              for="my-modal"
-              class="btn modal-button bg-own-primary text-own-white border-transparent"
+              htmlFor="my-modal"
+              className="btn modal-button bg-own-primary text-own-white border-transparent"
             >
               Update Your Details
             </label>

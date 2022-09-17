@@ -1,0 +1,19 @@
+.repair {
+  background-image: url(".././assets/images/banner.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px 70px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.category {
+  background-image: url(".././assets/images/banner.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px 70px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+}

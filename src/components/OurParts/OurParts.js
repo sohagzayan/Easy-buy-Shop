@@ -8,9 +8,7 @@ const OurParts = () => {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () =>
-    axios.get(`https://tranquil-shelf-42201.herokuapp.com/api/tools`)
-  );
+  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
 
   if (isLoading) {
     return <Loading />;
@@ -39,9 +37,9 @@ const OurParts = () => {
           </ul>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-          {partsData.data?.map((item) => (
+          {/* {partsData.data?.map((item) => (
             <OurPartsProducts item={item} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

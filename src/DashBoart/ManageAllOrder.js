@@ -5,7 +5,7 @@ import "../Table.css";
 const ManageAllOrder = () => {
   const [manageOrder, setManageOrder] = useState([]);
   useEffect(() => {
-    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase`, {
+    fetch(`http://localhost:5000/api/purchase`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -17,8 +17,8 @@ const ManageAllOrder = () => {
 
   console.log(manageOrder);
   return (
-    <div class="table-wrapper ">
-      <table class="fl-table">
+    <div className="table-wrapper ">
+      <table className="fl-table">
         <thead>
           <tr>
             <th>Date</th>
@@ -31,13 +31,6 @@ const ManageAllOrder = () => {
           </tr>
         </thead>
         <tbody>
-          {/* <tr>
-            <td>Content 10</td>
-            <td>Content 10</td>
-            <td>Content 10</td>
-            <td>Content 10</td>
-            <td>Content 10</td>
-          </tr> */}
           {manageOrder?.map((order, index) => (
             <ManageAllOrderRow key={index} order={order} />
           ))}
