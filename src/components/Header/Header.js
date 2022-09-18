@@ -1,20 +1,35 @@
-import Cookies from "js-cookie";
-import React from "react";
+/** External Import */
 import { NavLink, useNavigate } from "react-router-dom";
+import { FiLogIn } from "react-icons/fi";
+import Cookies from "js-cookie";
 import swal from "sweetalert";
+import React, { useState } from "react";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { AiFillStar } from "react-icons/ai";
+import { MdDriveFileMove } from "react-icons/md";
+import { AiOutlineLogin } from "react-icons/ai";
+
+/** Internal Import */
 import Icons from "../.././assets/icons/guarantee.png";
 import { useAuthContext } from "../../context/AuthContextProvider";
 import { useCurrentUserQuery } from "../../store/API/user";
-
+import demouser from "../../assets/demouser.png";
 const Header = () => {
+  /** Hocks  */
   const { username, logOut } = useAuthContext();
-  const usernames = true;
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  /** Variable  */
   const userid = Cookies.get("id");
   const response = useCurrentUserQuery(userid);
-  console.log(response?.data?.status === "success");
 
-  const handleLogout = async () => {
+  /** Handle Profile menu */
+  const handleProdileEngine = async () => {
+    setShowMenu((prev) => !prev);
+  };
+
+  /** Out Out Func Handler */
+  const handleLogOut = () => {
     swal({
       title: "Are you sure?",
       text: "LogOut user and !",
@@ -27,8 +42,7 @@ const Header = () => {
           icon: "success",
         });
         Cookies.remove("id");
-        Cookies.remove("access");
-        localStorage.removeItem("accessToken");
+        Cookies.remove("token");
         navigate("/login");
       } else {
         swal("Your imaginary file is safe!");
@@ -85,69 +99,71 @@ const Header = () => {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="  menu-horizontal p-0">
-            <li className="text-own-white px-3 font-semibold ">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li className="text-own-white px-3 font-semibold ">
-              <NavLink
-                to="/topselling"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                Top Selling
-              </NavLink>
-            </li>
-            <li className="text-own-white px-3 font-semibold ">
-              <NavLink
-                to="/blogs"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                Blogs
-              </NavLink>{" "}
-            </li>
-            <li className="text-own-white  px-3 font-semibold ">
-              <NavLink
-                to="/repair"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                Repair
-              </NavLink>
-            </li>
-            <li className="text-own-white  px-3 font-semibold ">
-              <NavLink
-                to="/bookmark"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                Bookmark
-              </NavLink>
-            </li>
+          {response?.data?.status === "success" && (
+            <ul className="  menu-horizontal p-0">
+              <li className="text-own-white px-3 font-semibold ">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li className="text-own-white px-3 font-semibold ">
+                <NavLink
+                  to="/topselling"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Top Selling
+                </NavLink>
+              </li>
+              <li className="text-own-white px-3 font-semibold ">
+                <NavLink
+                  to="/blogs"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Blogs
+                </NavLink>{" "}
+              </li>
+              <li className="text-own-white  px-3 font-semibold ">
+                <NavLink
+                  to="/repair"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Repair
+                </NavLink>
+              </li>
+              <li className="text-own-white  px-3 font-semibold ">
+                <NavLink
+                  to="/bookmark"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Bookmark
+                </NavLink>
+              </li>
 
-            <li className="text-own-white px-3 font-semibold ">
-              <NavLink
-                to="/dashBoart"
-                className={({ isActive }) =>
-                  isActive ? "text-own-primary" : " "
-                }
-              >
-                DashBoart
-              </NavLink>
-            </li>
-          </ul>
+              <li className="text-own-white px-3 font-semibold ">
+                <NavLink
+                  to="/dashBoart"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  DashBoart
+                </NavLink>
+              </li>
+            </ul>
+          )}
         </div>
         <div className="navbar-end">
           <div>
@@ -180,25 +196,69 @@ const Header = () => {
           {response?.data?.status === "success" ? (
             <div>
               <span
-                onClick={handleLogout}
-                className="bg-own-primary  text-own-white font-bold px-4 py-2 rounded-lg cursor-pointer"
+                onClick={handleProdileEngine}
+                className="bg-own-ternary overflow-hidden inline-block p-1 rounded-full cursor-pointer"
               >
-                LogOut
+                <img className="w-[40px]" src={demouser} alt="" />
               </span>
+              <div className="relative">
+                {showMenu && (
+                  <ul className="text-own-white bg-own-ternary rounded-md absolute top-3 shadow-md right-0 w-[250px] ">
+                    <li className="text-lg pointer-events-none rounded-sm bg-[#101126] py-1 px-5">
+                      Settings
+                    </li>
+                    <NavLink to="/myProfile">
+                      <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in">
+                        Profile
+                      </li>
+                    </NavLink>
+                    <NavLink to="/editProfile">
+                      <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in">
+                        Edit Profile
+                      </li>
+                    </NavLink>
+                    <hr className="border-[#838282] cursor-pointer" />
+                    <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in flex items-center">
+                      <FcLikePlaceholder className="mr-1" /> My Likes
+                    </li>
+                    <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in flex items-center">
+                      <AiFillStar className="mr-1" /> Go Pro
+                    </li>
+                    <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in flex items-center">
+                      <MdDriveFileMove className="mr-1" /> Collections
+                    </li>
+                    <hr className="border-[#838282]  cursor-pointer" />
+                    <li
+                      onClick={handleLogOut}
+                      className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in flex items-center "
+                    >
+                      <AiOutlineLogin className="mr-1" /> Sign Out
+                    </li>
+                  </ul>
+                )}
+              </div>
             </div>
           ) : (
             <div>
               <NavLink
-                to="/login"
-                className=" text-own-primary font-bold mr-6 text-lg"
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? " text-own-primary uppercase font-bold mr-6 text-lg"
+                    : " text-own-white uppercase font-bold mr-6 text-lg"
+                }
               >
-                Login
+                Home
               </NavLink>
               <NavLink
-                to="/signup"
-                className="px-4 py-2 rounded-lg bg-own-primary text-own-white text-white font-semibold "
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? " text-own-primary uppercase font-bold mr-6 text-lg"
+                    : " text-own-white uppercase font-bold mr-6 text-lg"
+                }
               >
-                Sign Up
+                Join
               </NavLink>
             </div>
           )}

@@ -118,7 +118,7 @@ const SignUp = () => {
                 Sign In
               </NavLink>
             </p>
-            <div className="sm:w-[60%] w-[90%] mx-auto sm:mx-0 sm:ml-24 py-6 ">
+            <div className="sm:w-[40%] w-[90%] mx-auto sm:mx-0 sm:ml-24 py-6 ">
               <div className="relative z-10">
                 <h2 className="text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
@@ -142,8 +142,8 @@ const SignUp = () => {
                     </span>
                   </a>
                 </div>
-                <div class="flex flex-col w-full]">
-                  <div class="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary mb-0 mt-0">
+                <div className="flex flex-col w-full]">
+                  <div className="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary ">
                     OR
                   </div>
                 </div>

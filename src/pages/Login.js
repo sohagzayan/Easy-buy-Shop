@@ -42,6 +42,7 @@ const SignUp = () => {
   /* Form validation Yap Resolver  */
   const {
     register,
+    reset,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
@@ -64,11 +65,11 @@ const SignUp = () => {
               console.log("verify ---");
               swal("Please verify your account and try again");
             }
-            console.log("still Error");
           } else {
             cookie.set("token", res.data.Access_Token);
             cookie.set("id", res.data.userId);
-            console.log("not Error");
+            navigate(from, { replace: true });
+            reset();
           }
         })
         .catch((error) => console.log(error));
@@ -106,7 +107,7 @@ const SignUp = () => {
                 Sign up now
               </NavLink>
             </p>
-            <div className=" sm:w-[60%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
+            <div className=" sm:w-[40%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
               <div className=" z-20 relative">
                 <h2 className="text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
@@ -133,8 +134,8 @@ const SignUp = () => {
                     </span>
                   </a>
                 </div>
-                <div class="flex flex-col w-full]">
-                  <div class="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary">
+                <div className="flex flex-col w-full]">
+                  <div className="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary">
                     OR
                   </div>
                 </div>

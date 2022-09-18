@@ -16,6 +16,7 @@ import MyProfile from "../DashBoart/MyProfile";
 import Payment from "../DashBoart/Payment";
 import Blogs from "../pages/Blogs";
 import BookMark from "../pages/BookMark";
+import EditProfile from "../pages/EditProfile";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Purchase from "../pages/Purchase";
@@ -30,18 +31,69 @@ const AllRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/blogs" element={<Blogs />} />
-      <Route path="/repair" element={<Repair />}>
-        <Route index={true} element={<ServiceCare />} />
+      <Route
+        path="/blogs"
+        element={
+          <PrivateRoute>
+            <Blogs />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/repair"
+        element={
+          <PrivateRoute>
+            <Repair />
+          </PrivateRoute>
+        }
+      >
+        <Route
+          index={true}
+          element={
+            <PrivateRoute>
+              <ServiceCare />
+            </PrivateRoute>
+          }
+        />
         <Route path="category/iphone" element={<IphoneCategory />} />
       </Route>
-      <Route path="/topselling" element={<TopSelling />} />
-      <Route path="/bookmark" element={<BookMark />} />
+      <Route
+        path="/topselling"
+        element={
+          <PrivateRoute>
+            <TopSelling />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/bookmark"
+        element={
+          <PrivateRoute>
+            <BookMark />
+          </PrivateRoute>
+        }
+      />
       <Route
         path="/dashBoart"
         element={
           <PrivateAdmin>
             <DashBoart />
+          </PrivateAdmin>
+        }
+      />
+      <Route
+        path="/editProfile"
+        element={
+          <PrivateAdmin>
+            <EditProfile />
+          </PrivateAdmin>
+        }
+      />
+      <Route
+        path="/myProfile"
+        element={
+          <PrivateAdmin>
+            <MyProfile />
           </PrivateAdmin>
         }
       >
