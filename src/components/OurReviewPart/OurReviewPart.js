@@ -7,11 +7,11 @@ import { Autoplay } from "swiper";
 import Reviews from "../Reviews/Reviews";
 const OurReviewPart = () => {
   const [reviewsData, setReviewsData] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/review`)
-      .then((data) => data.json())
-      .then((res) => setReviewsData(res));
-  }, [reviewsData]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/api/v1/review`)
+  //     .then((data) => data.json())
+  //     .then((res) => setReviewsData(res));
+  // }, [reviewsData]);
 
   return (
     <div className="mt-20">
@@ -39,11 +39,11 @@ const OurReviewPart = () => {
           onSlideChange={() => "slide change"}
           onSwiper={(swiper) => swiper}
         >
-          {reviewsData?.map((item) => (
+          {/* {reviewsData?.map((item) => (
             <SwiperSlide>
               <Reviews item={item} />{" "}
             </SwiperSlide>
-          ))}
+          ))} */}
         </Swiper>
       </div>
     </div>

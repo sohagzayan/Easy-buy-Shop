@@ -8,23 +8,25 @@ import axios from "axios";
 import swal from "sweetalert";
 import * as yup from "yup";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 /* Internal Import*/
-import Footer from "../components/Footer/Footer";
 import Headers from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
 import React, { useState } from "react";
-import useToken from "../hock/useToken";
-import signupImage from "../assets/gif image/signup.gif";
-import { useCurrentUserQuery } from "../store/API/user";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
+import LoadingSpenner from "../components/Loading/Loading";
+
 const SignUp = () => {
   /* Hocks */
   const [region, setRegion] = useState("");
   const [country, setCountry] = useState("");
   const [error, setError] = useState("");
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   // const navigate = useNavigate();
 
   /* select Country  Func */
@@ -61,19 +63,27 @@ const SignUp = () => {
   // const [toekn] = useToken(username);
   /** SingUp Func  */
   const onSubmit = async (data) => {
+    setLoading(true);
     const { username, name, email, password, ConformPassword } = data;
-    const url = "http://localhost:5000/api/user/signup";
+    const url = "http://localhost:5000/api/v1/user/signin";
     const newUser = {
       name,
       username,
       email,
+      bio: "Nothing Here bio ",
+      personalSite: "url",
+      socialAccount: [
+        { name: "Facebook", url: "google" },
+        { name: "twitter", url: "twitter" },
+      ],
+      AccountAccess: "freeUser",
       password,
       role: "user",
       education: "Your Academic Info",
       country: country,
       city: region,
       linkeDin: "url likedin url new",
-      image: "image url new",
+      image: "https://i.ibb.co/ZK5CBDW/demouser.png",
     };
     try {
       await axios
@@ -85,6 +95,7 @@ const SignUp = () => {
               "Your Account pending pleace chack your email and click to verify",
               "success"
             );
+            setLoading(false);
           }
         })
         .catch((err) => console.log(err));
@@ -107,7 +118,12 @@ const SignUp = () => {
     <>
       <Headers />
       <div className="">
-        <div className="login ">
+        <div className="login relative">
+          {loading && (
+            <div className="absolute left-0 top-0 h-full z-20 bg-[#101126a1] w-full">
+              <LoadingSpenner />
+            </div>
+          )}
           <div className="relative">
             <p className="text-own-white absolute top-2 right-5 z-10">
               Already a member?{" "}
@@ -148,13 +164,13 @@ const SignUp = () => {
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <label htmlFor="" className="text-own-white mb-1">
+                  <label htmlFor="" className="text-own-white mb-1  ">
                     Your Name
                   </label>
                   <input
                     type="text"
                     placeholder="Your Account Name"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-2"
+                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary mb-2"
                     {...register("name")}
                   />
                   <p className=" text-secondary">{errors.name?.message}</p>
@@ -164,7 +180,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Username Must Be unique"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-2"
+                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-2"
                     {...register("username")}
                   />
 
@@ -175,19 +191,31 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Make Sure Add Your Valid Email"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-2"
+                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-2 "
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
                   <label htmlFor="" className="text-own-white mb-1">
                     Your Password
                   </label>
-                  <input
-                    type="text"
-                    placeholder="6+ character"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-b"
-                    {...register("password")}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="6+ Character"
+                      className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]   w-full focus:outline-own-secondary placeholder:font-bold "
+                      {...register("password")}
+                    />
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-5 top-[20%]"
+                    >
+                      {showPassword ? (
+                        <AiOutlineEye className="text-own-white text-3xl cursor-pointer" />
+                      ) : (
+                        <AiOutlineEyeInvisible className="text-own-white text-3xl cursor-pointer" />
+                      )}
+                    </span>
+                  </div>
 
                   <p className=" text-secondary">{errors.password?.message}</p>
                   <div className="flex gap-16">
@@ -229,8 +257,12 @@ const SignUp = () => {
                     </label>
                   </div>
                   <div className=" mt-2">
-                    <button className="bg-own-primary text-own-white py-2 rounded-md text-white px-24 mt-3 ">
+                    <button className="btn-animation text-sm flex items-center justify-center ml-0">
                       Create Account
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
                     </button>
                   </div>
                   <p className="text-own-white text-sm mt-5">

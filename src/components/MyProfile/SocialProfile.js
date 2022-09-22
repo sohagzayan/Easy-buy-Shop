@@ -10,7 +10,7 @@ const SocialProfile = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="Twitter"
           >
-            Twitter
+            Twitter <span className="text-own-primary">*</span>
           </label>
           <input
             id="Twitter"
@@ -25,7 +25,7 @@ const SocialProfile = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="Facebook"
           >
-            Facebook
+            Facebook <span className="text-own-primary">*</span>
           </label>
           <input
             id="Facebook"
@@ -37,7 +37,7 @@ const SocialProfile = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="Facebook"
           >
-            Google
+            Google <span className="text-own-primary">*</span>
           </label>
           <button className="bg-[#1da1f2] px-6 py-2 rounded-md text-own-white flex items-center mt-2">
             <AiOutlineGoogle className="mr-1" /> Connect to Google
@@ -46,7 +46,7 @@ const SocialProfile = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="linkedin"
           >
-            Linkedin
+            Linkedin <span className="text-own-primary">*</span>
           </label>
           <input
             id="linkedin"
@@ -58,7 +58,7 @@ const SocialProfile = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="GitHub"
           >
-            GitHub
+            GitHub <span className="text-own-primary">*</span>
           </label>
           <input
             id="GitHub"

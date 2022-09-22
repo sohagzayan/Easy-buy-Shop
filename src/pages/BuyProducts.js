@@ -3,16 +3,18 @@ import Header from "../components/Header/Header";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Loading from ".././components/Loading/Loading";
-import OurPartsProducts from ".././components/OurPartsProducts/OurPartsProducts";
+import Loading from "../components/Loading/Loading";
+import OurPartsProducts from "../components/OurPartsProducts/OurPartsProducts";
 import Footer from "../components/Footer/Footer";
 
-const TopSelling = () => {
+const BuyProducts = () => {
   const {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
+  } = useQuery("toolsData", () =>
+    axios.get(`http://localhost:5000/api/v1/tools`)
+  );
   if (isLoading) {
     return <Loading />;
   }
@@ -66,7 +68,7 @@ const TopSelling = () => {
         </div>
         <div>
           <div className="container  mx-auto grid md:grid-cols-2 grid-cols-1 gap-10 mt-20">
-            {partsData.data?.map((item) => (
+            {partsData?.data?.map((item) => (
               <OurPartsProducts item={item} />
             ))}
           </div>
@@ -77,4 +79,4 @@ const TopSelling = () => {
   );
 };
 
-export default TopSelling;
+export default BuyProducts;

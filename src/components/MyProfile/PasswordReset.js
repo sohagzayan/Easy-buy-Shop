@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useCurrentUserQuery } from "../../store/API/user";
 
-const General = () => {
+const PasswordReset = () => {
   /** Hocks  */
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +43,7 @@ const General = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="username"
           >
-            Username <span className="text-own-primary">*</span>
+            Old Password <span className="text-own-primary">*</span>
           </label>
           <input
             id="username"
@@ -57,7 +57,7 @@ const General = () => {
             className="text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="email"
           >
-            Email <span className="text-own-primary">*</span>
+            New Password <span className="text-own-primary">*</span>
           </label>
           <input
             id="email"
@@ -67,22 +67,10 @@ const General = () => {
             placeholder="email"
             className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
           />
-          <div className="my-4 text-own-white">
-            <h3 className="mb-2">
-              Disable ads{" "}
-              <span className="uppercase bg-[#FF5555]  ml-3  text-sm px-1 rounded-md">
-                pro
-              </span>
-            </h3>
-            <p>
-              With a <span className="text-[#FF5555]">Pro</span> or{" "}
-              <span className="text-[#FF5555]">Pro Business</span> account, you
-              can disable ads across the site.
-            </p>
-          </div>
+
           <div className="flex justify-end">
-            <button className="bg-own-primary text-own-white px-3 py-2 rounded-md ">
-              Save Changes
+            <button className="bg-own-primary mt-4 text-own-white px-3 py-2 rounded-md ">
+              Changes
             </button>
           </div>
         </form>
@@ -91,4 +79,4 @@ const General = () => {
   );
 };
 
-export default General;
+export default PasswordReset;

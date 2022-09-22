@@ -6,12 +6,12 @@ import UpdateUserProfileModal from "./UpdateUserProfileModal";
 import { AiOutlineMenu } from "react-icons/ai";
 import demouser from ".././assets/demouser.png";
 import Footer from "../components/Footer/Footer";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const MyProfile = () => {
   const { username } = useAuthContext();
   const [userP, setUserP] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
     fetch(`http://localhost:5000/api/user/gdsohag360`, {
       method: "GET",
@@ -62,25 +62,41 @@ const MyProfile = () => {
           </div>
           <div className="mt-10">
             <ul className="flex items-center text-own-white gap-10">
-              <li>My Products 0</li>
-              <li>My Blogs 0</li>
-              <li>BookMark 0</li>
-              <li>My Favorite Short 0</li>
+              <NavLink
+                to="/myProfile"
+                className={({ isActive }) =>
+                  location.pathname === "/myProfile" ? "text-own-primary" : ""
+                }
+              >
+                <li>My Products 0</li>
+              </NavLink>
+              <NavLink
+                to="my_blog"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : ""
+                }
+              >
+                <li>My Blogs 0</li>
+              </NavLink>
+              <NavLink
+                to="my_bookmark"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : ""
+                }
+              >
+                <li>BookMark 0</li>
+              </NavLink>
+              <NavLink
+                to="my_favorite_sort"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : ""
+                }
+              >
+                <li>My Favorite Short ( 0 )</li>
+              </NavLink>
             </ul>
-            <div></div>
-          </div>
-          <hr className="border-own-ternary mt-3" />
-          <div className="border-2 border-dashed w-[300px] p-7 mt-7 flex flex-col">
-            <h2 className="text-own-primary text-2xl mb-2">
-              Upload your first shot
-            </h2>
-            <p className="text-own-white">
-              Show off your best work. Get feedback, likes and be a part of a
-              growing community.
-            </p>
-            <button className="bg-own-primary text-own-white mt-4 py-2 rounded-lg">
-              Add Your Products
-            </button>
+            <hr className="border-own-primary mt-3 border-[1px]" />
+            <div>{<Outlet />}</div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
+import { NavLink } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import OurPartsProducts from "../OurPartsProducts/OurPartsProducts";
 const OurParts = () => {
@@ -8,12 +9,13 @@ const OurParts = () => {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
+  } = useQuery("toolsData", () =>
+    axios.get(`http://localhost:5000/api/v1/tools?limit=6`)
+  );
 
   if (isLoading) {
     return <Loading />;
   }
-  console.log(partsData);
   return (
     <div className="mt-10">
       <div>
@@ -37,10 +39,22 @@ const OurParts = () => {
           </ul>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-          {/* {partsData.data?.map((item) => (
+          {/* {partsData?.data?.map((item) => (
             <OurPartsProducts item={item} />
           ))} */}
         </div>
+      </div>
+      <div className="flex justify-center ">
+        <NavLink
+          to="/buy_products"
+          className="btn-animation flex justify-center items-center"
+        >
+          All Products
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </NavLink>
       </div>
     </div>
   );

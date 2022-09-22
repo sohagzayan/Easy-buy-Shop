@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import IphoneCategory from "../components/IphoneCategory/IphoneCategory";
+import EditProfileInfo from "../components/MyProfile/EditProfileInfo";
+import General from "../components/MyProfile/General";
+import SocialProfile from "../components/MyProfile/SocialProfile";
 import NotFound from "../components/NotFound/NotFound";
 import PrivateAdmin from "../components/PrivateRoute/PrivateAdmin";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
@@ -22,13 +25,20 @@ import Login from "../pages/Login";
 import Purchase from "../pages/Purchase";
 import Repair from "../pages/Repair";
 import SignUp from "../pages/SignUp";
-import TopSelling from "../pages/TopSelling";
-
+import BuyProducts from "../pages/BuyProducts";
+import MyProductsD from "../components/My_profile_deshbord/MyProductsD";
+import MyBlogD from "../components/My_profile_deshbord/MyBlogD";
+import MyBookMarkD from "../components/My_profile_deshbord/MyBookMarkD";
+import MyFavoriteD from "../components/My_profile_deshbord/MyFavoriteD";
+import PasswordReset from "../components/MyProfile/PasswordReset";
+import EmailNotifecation from "../components/MyProfile/EmailNotifecation";
+import AddNewProducts from "../pages/AddNewProducts";
 const AllRoutes = () => {
   // const [admin] = useAdmin(username)
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route
@@ -58,10 +68,18 @@ const AllRoutes = () => {
         <Route path="category/iphone" element={<IphoneCategory />} />
       </Route>
       <Route
-        path="/topselling"
+        path="/buy_products"
         element={
           <PrivateRoute>
-            <TopSelling />
+            <BuyProducts />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/add_new_products"
+        element={
+          <PrivateRoute>
+            <AddNewProducts />
           </PrivateRoute>
         }
       />
@@ -82,13 +100,19 @@ const AllRoutes = () => {
         }
       />
       <Route
-        path="/editProfile"
+        path="/account"
         element={
           <PrivateAdmin>
             <EditProfile />
           </PrivateAdmin>
         }
-      />
+      >
+        <Route index={true} element={<General />} />
+        <Route path="profile" element={<EditProfileInfo />} />
+        <Route path="social_profiles" element={<SocialProfile />} />
+        <Route path="password" element={<PasswordReset />} />
+        <Route path="email_notifications" element={<EmailNotifecation />} />
+      </Route>
       <Route
         path="/myProfile"
         element={
@@ -97,16 +121,20 @@ const AllRoutes = () => {
           </PrivateAdmin>
         }
       >
-        <Route index element={<MyProfile />} />
-        <Route path="myProfile" element={<MyProfile />} />
+        <Route index element={<MyProductsD />} />
+        <Route path="my_blog" element={<MyBlogD />} />
+        <Route path="my_bookmark" element={<MyBookMarkD />} />
+        <Route path="my_favorite_sort" element={<MyFavoriteD />} />
+        {/* <Route index element={<MyProfile />} /> */}
+        {/* <Route path="myProfile" element={<MyProfile />} /> */}
         {/* <Route  element={<ManageAllOrder />} /> */}
-        <Route path="manageAllOrder" element={<ManageAllOrder />} />
+        {/* <Route path="manageAllOrder" element={<ManageAllOrder />} />
         <Route path="AddTools" element={<AddTools />} />
         <Route path="myOrder" element={<MyOrder />}></Route>
         <Route path="addUserReview" element={<AddUserReview />} />
         <Route path="makeAdmin" element={<MakeAdmin />} />
         <Route path="manageProducts" element={<ManageAllProducts />} />
-        <Route path="payment/:id" element={<Payment />} />
+        <Route path="payment/:id" element={<Payment />} /> */}
         {/* <Route path="manageAllOrder" element={<ManageAllOrder />} /> */}
       </Route>
       <Route

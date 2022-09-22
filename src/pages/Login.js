@@ -7,6 +7,8 @@ import swal from "sweetalert";
 import * as yup from "yup";
 import axios from "axios";
 import cookie from "js-cookie";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+
 /* Internal Import */
 import React, { useState } from "react";
 import Footer from "../components/Footer/Footer";
@@ -18,15 +20,19 @@ import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
+import LoadingSpenner from "../components/Loading/Loading";
 
 const SignUp = () => {
   /* Hocks  */
   const { login, googleLogin, username } = useAuthContext();
   const [token, isLoading] = useToken(username);
   const [error, setError] = useState("");
+  const [mainError, setMainError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   /* Orders  */
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const from = location.state?.from?.pathname || "/";
   const accessToken = Cookies.get("access");
   const userId = Cookies.get("id");
@@ -49,30 +55,40 @@ const SignUp = () => {
 
   /** Login User Handler */
   const onSubmit = async (data) => {
+    setLoading(true);
+    console.log("tart");
     const { email, password } = data;
-
-    const url = "http://localhost:5000/api/user/login";
+    const url = "http://localhost:5000/api/v1/user/login";
     try {
       await axios
         .post(url, { email, password })
         .then((res) => {
-          console.log(res);
           if (res.data.status === 500) {
+            setLoading(false);
+            if (res.data.message === "This User Not Valid") {
+              setMainError(
+                "We couldnt find an account matching the username and password you entered. Please check your username and password and try again"
+              );
+              swal("This User Not Valid! Please try again with Valid Email ");
+            }
             if (
               res.data.message ===
               "Pleace Verify Your Account then again try to login"
             ) {
               console.log("verify ---");
+              setMainError("Please verify your account and try again");
               swal("Please verify your account and try again");
             }
           } else {
+            setMainError("");
             cookie.set("token", res.data.Access_Token);
             cookie.set("id", res.data.userId);
             navigate(from, { replace: true });
+            setLoading(false);
             reset();
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => setMainError(error.message));
 
       setError("");
     } catch (error) {
@@ -95,8 +111,20 @@ const SignUp = () => {
   return (
     <>
       <Headers />
-      <div className="">
-        <div className="login">
+      <div className="relative">
+        {mainError && (
+          <div className="">
+            <p className="bg-[#FF5555] text-own-white text-center py-2 ">
+              {mainError}
+            </p>
+          </div>
+        )}
+        <div className="login relative">
+          {loading && (
+            <div className="absolute left-0 top-0 h-full z-30 bg-[#101126a1] w-full">
+              <LoadingSpenner />
+            </div>
+          )}
           <div className="relative">
             <p className="text-own-white absolute top-2 right-5 z-10">
               Not a member?{" "}
@@ -146,7 +174,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="email"
-                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light mb-3"
+                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-3"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
@@ -160,19 +188,38 @@ const SignUp = () => {
                       </a>
                     </label>
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Password"
-                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#9AA5B5] w-full focus:outline-own-secondary placeholder:font-light"
-                    {...register("password")}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary "
+                      {...register("password")}
+                    />
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-5 top-[20%]"
+                    >
+                      {showPassword ? (
+                        <AiOutlineEye className="text-own-white text-3xl cursor-pointer" />
+                      ) : (
+                        <AiOutlineEyeInvisible className="text-own-white text-3xl cursor-pointer" />
+                      )}
+                    </span>
+                  </div>
                   <p className=" text-secondary">{errors.password?.message}</p>
 
                   <p className="text-secondary text-sm">{error}</p>
 
                   <div className=" mt-2">
-                    <button className=" bg-own-primary text-own-white py-2 rounded-md text-white px-24 mt-3 ">
+                    {/* <button className=" bg-own-primary text-own-white py-2 rounded-md text-white px-24 mt-3 ">
                       Sign In
+                    </button> */}
+                    <button className="btn-animation flex items-center justify-center ml-0">
+                      Sign In
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
                     </button>
                   </div>
                 </form>

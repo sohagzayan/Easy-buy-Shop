@@ -48,6 +48,7 @@ const UpdateUserProfileModal = ({
     } catch (error) {
       console.log(error);
     }
+
     if (file) {
       const fileName = file;
       console.log(file);

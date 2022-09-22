@@ -1,5 +1,5 @@
 /** External Import */
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 import Cookies from "js-cookie";
 import swal from "sweetalert";
@@ -16,13 +16,14 @@ import { useCurrentUserQuery } from "../../store/API/user";
 import demouser from "../../assets/demouser.png";
 const Header = () => {
   /** Hocks  */
+  const location = useLocation();
   const { username, logOut } = useAuthContext();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   /** Variable  */
   const userid = Cookies.get("id");
   const response = useCurrentUserQuery(userid);
-
+  console.log(response);
   /** Handle Profile menu */
   const handleProdileEngine = async () => {
     setShowMenu((prev) => !prev);
@@ -51,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <div className="shadow-sm  sticky top-0 z-50 bg-[#101126]">
+    <div className="shadow-sm  sticky top-0 z-50 bg-[#0C0C18]">
       <div className="navbar   container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -91,79 +92,80 @@ const Header = () => {
             </ul>
           </div>
           <a
-            className="btn btn-ghost normal-case text-xl text-own-white font-semibold"
+            className="btn text-own-primary btn-ghost normal-case text-xl text-own-white font-semibold"
             href="/"
           >
-            <img width="25px" className="mr-2" src={Icons} alt="icons" />{" "}
-            Quality <span className="text-own-secondary">C</span> ookie
+            Digital{" "}
+            <span className="text-own-white font-semibold text-xl">Store</span>
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          {response?.data?.status === "success" && (
-            <ul className="  menu-horizontal p-0">
-              <li className="text-own-white px-3 font-semibold ">
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className="text-own-white px-3 font-semibold ">
-                <NavLink
-                  to="/topselling"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  Top Selling
-                </NavLink>
-              </li>
-              <li className="text-own-white px-3 font-semibold ">
-                <NavLink
-                  to="/blogs"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  Blogs
-                </NavLink>{" "}
-              </li>
-              <li className="text-own-white  px-3 font-semibold ">
-                <NavLink
-                  to="/repair"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  Repair
-                </NavLink>
-              </li>
-              <li className="text-own-white  px-3 font-semibold ">
-                <NavLink
-                  to="/bookmark"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  Bookmark
-                </NavLink>
-              </li>
+          {response?.data?.status === "success" &&
+            response?.data?.currentuser?.length > 0 && (
+              <ul className="  menu-horizontal p-0">
+                <li className="text-own-white px-3 font-semibold ">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      location.pathname === "/" ? "text-own-primary" : " "
+                    }
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li className="text-[#A2A5B9]  px-3 font-semibold ">
+                  <NavLink
+                    to="/buy_products"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Buy Products
+                  </NavLink>
+                </li>
+                <li className="text-[#A2A5B9] px-3 font-semibold ">
+                  <NavLink
+                    to="/blogs"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Blogs
+                  </NavLink>{" "}
+                </li>
+                <li className="text-[#A2A5B9]  px-3 font-semibold ">
+                  <NavLink
+                    to="/repair"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Repair
+                  </NavLink>
+                </li>
+                <li className="text-[#A2A5B9]   px-3 font-semibold ">
+                  <NavLink
+                    to="/bookmark"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Bookmark
+                  </NavLink>
+                </li>
 
-              <li className="text-own-white px-3 font-semibold ">
-                <NavLink
-                  to="/dashBoart"
-                  className={({ isActive }) =>
-                    isActive ? "text-own-primary" : " "
-                  }
-                >
-                  DashBoart
-                </NavLink>
-              </li>
-            </ul>
-          )}
+                <li className="text-[#A2A5B9]  px-3 font-semibold ">
+                  <NavLink
+                    to="/dashBoart"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    DashBoart
+                  </NavLink>
+                </li>
+              </ul>
+            )}
         </div>
         <div className="navbar-end">
           <div>
@@ -193,13 +195,18 @@ const Header = () => {
               </svg>
             </label>
           </div>
-          {response?.data?.status === "success" ? (
+          {response?.data?.status === "success" &&
+          response?.data?.currentuser?.length > 0 ? (
             <div>
               <span
                 onClick={handleProdileEngine}
                 className="bg-own-ternary overflow-hidden inline-block p-1 rounded-full cursor-pointer"
               >
-                <img className="w-[40px]" src={demouser} alt="" />
+                <img
+                  className="w-[40px] rounded-full"
+                  src={response?.data?.currentuser[0]?.image}
+                  alt=""
+                />
               </span>
               <div className="relative">
                 {showMenu && (
@@ -212,7 +219,7 @@ const Header = () => {
                         Profile
                       </li>
                     </NavLink>
-                    <NavLink to="/editProfile">
+                    <NavLink to="/account/profile">
                       <li className="text-lg cursor-pointer py-1 px-5 hover:bg-own-primary transition-all ease-in">
                         Edit Profile
                       </li>
