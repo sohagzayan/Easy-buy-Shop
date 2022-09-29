@@ -8,17 +8,17 @@ import service3 from "../../assets/images/Apple-Watch-Force-Touch-Sensor-Replace
 import service4 from "../../assets/images/Apple-Watch-Screen-Replacement-300x225.jpg";
 const IphoneCategory = () => {
   return (
-    <div className="text-own-white">
+    <div className="text-own-secondary dark:text-own-white">
       <div className={classes.category}>
         <div className="flex  items-center">
           <div>
             <img width="200px" src={clockImaghe} alt="" />
           </div>
           <div>
-            <h3 className="text-own-white text-3xl mb-2  ">
+            <h3 className="text-own-secondary dark:text-own-white text-3xl mb-2  ">
               Apple Watch Repair
             </h3>
-            <p className="text-own-white text-xl mb-2  ">
+            <p className="text-own-secondary dark:text-own-white text-xl mb-2  ">
               Repair and disassembly guides for smartwatches designed by Apple.
             </p>
           </div>

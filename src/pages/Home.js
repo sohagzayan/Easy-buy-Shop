@@ -16,7 +16,7 @@ const Home = () => {
       <Header />
       <div className="">
         <div className=" ">
-          <div className=" bg-[#0C0C18]">
+          <div className="">
             <div className="container mx-auto px-5 py-3">
               <Hero />
             </div>

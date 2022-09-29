@@ -8,7 +8,7 @@ const Fashion = () => {
         <div className="fashion">
           <img src={ImageGirl} className="rounded-md inner" alt="" />
           <div className="absolute top-[40%] left-[5%] ">
-            <h4 className="text-6xl font-semibold text-own-white uppercase">
+            <h4 className="text-6xl font-semibold text-own-secondary dark:text-own-white uppercase">
               Ladies
             </h4>
             <span className="text-4xl font-semibold text-own-primary uppercase">
@@ -19,7 +19,7 @@ const Fashion = () => {
         <div className="fashion">
           <img src={ImageBoy} className="rounded-md inner" alt="" />
           <div className="absolute top-[40%] left-[5%] ">
-            <h4 className="text-6xl font-semibold text-own-white uppercase">
+            <h4 className="text-6xl font-semibold text-own-secondary dark:text-own-white uppercase">
               Mens
             </h4>
             <span className="text-4xl font-semibold text-own-primary uppercase">

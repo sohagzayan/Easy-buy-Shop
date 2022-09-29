@@ -14,17 +14,17 @@ const ServiceCare = () => {
             <img className="mr-6" width="230px" src={repairimage} alt="" />
           </div>
           <div>
-            <h3 className="text-own-white text-3xl mb-2  ">
+            <h3 className="text-own-secondary dark:text-own-white text-3xl mb-2  ">
               Repairs Apple Or Others Products
             </h3>
-            <h4 className="text-own-white text-xl mb-2  ">
+            <h4 className="text-own-secondary dark:text-own-white text-xl mb-2  ">
               Specialized service center
             </h4>
           </div>
         </div>
       </div>
       <div>
-        <h3 className="text-own-white text-center text-2xl mt-10 ">
+        <h3 className="text-own-secondary dark:text-own-white text-center text-2xl mt-10 ">
           Select a <span className="text-own-primary font-bold">Device</span> to
           find out the cost of repairs
         </h3>
@@ -36,7 +36,7 @@ const ServiceCare = () => {
                 src={Category1}
                 alt=""
               />
-              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-white font-bold text-xl">
+              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-secondary dark:text-own-white font-bold text-xl">
                 <span className="text-2xl">Watch</span>
                 <hr />
                 <span className="text-2xl">Apple Watch</span>
@@ -50,7 +50,7 @@ const ServiceCare = () => {
                 src={Category2}
                 alt=""
               />
-              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-white font-bold text-xl">
+              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-secondary dark:text-own-white font-bold text-xl">
                 <span className="text-2xl">iPad</span>
                 <hr />
                 <span className="text-2xl">Apple Mac</span>
@@ -64,7 +64,7 @@ const ServiceCare = () => {
                 src={Category3}
                 alt=""
               />
-              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-white font-bold text-xl">
+              <div className="absolute  z-10 top-[50%] left-[30%]  text-own-secondary dark:text-own-white font-bold text-xl">
                 <span className="text-2xl">Phone</span>
                 <hr />
                 <span className="text-2xl">iPhone</span>

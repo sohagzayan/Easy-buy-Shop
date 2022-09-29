@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaLinkedinIn } from "react-icons/fa";
 import Header from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
 import UpdateUserProfileModal from "./UpdateUserProfileModal";
@@ -7,24 +6,67 @@ import { AiOutlineMenu } from "react-icons/ai";
 import demouser from ".././assets/demouser.png";
 import Footer from "../components/Footer/Footer";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-
+import Cookies from "js-cookie";
+import { useCurrentUserQuery } from "../store/API/user";
+import { useGetFetchQuery } from "../utiliti/GetFatchData";
+import Loading from "../components/Loading/Loading";
+import { useQuery } from "react-query";
+import { getBookMarkData, getAddToCard } from "../Querys/BookmarkQuery";
+import axios from "axios";
 const MyProfile = () => {
   const { username } = useAuthContext();
   const [userP, setUserP] = useState([]);
+  const [percess, setPercess] = useState([]);
+  const userId = Cookies.get("id");
+  const accesToken = Cookies.get("token");
+  const response = useCurrentUserQuery(userId);
+  const token = Cookies.get("token");
+  const id = Cookies.get("id");
+  const [bookmark, setBookmark] = useState([]);
+  const [myProduct, setMyProduct] = useState([]);
+  // console.log(response?.data?.currentuser[0]?.tools);
   const location = useLocation();
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/user/gdsohag360`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setUserP(data));
-  }, [userP]);
 
-  // console.log(userP[0]?.image);
-  // const { name ,education , location} = userP[0]
+  useEffect(() => {
+    Promise.all([
+      fetch(`http://localhost:5000/api/v1/tools?currentUser=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      fetch(
+        `http://localhost:5000/api/v1/purchase?email=${response?.currentData?.currentuser[0]?.email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+      fetch(`http://localhost:5000/api/v1/bookmark`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    ])
+      .then((responses) => {
+        return Promise.all(
+          responses.map(function (response) {
+            return response.json();
+          })
+        );
+      })
+      .then((data) => {
+        setMyProduct(data[0]);
+        setPercess(data[1]);
+        setBookmark(data[2]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [response, token]);
 
   return (
     <>
@@ -44,31 +86,31 @@ const MyProfile = () => {
               <h2 className="text-3xl text-own-primary font-bold">
                 My Profile Info
               </h2>
-              <span className="text-own-white py-2 inline-block">
+              <span className="text-own-secondary dark:text-own-white py-2 inline-block">
                 Bangladesh
               </span>
               <div className="flex items-center gap-10">
                 <NavLink
-                  to="/editProfile"
-                  className="text-own-white  b px-2 py-1 rounded-md  bg-own-ternary"
+                  to="/account/edit_profile"
+                  className="text-own-secondary dark:text-own-white  b px-2 py-1 rounded-md  bg-own-ternary"
                 >
                   Edit Profile
                 </NavLink>
-                <button className="text-own-white bg-own-ternary px-2 py-1 rounded-md">
+                <button className="text-own-secondary dark:text-own-white bg-own-ternary px-2 py-1 rounded-md">
                   <AiOutlineMenu className="text-[23px]" />
                 </button>
               </div>
             </div>
           </div>
           <div className="mt-10">
-            <ul className="flex items-center text-own-white gap-10">
+            <ul className=" container_c mx-auto flex items-center text-own-secondary dark:text-own-white gap-10 border-b-[1px] border-own-primary">
               <NavLink
                 to="/myProfile"
                 className={({ isActive }) =>
                   location.pathname === "/myProfile" ? "text-own-primary" : ""
                 }
               >
-                <li>My Products 0</li>
+                <li>My Products ( {myProduct?.length} )</li>
               </NavLink>
               <NavLink
                 to="my_blog"
@@ -84,7 +126,7 @@ const MyProfile = () => {
                   isActive ? "text-own-primary" : ""
                 }
               >
-                <li>BookMark 0</li>
+                <li>BookMark ( {bookmark?.length} )</li>
               </NavLink>
               <NavLink
                 to="my_favorite_sort"
@@ -92,10 +134,17 @@ const MyProfile = () => {
                   isActive ? "text-own-primary" : ""
                 }
               >
-                <li>My Favorite Short ( 0 )</li>
+                <li>My Products Ordered ( 0 )</li>
+              </NavLink>
+              <NavLink
+                to="my_ordered"
+                className={({ isActive }) =>
+                  isActive ? "text-own-primary" : ""
+                }
+              >
+                <li>My Ordered ( {percess?.length} )</li>
               </NavLink>
             </ul>
-            <hr className="border-own-primary mt-3 border-[1px]" />
             <div>{<Outlet />}</div>
           </div>
         </div>

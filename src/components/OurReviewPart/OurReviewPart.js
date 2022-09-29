@@ -14,14 +14,14 @@ const OurReviewPart = () => {
   // }, [reviewsData]);
 
   return (
-    <div className="mt-20">
+    <div className="mt-20 overflow-x-hidden">
       <div className="text-center">
         <div className="flex justify-center">
           <span className="text-own-primary  block ml-20 sm:text-lg font-bold mb-2 relative before:absolute before:w-12 before:h-[2px] before:bg-own-primary sm:before:left-[-35%] before:top-[55%] before:left-[-10%] ">
             Our Clients Reviews
           </span>
         </div>
-        <p className="text-sm text-own-text mb-6">
+        <p className="text-sm text-own-text-light  dark:text-own-text-dark mb-6">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
           harum?
         </p>

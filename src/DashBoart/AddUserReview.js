@@ -30,7 +30,7 @@ const AddUserReview = () => {
   return (
     <div className="flex justify-center items-center mt-20 px-5">
       <div className="w-full">
-        <span className="text-own-white text-2xl mb-3 inline-block">
+        <span className="text-own-secondary dark:text-own-white text-2xl mb-3 inline-block">
           Give a Review{" "}
         </span>
         <div className="flex my-4">
@@ -53,7 +53,7 @@ const AddUserReview = () => {
             className="textarea text-own-primary font-semibold text-lg bg-own-ternary placeholder:text-own-primary w-full focus:outline-own-secondary"
             placeholder="Bio"
           ></textarea>
-          <button className="bg-own-primary  text-own-white text-white font-bold px-4 py-2 rounded-md">
+          <button className="bg-own-primary  text-own-secondary dark:text-own-white text-white font-bold px-4 py-2 rounded-md">
             Submit Review
           </button>
         </form>

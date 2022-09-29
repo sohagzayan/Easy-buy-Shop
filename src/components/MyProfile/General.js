@@ -40,7 +40,7 @@ const General = () => {
       <div>
         <form action="" onSubmit={handleGeneralUserUpdate}>
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="username"
           >
             Username <span className="text-own-primary">*</span>
@@ -51,10 +51,10 @@ const General = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="username"
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="email"
           >
             Email <span className="text-own-primary">*</span>
@@ -65,9 +65,9 @@ const General = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="email"
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
-          <div className="my-4 text-own-white">
+          <div className="my-4 text-own-secondary dark:text-own-white">
             <h3 className="mb-2">
               Disable ads{" "}
               <span className="uppercase bg-[#FF5555]  ml-3  text-sm px-1 rounded-md">
@@ -81,7 +81,7 @@ const General = () => {
             </p>
           </div>
           <div className="flex justify-end">
-            <button className="bg-own-primary text-own-white px-3 py-2 rounded-md ">
+            <button className="bg-own-primary text-own-secondary dark:text-own-white px-3 py-2 rounded-md ">
               Save Changes
             </button>
           </div>

@@ -183,3 +183,30 @@ tr:nth-child(even) {
 .btn-animation span:nth-child(4) {
   --n: 4;
 }
+
+/* product-buy-card */
+/* .product-buy-card {
+  background: url("./assets/animation video/back-animation.mp4");
+  background-repeat: no-repeat;
+} */
+
+.modal-modifiy {
+  background-color: rgba(0, 0, 0, 0.459) !important;
+  /* opacity: background-color 0.2; */
+}
+
+/* payment styles  */
+
+/* .ElementsApp .InputElement.is-invalid {
+  color: yellow !important;
+} */
+
+/* .ElementsApp input {
+  color: #09be8b !important;
+} */
+
+/* comon class  */
+
+.shadow1 {
+  box-shadow: 0 0 1.25rem rgb(31 45 61 / 5%);
+}

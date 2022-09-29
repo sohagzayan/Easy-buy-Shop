@@ -47,26 +47,26 @@ const EditProfile = () => {
                 <h3 className="text-own-primary text-xl mb-1">
                   MD Sohag / Edit Profile
                 </h3>
-                <p className="text-own-text">
+                <p className="text-own-text-light  dark:text-own-text-dark">
                   Set up your Qulality Coookie presence and hiring needs
                 </p>
               </div>
             </div>
             <div className="flex items-center flex-col border-2 border-own-primary  rounded-md border-dashed cursor-pointer group transition-all ease-in">
-              <h2 className="text-own-white font-bold text-xl bg-[#0C0C18] w-full text-center py-1 group-hover:bg-own-primary transition-all ease-in">
+              <h2 className="text-own-secondary dark:text-own-white font-bold text-xl bg-[#0C0C18] w-full text-center py-1 group-hover:bg-own-primary transition-all ease-in">
                 Go{" "}
                 <span className="text-own-primary group-hover:text-[#FF5555] ">
                   Pro
                 </span>
               </h2>
-              <p className="text-own-white text-sm bg-own-primary px-2 py-2 group-hover:bg-[#0C0C18] transition-all ease-in">
+              <p className="text-own-secondary dark:text-own-white text-sm bg-own-primary px-2 py-2 group-hover:bg-[#0C0C18] transition-all ease-in">
                 Add power features for just $5/month
               </p>
             </div>
           </div>
           <div className="mt-20 grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <ul className="text-own-white ">
+              <ul className="text-own-secondary dark:text-own-white ">
                 <NavLink
                   to="/account"
                   className={({ isActive }) =>
@@ -76,7 +76,7 @@ const EditProfile = () => {
                   <li className="mb-2">General</li>
                 </NavLink>
                 <NavLink
-                  to="profile"
+                  to="edit_profile"
                   className={({ isActive }) =>
                     isActive ? "text-own-primary" : ""
                   }

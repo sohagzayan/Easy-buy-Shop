@@ -48,7 +48,7 @@ const MakeAdminRow = ({ user, refetch }) => {
       <td>{email}</td>
       <td>{role}</td>
       <td onClick={makeAdmin}>
-        <button className="text-own-white px-2 py-2 rounded-md bg-primary border-primary text-white">
+        <button className="text-own-secondary dark:text-own-white px-2 py-2 rounded-md bg-primary border-primary text-white">
           {role === "admin" ? "Make User😑" : "Make Admin🦾"}
         </button>
       </td>

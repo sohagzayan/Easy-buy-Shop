@@ -6,6 +6,9 @@ import "./App.css";
 import Loading from "./components/Loading/Loading";
 import { AuthContextProvider } from "./context/AuthContextProvider";
 import AllRoutes from "./router/AllRoutes";
+import "swiper/css/bundle";
+import "./components/HeroSlider/styles.css";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -17,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-[#fff] dark:bg-own-dark-bg">
       {loading ? (
         <Loading />
       ) : (

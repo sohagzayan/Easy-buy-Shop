@@ -157,13 +157,15 @@ const Reviews = ({ item }) => {
             <div className="rating">{GetRating(ratingParse)}</div>
           </div>
         </div>
-        <div className="my-5 text-own-text text-left">
+        <div className="my-5 text-own-text-light  dark:text-own-text-dark text-left">
           <p>
             Completely agree with the first choice, i found the same kit a few
             weeks ago on Newegg, Viper RGB 3600 Mhz that was
           </p>
         </div>
-        <p className="font-bold text-own-text text-left">{date}</p>
+        <p className="font-bold text-own-text-light  dark:text-own-text-dark text-left">
+          {date}
+        </p>
       </div>
     </div>
   );

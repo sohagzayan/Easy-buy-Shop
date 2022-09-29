@@ -111,15 +111,15 @@ const EditProfileInfo = () => {
           <div className="flex">
             {pictureUpdateMode ? (
               <div className="flex flex-col">
-                <button className="inline-block mb-2 bg-[#FF557B] text-own-white px-6 rounded-md w-[100px]">
+                <button className="inline-block mb-2 bg-[#FF557B] text-own-secondary dark:text-own-white px-6 rounded-md w-[100px]">
                   Delete
                 </button>
                 <input
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  className="mb-2 text-own-white"
+                  className="mb-2 text-own-secondary dark:text-own-white"
                 />
-                <p className="text-own-white text-sm my-2">
+                <p className="text-own-secondary dark:text-own-white text-sm my-2">
                   JPG, GIF or PNG. Max size of 800K
                 </p>
                 <button
@@ -137,13 +137,13 @@ const EditProfileInfo = () => {
               <div className="flex items-center">
                 <button
                   onClick={() => setPictureUpdateMode(true)}
-                  className="px-6 block py-2 rounded-md  bg-own-primary border-none text-own-white mr-10"
+                  className="px-6 block py-2 rounded-md  bg-own-primary border-none text-own-secondary dark:text-own-white mr-10"
                 >
                   Upload new Picture
                 </button>
                 <button
                   onClick={defaultPictureSet}
-                  className="block  bg-[#FF557B] text-own-white px-6 rounded-md py-2"
+                  className="block  bg-[#FF557B] text-own-secondary dark:text-own-white px-6 rounded-md py-2"
                 >
                   Reset Picture
                 </button>
@@ -153,7 +153,7 @@ const EditProfileInfo = () => {
         </div>
         <form action="">
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="name"
           >
             Name <span className="text-own-primary">*</span>
@@ -164,10 +164,10 @@ const EditProfileInfo = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder=""
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="location"
           >
             Location <span className="text-own-primary">*</span>
@@ -178,10 +178,10 @@ const EditProfileInfo = () => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder=""
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="bio"
           >
             Bio <span className="text-own-primary">*</span>
@@ -192,12 +192,14 @@ const EditProfileInfo = () => {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             placeholder=""
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
-          <h3 className="text-own-white mt-3">ONLINE PRESENCE</h3>
+          <h3 className="text-own-secondary dark:text-own-white mt-3">
+            ONLINE PRESENCE
+          </h3>
           <hr className="border-own-text mt-1" />
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="website"
           >
             Personal website <span className="text-own-primary">*</span>
@@ -208,12 +210,12 @@ const EditProfileInfo = () => {
             value={personalWeb}
             onChange={(e) => setPersonalWeb(e.target.value)}
             placeholder=""
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <div className="flex justify-end mt-6">
             <button
               onClick={handleUpdateProfile}
-              className="bg-own-primary text-own-white px-3 py-2 rounded-md "
+              className="bg-own-primary text-own-secondary dark:text-own-white px-3 py-2 rounded-md "
             >
               Save Profile
             </button>

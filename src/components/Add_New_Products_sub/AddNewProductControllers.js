@@ -32,7 +32,7 @@ const AddNewProductControllers = ({ resetHandleForm }) => {
           Chancel
         </button>
 
-        <div className="text-own-white flex sm:justify-end items-center mb-4  container mx-auto py-3">
+        <div className="text-own-secondary dark:text-own-white flex sm:justify-end items-center mb-4  container mx-auto py-3">
           <button
             onClick={resetHandleForm}
             className="border-[1px] px-6 py-3  rounded-md border-own-primary border-opacity-50 bg-own-secondary"

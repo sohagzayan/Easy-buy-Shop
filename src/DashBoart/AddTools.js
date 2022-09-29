@@ -76,10 +76,10 @@ const AddTools = () => {
                   <img className="w-[200px] mx-auto" src={chest} alt="" />
                 </div>
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold text-own-white">
+                  <h1 className="text-4xl font-bold text-own-secondary dark:text-own-white">
                     Add Products/tools
                   </h1>
-                  <p className="py-3 text-own-white">
+                  <p className="py-3 text-own-secondary dark:text-own-white">
                     excepturi exercitationem quasi. In deleniti eaque aut
                     repudiandae et a id nisi.
                   </p>
@@ -160,7 +160,7 @@ const AddTools = () => {
                         <p className="text-[#F23030] mb-1">{message}</p>
                       )}
                     />
-                    <button className="btn bg-own-primary text-own-white border-transparent text-white">
+                    <button className="btn bg-own-primary text-own-secondary dark:text-own-white border-transparent text-white">
                       ADD PRODUCT
                     </button>
                   </form>

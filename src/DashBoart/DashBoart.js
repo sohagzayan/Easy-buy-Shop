@@ -19,7 +19,7 @@ const DashBoart = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2 " className="drawer-overlay"></label>
-          <ul className="menu p-4 overflow-y-auto w-60 bg-own-ternary text-own-white">
+          <ul className="menu p-4 overflow-y-auto w-60 bg-own-ternary text-own-secondary dark:text-own-white">
             <li>
               <NavLink to="myProfile">My Profile</NavLink>
             </li>

@@ -1,4 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 
@@ -10,11 +11,12 @@ const CheckoutForm = ({ data }) => {
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+  const token = Cookies.get("token");
 
   const { _id, price, email, name } = data;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/purchase/payment", {
+    fetch("http://localhost:5000/api/v1/payment", {
       method: "POST",
       body: JSON.stringify({
         price,
@@ -25,6 +27,7 @@ const CheckoutForm = ({ data }) => {
     })
       .then((res) => res.json())
       .then((info) => {
+        console.log(info);
         if (info?.clientSecret) {
           setClientSecret(info.clientSecret);
         }
@@ -32,8 +35,8 @@ const CheckoutForm = ({ data }) => {
   }, [price]);
 
   const handleSubmit = async (e) => {
-    setSuccess("");
     e.preventDefault();
+    setSuccess("");
     if (!stripe || !elements) {
       return;
     }
@@ -78,17 +81,17 @@ const CheckoutForm = ({ data }) => {
         transactionId: paymentIntent.id,
         productId: _id,
       };
-      fetch(`http://localhost:5000/api/purchase/${_id}`, {
+      fetch(`http://localhost:5000/api/v1/payment/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify({
           transactionId: paymentIntent.id,
           productId: _id,
-          payed: "pending",
+          payed: "complete",
         }),
       })
         .then((res) => res.json())
@@ -109,7 +112,7 @@ const CheckoutForm = ({ data }) => {
         <CardElement />
         <button
           type="submit"
-          className="bg-primary btn mt-2"
+          className="bg-own-primary text-own-secondary dark:text-own-white btn mt-2"
           disabled={!stripe || !clientSecret}
         >
           Pay
@@ -117,7 +120,7 @@ const CheckoutForm = ({ data }) => {
       </form>
       <p className="text-secondary">{cardError}</p>
       <div className="">
-        <p className="text-green-400">{success}</p>
+        <p className="text-own-primary">{success}</p>
         {succesTransationId && (
           <h2 className="text-green-500 font-bold text-xl">
             Your TrazationId {succesTransationId}

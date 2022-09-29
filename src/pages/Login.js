@@ -114,7 +114,7 @@ const SignUp = () => {
       <div className="relative">
         {mainError && (
           <div className="">
-            <p className="bg-[#FF5555] text-own-white text-center py-2 ">
+            <p className="bg-[#FF5555] text-own-secondary dark:text-own-white text-center py-2 ">
               {mainError}
             </p>
           </div>
@@ -126,7 +126,7 @@ const SignUp = () => {
             </div>
           )}
           <div className="relative">
-            <p className="text-own-white absolute top-2 right-5 z-10">
+            <p className="text-own-secondary dark:text-own-white absolute top-2 right-5 z-10">
               Not a member?{" "}
               <NavLink
                 className="text-own-primary font-bold text-lg"
@@ -137,12 +137,12 @@ const SignUp = () => {
             </p>
             <div className=" sm:w-[40%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
               <div className=" z-20 relative">
-                <h2 className="text-own-white font-semibold text-3xl mb-3">
+                <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
                 </h2>
                 <div className="flex sm:flex-row flex-col sm:items-center mb-5">
                   <button
-                    className=" bg-[#1a73e8] text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
+                    className=" bg-[#1a73e8] text-own-secondary dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
                     onClick={handleLoginWithGoogle}
                   >
                     <span className="block">Sign In Your Google Account</span>
@@ -154,10 +154,10 @@ const SignUp = () => {
                     href=""
                     className="bg-[#1a73e8] p-2 rounded-md sm:inline-block hidden"
                   >
-                    <GrFacebookOption className="text-own-white text-2x " />
+                    <GrFacebookOption className="text-own-secondary dark:text-own-white text-2x " />
                   </a>
                   <a href="">
-                    <span className="sm:hidden inline-block text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
+                    <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
                       Facebook
                     </span>
                   </a>
@@ -168,7 +168,10 @@ const SignUp = () => {
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <label htmlFor="" className="text-own-white mb-1">
+                  <label
+                    htmlFor=""
+                    className="text-own-secondary dark:text-own-white mb-1"
+                  >
                     Username or Email Address
                   </label>
                   <input
@@ -179,7 +182,10 @@ const SignUp = () => {
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="" className="text-own-white">
+                    <label
+                      htmlFor=""
+                      className="text-own-secondary dark:text-own-white"
+                    >
                       Password
                     </label>
                     <label className=" inline-block">
@@ -200,9 +206,9 @@ const SignUp = () => {
                       className="absolute right-5 top-[20%]"
                     >
                       {showPassword ? (
-                        <AiOutlineEye className="text-own-white text-3xl cursor-pointer" />
+                        <AiOutlineEye className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
                       ) : (
-                        <AiOutlineEyeInvisible className="text-own-white text-3xl cursor-pointer" />
+                        <AiOutlineEyeInvisible className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
                       )}
                     </span>
                   </div>
@@ -211,7 +217,7 @@ const SignUp = () => {
                   <p className="text-secondary text-sm">{error}</p>
 
                   <div className=" mt-2">
-                    {/* <button className=" bg-own-primary text-own-white py-2 rounded-md text-white px-24 mt-3 ">
+                    {/* <button className=" bg-own-primary text-own-secondary dark:text-own-white py-2 rounded-md text-white px-24 mt-3 ">
                       Sign In
                     </button> */}
                     <button className="btn-animation flex items-center justify-center ml-0">

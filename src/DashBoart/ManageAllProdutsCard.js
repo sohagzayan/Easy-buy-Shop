@@ -30,17 +30,21 @@ const ManageAllProdutsCard = ({ data }) => {
         <img width="200px" src={image ? MF + image : null} alt="Movie" />
 
         <div className="card-body">
-          <h2 className="card-title text-own-white">{name}</h2>
-          <p className="text-own-white">{details}</p>
-          <span className="text-own-white">Price : {price}</span>
+          <h2 className="card-title text-own-secondary dark:text-own-white">
+            {name}
+          </h2>
+          <p className="text-own-secondary dark:text-own-white">{details}</p>
+          <span className="text-own-secondary dark:text-own-white">
+            Price : {price}
+          </span>
           <div className="card-actions justify-end">
-            <div className="flex flex-col text-own-white">
+            <div className="flex flex-col text-own-secondary dark:text-own-white">
               <span>Available : {quantity}</span>
               <span>MinimumOrder : {minimumOrder}</span>
             </div>
             <button
               onClick={handleDeleteProducts}
-              className="btn  bg-own-primary text-own-white text-white items-center"
+              className="btn  bg-own-primary text-own-secondary dark:text-own-white text-white items-center"
             >
               DELETE
             </button>

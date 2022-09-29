@@ -40,7 +40,7 @@ const PasswordReset = () => {
       <div>
         <form action="" onSubmit={handleGeneralUserUpdate}>
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="username"
           >
             Old Password <span className="text-own-primary">*</span>
@@ -51,10 +51,10 @@ const PasswordReset = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="username"
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <label
-            className="text-own-white cursor-pointer mt-6 inline-block mb-1"
+            className="text-own-secondary dark:text-own-white cursor-pointer mt-6 inline-block mb-1"
             htmlFor="email"
           >
             New Password <span className="text-own-primary">*</span>
@@ -65,11 +65,11 @@ const PasswordReset = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="email"
-            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-white"
+            className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
 
           <div className="flex justify-end">
-            <button className="bg-own-primary mt-4 text-own-white px-3 py-2 rounded-md ">
+            <button className="bg-own-primary mt-4 text-own-secondary dark:text-own-white px-3 py-2 rounded-md ">
               Changes
             </button>
           </div>

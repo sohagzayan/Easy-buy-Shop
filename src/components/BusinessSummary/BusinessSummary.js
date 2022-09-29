@@ -14,10 +14,10 @@ const BusinessSummary = () => {
             Why choose Us
           </span>
         </div>
-        <span className="text-2xl font-medium mb-2 block text-center text-own-white">
+        <span className="text-2xl font-medium mb-2 block text-center text-own-secondary dark:text-own-white">
           Many Business Trust Us
         </span>
-        <p className="text-sm text-own-text text-center">
+        <p className="text-sm text-own-text-light  dark:text-own-text-dark text-center">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
           reiciendis.
         </p>
@@ -26,10 +26,10 @@ const BusinessSummary = () => {
             <span className="text-2xl font-bold text-own-primary bg-[#39f1a8] animate-pulse w-[80px] h-[80px] rounded-full flex items-center justify-center  mb-3 bg-opacity-25">
               100+
             </span>
-            <span className="  text-lg text-own-white mb-2 font-bold">
+            <span className="  text-lg text-own-secondary dark:text-own-white mb-2 font-bold">
               We served customers
             </span>
-            <p className="text-own-text">
+            <p className="text-own-text-light  dark:text-own-text-dark">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             </p>
           </div>
@@ -37,10 +37,10 @@ const BusinessSummary = () => {
             <span className="text-2xl font-bold text-own-primary bg-[#39f1a8] animate-pulse w-[80px] h-[80px] rounded-full flex items-center justify-center  mb-3 bg-opacity-25">
               120+
             </span>
-            <span className="  text-lg text-own-white mb-2 font-bold">
+            <span className="  text-lg text-own-secondary dark:text-own-white mb-2 font-bold">
               Annual revenue
             </span>
-            <p className="text-own-text">
+            <p className="text-own-text-light  dark:text-own-text-dark">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             </p>
           </div>
@@ -48,10 +48,10 @@ const BusinessSummary = () => {
             <span className="text-2xl font-bold text-own-primary bg-[#39f1a8] animate-pulse w-[80px] h-[80px] rounded-full flex items-center justify-center  mb-3 bg-opacity-25">
               2+
             </span>
-            <span className="  text-lg text-own-white mb-2 font-bold">
+            <span className="  text-lg text-own-secondary dark:text-own-white mb-2 font-bold">
               Reviews
             </span>
-            <p className="text-own-text">
+            <p className="text-own-text-light  dark:text-own-text-dark">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             </p>
           </div>
@@ -59,10 +59,10 @@ const BusinessSummary = () => {
             <span className="text-2xl font-bold text-own-primary bg-[#39f1a8] animate-pulse w-[80px] h-[80px] rounded-full flex items-center justify-center   mb-3 bg-opacity-25">
               100+
             </span>
-            <span className="  text-lg text-own-white mb-2 font-bold">
+            <span className="  text-lg text-own-secondary dark:text-own-white mb-2 font-bold">
               Total User
             </span>
-            <p className="text-own-text">
+            <p className="text-own-text-light  dark:text-own-text-dark">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             </p>
           </div>

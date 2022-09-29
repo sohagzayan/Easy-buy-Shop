@@ -14,7 +14,7 @@ import DashBoart from "../DashBoart/DashBoart";
 import MakeAdmin from "../DashBoart/MakeAdmin";
 import ManageAllOrder from "../DashBoart/ManageAllOrder";
 import ManageAllProducts from "../DashBoart/ManageAllProducts";
-import MyOrder from "../DashBoart/MyOrder";
+import MyOrder from "../components/My_profile_deshbord/MyOrder";
 import MyProfile from "../DashBoart/MyProfile";
 import Payment from "../DashBoart/Payment";
 import Blogs from "../pages/Blogs";
@@ -33,14 +33,23 @@ import MyFavoriteD from "../components/My_profile_deshbord/MyFavoriteD";
 import PasswordReset from "../components/MyProfile/PasswordReset";
 import EmailNotifecation from "../components/MyProfile/EmailNotifecation";
 import AddNewProducts from "../pages/AddNewProducts";
+import ProductsDetails from "../components/ProductsDetails/ProductsDetails";
+import Card from "../pages/Card";
+import ProductMainInfo from "../components/AddNewProducts/ProductMainInfo";
+import ProductsOthersInfo from "../components/AddNewProducts/ProductsOthersInfo";
+import UserProfile from "../pages/UserProfile";
 const AllRoutes = () => {
   // const [admin] = useAdmin(username)
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/ProductsDetails/:id" element={<ProductsDetails />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/payment/:id" element={<Payment />} />
+      <Route path="/user_profile/:id" element={<UserProfile />} />
+
       <Route
         path="/blogs"
         element={
@@ -83,6 +92,7 @@ const AllRoutes = () => {
           </PrivateRoute>
         }
       />
+
       <Route
         path="/bookmark"
         element={
@@ -108,7 +118,7 @@ const AllRoutes = () => {
         }
       >
         <Route index={true} element={<General />} />
-        <Route path="profile" element={<EditProfileInfo />} />
+        <Route path="edit_profile" element={<EditProfileInfo />} />
         <Route path="social_profiles" element={<SocialProfile />} />
         <Route path="password" element={<PasswordReset />} />
         <Route path="email_notifications" element={<EmailNotifecation />} />
@@ -124,7 +134,7 @@ const AllRoutes = () => {
         <Route index element={<MyProductsD />} />
         <Route path="my_blog" element={<MyBlogD />} />
         <Route path="my_bookmark" element={<MyBookMarkD />} />
-        <Route path="my_favorite_sort" element={<MyFavoriteD />} />
+        <Route path="my_ordered" element={<MyOrder />} />
         {/* <Route index element={<MyProfile />} /> */}
         {/* <Route path="myProfile" element={<MyProfile />} /> */}
         {/* <Route  element={<ManageAllOrder />} /> */}

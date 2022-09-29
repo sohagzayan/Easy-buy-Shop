@@ -4,7 +4,12 @@
 @tailwind utilities;
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: sans-serif;
   margin: auto;
-  background: #141a28;
+}
+
+.container_c {
+  width: 85%;
+  max-width: 1400px;
+  padding: 10px 5px;
 }

@@ -125,7 +125,7 @@ const SignUp = () => {
             </div>
           )}
           <div className="relative">
-            <p className="text-own-white absolute top-2 right-5 z-10">
+            <p className="text-own-secondary dark:text-own-white absolute top-2 right-5 z-10">
               Already a member?{" "}
               <NavLink
                 className="text-own-primary font-bold text-lg"
@@ -136,11 +136,11 @@ const SignUp = () => {
             </p>
             <div className="sm:w-[40%] w-[90%] mx-auto sm:mx-0 sm:ml-24 py-6 ">
               <div className="relative z-10">
-                <h2 className="text-own-white font-semibold text-3xl mb-3">
+                <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
                 </h2>
                 <div className="flex sm:flex-row flex-col sm:items-center mb-1">
-                  <button className=" bg-[#1a73e8] text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3">
+                  <button className=" bg-[#1a73e8] text-own-secondary dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3">
                     <span className="block">Sign In Your Google Account</span>
                     <span className="block bg-own-white text-2xl py-2 px-3 rounded-r-md">
                       <FcGoogle className="" />
@@ -150,10 +150,10 @@ const SignUp = () => {
                     href=""
                     className="bg-[#1a73e8] p-2 rounded-md sm:inline-block hidden"
                   >
-                    <GrFacebookOption className="text-own-white text-2x " />
+                    <GrFacebookOption className="text-own-secondary dark:text-own-white text-2x " />
                   </a>
                   <a href="">
-                    <span className="sm:hidden inline-block text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
+                    <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
                       Facebook
                     </span>
                   </a>
@@ -164,7 +164,10 @@ const SignUp = () => {
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <label htmlFor="" className="text-own-white mb-1  ">
+                  <label
+                    htmlFor=""
+                    className="text-own-secondary dark:text-own-white mb-1  "
+                  >
                     Your Name
                   </label>
                   <input
@@ -174,7 +177,10 @@ const SignUp = () => {
                     {...register("name")}
                   />
                   <p className=" text-secondary">{errors.name?.message}</p>
-                  <label htmlFor="" className="text-own-white mb-1">
+                  <label
+                    htmlFor=""
+                    className="text-own-secondary dark:text-own-white mb-1"
+                  >
                     Your Username
                   </label>
                   <input
@@ -185,7 +191,10 @@ const SignUp = () => {
                   />
 
                   <p className=" text-secondary">{errors.username?.message}</p>
-                  <label htmlFor="" className="text-own-white mb-1">
+                  <label
+                    htmlFor=""
+                    className="text-own-secondary dark:text-own-white mb-1"
+                  >
                     Your Email Address
                   </label>
                   <input
@@ -195,7 +204,10 @@ const SignUp = () => {
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
-                  <label htmlFor="" className="text-own-white mb-1">
+                  <label
+                    htmlFor=""
+                    className="text-own-secondary dark:text-own-white mb-1"
+                  >
                     Your Password
                   </label>
                   <div className="relative">
@@ -210,9 +222,9 @@ const SignUp = () => {
                       className="absolute right-5 top-[20%]"
                     >
                       {showPassword ? (
-                        <AiOutlineEye className="text-own-white text-3xl cursor-pointer" />
+                        <AiOutlineEye className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
                       ) : (
-                        <AiOutlineEyeInvisible className="text-own-white text-3xl cursor-pointer" />
+                        <AiOutlineEyeInvisible className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
                       )}
                     </span>
                   </div>
@@ -220,13 +232,13 @@ const SignUp = () => {
                   <p className=" text-secondary">{errors.password?.message}</p>
                   <div className="flex gap-16">
                     <CountryDropdown
-                      className="bg-[#323644] text-own-white py-2 mt-4 w-full px-3 rounded-md"
+                      className="bg-[#323644] text-own-secondary dark:text-own-white py-2 mt-4 w-full px-3 rounded-md"
                       value={country}
                       onChange={(val) => selectCountry(val)}
                       required
                     />
                     <RegionDropdown
-                      className="bg-[#323644] text-own-white py-2 mt-4 w-[160px] px-3 rounded-md"
+                      className="bg-[#323644] text-own-secondary dark:text-own-white py-2 mt-4 w-[160px] px-3 rounded-md"
                       country={country}
                       value={region}
                       onChange={(val) => selectRegion(val)}
@@ -244,7 +256,7 @@ const SignUp = () => {
                     />
                     <label
                       htmlFor="tarms-condetion"
-                      className="text-own-white text-sm"
+                      className="text-own-secondary dark:text-own-white text-sm"
                     >
                       Creating an account means you’re okay with our{" "}
                       <a href="" className="text-own-primary">
@@ -265,7 +277,7 @@ const SignUp = () => {
                       <span></span>
                     </button>
                   </div>
-                  <p className="text-own-white text-sm mt-5">
+                  <p className="text-own-secondary dark:text-own-white text-sm mt-5">
                     This site is protected by reCAPTCHA and the Google{" "}
                     <a href="" className="text-own-primary">
                       {" "}

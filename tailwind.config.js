@@ -1,12 +1,17 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
+  darkMode: "class",
   theme: {
     colors: {
-      "own-primary": "#7703FC",
-      "own-secondary": "#151529",
+      "own-primary": "#008aff",
+      "own-secondary": "#152c5b",
+      "own-dark-bg": "#1C2836",
+      "own-dark-bg-special": "#1F2D3D",
       "own-ternary": "#1E2738",
-      "own-text": "#747990",
+      "own-text-dark": "#c0ccda",
+      "own-text-light": "#62759d",
       "own-white": "#ffffff",
+      "own-white-special": "#FAFBFE",
       "own-black": "#000000",
     },
   },

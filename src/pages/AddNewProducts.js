@@ -4,9 +4,7 @@ import UploadImage from "../assets/image_upload.png";
 import bannerImahe from "../assets/banner-img-1.png";
 import axios from "axios";
 import swal from "sweetalert";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+
 import AddNewProductControllers from "../components/Add_New_Products_sub/AddNewProductControllers";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
@@ -18,9 +16,12 @@ const AddNewProducts = () => {
   const [details, setDetails] = useState("");
   const [price, setPrice] = useState("");
   const [minOrder, setMinOrder] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [inStock, setInStock] = useState("");
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
+  const [bgColor, setBgColor] = useState("");
   const imagebbKey = "0b8c4fea4eba3001acb5a66d0574e4b5";
   /** Current User Info */
   const userId = Cookies.get("id");
@@ -40,10 +41,7 @@ const AddNewProducts = () => {
       await axios
         .post(url, formData)
         .then((result) => {
-          console.log(result?.data?.data?.url);
-          console.log(result?.data?.success);
           if (result?.data?.success) {
-            console.log("come inner");
             axios
               .post(
                 `http://localhost:5000/api/v1/tools`,
@@ -51,8 +49,9 @@ const AddNewProducts = () => {
                   name,
                   details,
                   price,
-                  quantity,
-                  minimumOrder: minOrder,
+                  inStock,
+                  Brand: brand,
+                  category,
                   image: result?.data?.data?.url,
                 },
                 {
@@ -66,21 +65,21 @@ const AddNewProducts = () => {
                   Cookies.remove("token");
                   Cookies.remove("id");
                   window.location.reload(true);
+                  return;
                 }
 
-                console.log(res.data.message);
                 setLoading(false);
                 swal("success to update your profile");
                 setName("");
                 setDetails("");
                 setPrice("");
                 setMinOrder("");
-                setQuantity("");
+                setInStock("");
                 setFile(null);
+                URL.createObjectURL({});
               })
               .catch((err) => {
                 setLoading(false);
-                console.log(err);
               });
           }
         })
@@ -99,7 +98,7 @@ const AddNewProducts = () => {
     setDetails("");
     setPrice("");
     setMinOrder("");
-    setQuantity("");
+    setInStock("");
     setFile(null);
     swal("Reset Your Form Successful");
   };
@@ -129,11 +128,11 @@ const AddNewProducts = () => {
                   {file ? (
                     <div className="flex justify-between items-center w-full gap-10 border-[1px] border-dashed border-own-primary">
                       <img
-                        className="w-[200px] mr-auto border-2 border-own-primary"
+                        className="w-[130px] mr-auto border-2 border-own-primary"
                         src={URL.createObjectURL(file)}
                         alt=""
                       />
-                      <div className="text-own-white mr-10">
+                      <div className="text-own-secondary dark:text-own-white mr-10">
                         <h5 className="text-xl  text-own-primary ">
                           Preview Your Image{" "}
                         </h5>
@@ -142,12 +141,12 @@ const AddNewProducts = () => {
                     </div>
                   ) : (
                     <div className="py-2">
-                      <img className="w-[100px]" src={UploadImage} alt="" />
-                      <p className="text-own-white">
+                      <img className="w-[50px]" src={UploadImage} alt="" />
+                      <p className="text-own-secondary dark:text-own-white text-sm">
                         Drag and drop an image, or{" "}
-                        <span className="text-own-primary">Browse</span>
+                        <span className="text-own-primary ">Browse</span>
                       </p>
-                      <p className="text-own-white">
+                      <p className="text-own-secondary dark:text-own-white text-sm">
                         1600x1200 or higher recommended. Max 5MB
                       </p>
                     </div>
@@ -157,15 +156,15 @@ const AddNewProducts = () => {
                   id="imageadd"
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  className="mb-2 text-own-white hidden"
+                  className="mb-2 text-own-secondary dark:text-own-white hidden"
                 />
 
-                <form onSubmit={handleAddNewProducts} className=" mt-6">
+                <form onSubmit={handleAddNewProducts} className=" mt-3">
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="bg-own-secondary w-full py-2 text-own-white   px-4 outline-none focus:outline-own-primary  border-[1px] border-[#7703fc46] rounded-md"
+                    className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mb-2  border-[1px] border-[#7703fc46] rounded-md"
                     placeholder="Give me a name"
                     required
                   />
@@ -174,39 +173,46 @@ const AddNewProducts = () => {
                     type="text"
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
-                    className="bg-own-secondary w-full py-2 text-own-white   px-4 outline-none focus:outline-own-primary mt-4  border-[1px] border-[#7703fc46] rounded-md"
+                    className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mb-2  border-[1px] border-[#7703fc46] rounded-md"
                     placeholder="Deatils Your Products"
                     required
                   />
-                  <p className=" text-secondary  mt-1"></p>
-                  <input
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    type="number"
-                    className="bg-own-secondary w-full py-2 text-own-white   px-4 outline-none focus:outline-own-primary mt-4  border-[1px] border-[#7703fc46] rounded-md"
-                    placeholder="Your Products Price"
-                    required
-                  />
-                  <p className=" text-secondary  mt-1"></p>
-                  <div className="flex items-center gap-10">
+                  <p className=" text-secondary  "></p>
+                  <div className="flex items-center  justify-between gap-10">
                     <input
-                      value={minOrder}
-                      onChange={(e) => setMinOrder(e.target.value)}
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                       type="number"
-                      className="bg-own-secondary w-full py-2 text-own-white   px-4 outline-none focus:outline-own-primary mt-4  border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="Minimum Order Quantity"
+                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-[#7703fc46] rounded-md"
+                      placeholder="Your Products Price"
                       required
                     />
-                    <p className=" text-secondary  mt-1"></p>
                     <input
-                      value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
-                      type="number"
-                      className="bg-own-secondary w-full py-2 text-own-white   px-4 outline-none focus:outline-own-primary mt-4  border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="Available Order Quentitie"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      type="text"
+                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-[#7703fc46] rounded-md"
+                      placeholder="Your Products Category"
                       required
                     />
-                    <p className=" text-secondary  mt-1"></p>
+                  </div>
+                  <div className="flex items-center mt-2 gap-10">
+                    <input
+                      value={inStock}
+                      onChange={(e) => setInStock(e.target.value)}
+                      type="number"
+                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary   border-[1px] border-[#7703fc46] rounded-md"
+                      placeholder="In Stock"
+                      required
+                    />
+                    <input
+                      value={brand}
+                      onChange={(e) => setBrand(e.target.value)}
+                      type="text"
+                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary   border-[1px] border-[#7703fc46] rounded-md"
+                      placeholder="Brand Name"
+                      required
+                    />
                   </div>
 
                   <button className="btn-animation flex items-center justify-center ml-0">
