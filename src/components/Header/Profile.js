@@ -9,7 +9,7 @@ const Profile = ({ handleUserProfile }) => {
     <>
       <span
         onClick={handleUserProfile}
-        className="bg-own-ternary overflow-hidden inline-block p-1 rounded-full cursor-pointer"
+        className="bg-own-white-special dark:bg-own-dark-bg-special overflow-hidden inline-block p-1 rounded-full cursor-pointer"
       >
         <img
           className="w-[40px] rounded-full"

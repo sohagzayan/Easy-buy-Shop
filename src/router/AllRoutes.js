@@ -34,7 +34,6 @@ import PasswordReset from "../components/MyProfile/PasswordReset";
 import EmailNotifecation from "../components/MyProfile/EmailNotifecation";
 import AddNewProducts from "../pages/AddNewProducts";
 import ProductsDetails from "../components/ProductsDetails/ProductsDetails";
-import Card from "../pages/Card";
 import ProductMainInfo from "../components/AddNewProducts/ProductMainInfo";
 import ProductsOthersInfo from "../components/AddNewProducts/ProductsOthersInfo";
 import UserProfile from "../pages/UserProfile";

@@ -6,6 +6,7 @@ module.exports = {
       "own-primary": "#008aff",
       "own-secondary": "#152c5b",
       "own-dark-bg": "#1C2836",
+      "own-soft-red": "#F8507B",
       "own-dark-bg-special": "#1F2D3D",
       "own-ternary": "#1E2738",
       "own-text-dark": "#c0ccda",

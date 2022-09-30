@@ -1,16 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 const WithOutLoginMenu = () => {
   return (
     <>
-      <div>
+      <div className="flex items-center gap-6">
+        <ThemeToggle />
         <NavLink
           to="/"
           className={({ isActive }) =>
             isActive
-              ? " text-own-primary uppercase font-bold mr-6 text-lg"
-              : " text-own-secondary dark:text-own-white uppercase font-bold mr-6 text-lg"
+              ? " text-own-primary uppercase font-bold text-lg"
+              : " text-own-secondary dark:text-own-white uppercase font-bold  text-lg"
           }
         >
           Home
@@ -19,8 +21,8 @@ const WithOutLoginMenu = () => {
           to="/login"
           className={({ isActive }) =>
             isActive
-              ? " text-own-primary uppercase font-bold mr-6 text-lg"
-              : " text-own-secondary dark:text-own-white uppercase font-bold mr-6 text-lg"
+              ? " text-own-primary uppercase font-bold  text-lg"
+              : " text-own-secondary dark:text-own-white uppercase font-bold  text-lg"
           }
         >
           Join

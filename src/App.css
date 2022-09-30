@@ -105,8 +105,7 @@ tr:nth-child(even) {
 
 /* login */
 
-.login {
-  background-image: url("./assets/login bg.jpg");
+/* .login {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -114,8 +113,8 @@ tr:nth-child(even) {
   min-height: 100vh;
   max-height: 100%;
   position: relative;
-}
-.login::after {
+} */
+/* .login::after {
   content: "";
   position: absolute;
   background-image: linear-gradient(to right, #272a37, #272a37, 85%, #282a376c);
@@ -123,14 +122,14 @@ tr:nth-child(even) {
   height: 100%;
   top: 0;
   left: 0;
-  /* z-index: 10; */
-}
+  z-index: 10;
+} */
 
 .btn-animation {
-  --c: #7703fc;
-  color: #7703fc;
+  --c: #008aff;
+  color: #008aff;
   font-size: 16px;
-  border: 0.3em solid #7703fc;
+  border: 0.3em solid #008aff;
   border-radius: 0.5em;
   width: 12em;
   height: 3em;
@@ -151,7 +150,7 @@ tr:nth-child(even) {
   position: absolute;
   width: 25%;
   height: 100%;
-  background-color: #7703fc;
+  background-color: #008aff;
   transform: translateY(150%);
   border-radius: 50%;
   left: calc((var(--n) - 1) * 25%);
@@ -209,4 +208,11 @@ tr:nth-child(even) {
 
 .shadow1 {
   box-shadow: 0 0 1.25rem rgb(31 45 61 / 5%);
+}
+
+/* controlSmallPage */
+
+.controlSmallPage {
+  min-height: 100vh;
+  max-height: 100% !important;
 }

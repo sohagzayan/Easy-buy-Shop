@@ -104,7 +104,7 @@ const EditProfileInfo = () => {
       <div>
         <div className="flex items-center">
           <img
-            className="w-[80px] rounded-full mr-10 border-[5px] border-[#101126]"
+            className="w-[80px] rounded-full mr-10 border-[5px] border-own-white-special dark:border-own-dark-bg-special"
             src={response?.data?.currentuser[0].image}
             alt=""
           />
@@ -137,13 +137,13 @@ const EditProfileInfo = () => {
               <div className="flex items-center">
                 <button
                   onClick={() => setPictureUpdateMode(true)}
-                  className="px-6 block py-2 rounded-md  bg-own-primary border-none text-own-secondary dark:text-own-white mr-10"
+                  className="px-6 block py-2 rounded-md  bg-own-primary text-own-white border-none  dark:text-own-white mr-10"
                 >
                   Upload new Picture
                 </button>
                 <button
                   onClick={defaultPictureSet}
-                  className="block  bg-[#FF557B] text-own-secondary dark:text-own-white px-6 rounded-md py-2"
+                  className="block  bg-own-soft-red text-own-white  dark:text-own-white px-6 rounded-md py-2"
                 >
                   Reset Picture
                 </button>
@@ -215,7 +215,7 @@ const EditProfileInfo = () => {
           <div className="flex justify-end mt-6">
             <button
               onClick={handleUpdateProfile}
-              className="bg-own-primary text-own-secondary dark:text-own-white px-3 py-2 rounded-md "
+              className="bg-own-primary text-own-white dark:text-own-white px-3 py-2 rounded-md "
             >
               Save Profile
             </button>

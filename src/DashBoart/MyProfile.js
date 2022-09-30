@@ -78,7 +78,7 @@ const MyProfile = () => {
               <img
                 style={{ backgroundClip: "padding-box" }}
                 className="w-[100px] rounded-full  border-2"
-                src={demouser}
+                src={response?.data?.currentuser[0]?.image}
                 alt=""
               />
             </div>
@@ -87,23 +87,23 @@ const MyProfile = () => {
                 My Profile Info
               </h2>
               <span className="text-own-secondary dark:text-own-white py-2 inline-block">
-                Bangladesh
+                {response?.data?.currentuser[0]?.country}
               </span>
               <div className="flex items-center gap-10">
                 <NavLink
                   to="/account/edit_profile"
-                  className="text-own-secondary dark:text-own-white  b px-2 py-1 rounded-md  bg-own-ternary"
+                  className="text-own-secondary dark:text-own-white  py-1 rounded-md  bg-own-white-special dark:bg-own-dark-bg-special"
                 >
                   Edit Profile
                 </NavLink>
-                <button className="text-own-secondary dark:text-own-white bg-own-ternary px-2 py-1 rounded-md">
+                <button className="text-own-secondary dark:text-own-white bg-own-white-special px-2 py-1 rounded-md dark:bg-own-dark-bg-special">
                   <AiOutlineMenu className="text-[23px]" />
                 </button>
               </div>
             </div>
           </div>
           <div className="mt-10">
-            <ul className=" container_c mx-auto flex items-center text-own-secondary dark:text-own-white gap-10 border-b-[1px] border-own-primary">
+            <ul className=" container_c mx-auto flex items-center text-own-secondary dark:text-own-white gap-10 border-b-[1px] border-own-primary font-bold">
               <NavLink
                 to="/myProfile"
                 className={({ isActive }) =>

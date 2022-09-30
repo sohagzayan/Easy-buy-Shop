@@ -6,9 +6,11 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
 import HowItWorks from "../components/HowItWorks/HowItWorks";
+import ManageYourBusiness from "../components/ManageYourBusiness/ManageYourBusiness";
 import OurParts from "../components/OurParts/OurParts";
 import OurReviewPart from "../components/OurReviewPart/OurReviewPart";
 import Repair from "../components/Repair/Repair";
+import StartYourBusiness from "../components/StartYourBusiness/StartYourBusiness";
 
 const Home = () => {
   return (
@@ -17,12 +19,14 @@ const Home = () => {
       <div className="">
         <div className=" ">
           <div className="">
-            <div className="container mx-auto px-5 py-3">
+            <div className="container_c mx-auto  py-3">
               <Hero />
             </div>
           </div>
         </div>
         <div className="container mx-auto px-5 py-3">
+          <StartYourBusiness />
+          <ManageYourBusiness />
           <Fashion />
           <OurParts />
 

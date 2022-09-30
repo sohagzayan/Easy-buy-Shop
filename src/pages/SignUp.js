@@ -117,15 +117,15 @@ const SignUp = () => {
   return (
     <>
       <Headers />
-      <div className="">
-        <div className="login relative">
+      <div className="controlSmallPage">
+        <div className="login container_c mx-auto relative">
           {loading && (
             <div className="absolute left-0 top-0 h-full z-20 bg-[#101126a1] w-full">
               <LoadingSpenner />
             </div>
           )}
           <div className="relative">
-            <p className="text-own-secondary dark:text-own-white absolute top-2 right-5 z-10">
+            <p className="text-own-secondary font-bold dark:text-own-white absolute top-2 right-5 z-10">
               Already a member?{" "}
               <NavLink
                 className="text-own-primary font-bold text-lg"
@@ -134,21 +134,23 @@ const SignUp = () => {
                 Sign In
               </NavLink>
             </p>
-            <div className="sm:w-[40%] w-[90%] mx-auto sm:mx-0 sm:ml-24 py-6 ">
+            <div className="sm:w-[60%] w-[90%] mx-auto sm:mx-0 sm:ml-24 py-6 ">
               <div className="relative z-10">
                 <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
                 </h2>
                 <div className="flex sm:flex-row flex-col sm:items-center mb-1">
-                  <button className=" bg-[#1a73e8] text-own-secondary dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3">
-                    <span className="block">Sign In Your Google Account</span>
+                  <button className=" bg-own-primary text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3">
+                    <span className="block ml-3 font-bold">
+                      Sign In Your Google Account
+                    </span>
                     <span className="block bg-own-white text-2xl py-2 px-3 rounded-r-md">
                       <FcGoogle className="" />
                     </span>
                   </button>
                   <a
                     href=""
-                    className="bg-[#1a73e8] p-2 rounded-md sm:inline-block hidden"
+                    className="bg-own-primary  p-2 rounded-md sm:inline-block hidden"
                   >
                     <GrFacebookOption className="text-own-secondary dark:text-own-white text-2x " />
                   </a>
@@ -173,7 +175,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Your Account Name"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary mb-2"
+                    className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
                     {...register("name")}
                   />
                   <p className=" text-secondary">{errors.name?.message}</p>
@@ -186,7 +188,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Username Must Be unique"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-2"
+                    className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
                     {...register("username")}
                   />
 
@@ -200,7 +202,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Make Sure Add Your Valid Email"
-                    className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-2 "
+                    className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3 "
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
@@ -214,7 +216,7 @@ const SignUp = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="6+ Character"
-                      className="px-3 rounded-md outline-none py-2 text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]   w-full focus:outline-own-secondary placeholder:font-bold "
+                      className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  "
                       {...register("password")}
                     />
                     <span
@@ -230,15 +232,15 @@ const SignUp = () => {
                   </div>
 
                   <p className=" text-secondary">{errors.password?.message}</p>
-                  <div className="flex gap-16">
+                  <div className="flex gap-12">
                     <CountryDropdown
-                      className="bg-[#323644] text-own-secondary dark:text-own-white py-2 mt-4 w-full px-3 rounded-md"
+                      className="bg-own-white text-own-secondary dark:bg-own-secondary font-semibold dark:text-own-white py-2 mt-2 w-full focus:outline-own-primary px-3 rounded-md"
                       value={country}
                       onChange={(val) => selectCountry(val)}
                       required
                     />
                     <RegionDropdown
-                      className="bg-[#323644] text-own-secondary dark:text-own-white py-2 mt-4 w-[160px] px-3 rounded-md"
+                      className="bg-own-white dark:bg-own-secondary text-own-secondary dark:text-own-white py-2 mt-4 w-[160px] px-3 rounded-md focus:outline-own-primary font-semibold"
                       country={country}
                       value={region}
                       onChange={(val) => selectRegion(val)}

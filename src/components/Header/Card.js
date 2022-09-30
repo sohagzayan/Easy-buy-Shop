@@ -37,7 +37,7 @@ const Card = ({ card }) => {
 
   return (
     <>
-      <ul className="absolute w-[350px] right-0 top-14 border-[1px] border-own-primary bg-[#0C0C18] px-5 py-3 rounded-md">
+      <ul className="absolute w-[350px] right-0 top-14 border-[1px] border-own-primary bg-own-white dark:bg-own-dark-bg px-5 py-3 rounded-md shadow-md">
         {card?.length > 0 ? (
           card?.map((p) => (
             <CardSingleProducts mutateAsync={mutateAsync} data={p} />

@@ -111,7 +111,7 @@ const SignUp = () => {
   return (
     <>
       <Headers />
-      <div className="relative">
+      <div className="relative controlSmallPage">
         {mainError && (
           <div className="">
             <p className="bg-[#FF5555] text-own-secondary dark:text-own-white text-center py-2 ">
@@ -119,14 +119,14 @@ const SignUp = () => {
             </p>
           </div>
         )}
-        <div className="login relative">
+        <div className="login container_c mx-auto bg-own-white dark:bg-own-dark-bg relative">
           {loading && (
-            <div className="absolute left-0 top-0 h-full z-30 bg-[#101126a1] w-full">
+            <div className="absolute left-0 top-0 h-full z-30 bg-own-dark-bg w-full">
               <LoadingSpenner />
             </div>
           )}
           <div className="relative">
-            <p className="text-own-secondary dark:text-own-white absolute top-2 right-5 z-10">
+            <p className="text-own-secondary font-semibold dark:text-own-white absolute top-2 right-5 z-10">
               Not a member?{" "}
               <NavLink
                 className="text-own-primary font-bold text-lg"
@@ -135,26 +135,28 @@ const SignUp = () => {
                 Sign up now
               </NavLink>
             </p>
-            <div className=" sm:w-[40%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
+            <div className=" sm:w-[60%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
               <div className=" z-20 relative">
                 <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
                   Sign in to QualityCookie
                 </h2>
                 <div className="flex sm:flex-row flex-col sm:items-center mb-5">
                   <button
-                    className=" bg-[#1a73e8] text-own-secondary dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
+                    className=" bg-own-primary text-own-white dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
                     onClick={handleLoginWithGoogle}
                   >
-                    <span className="block">Sign In Your Google Account</span>
+                    <span className="block ml-3">
+                      Sign In Your Google Account
+                    </span>
                     <span className="block bg-own-white text-2xl py-2 px-3 rounded-r-md">
                       <FcGoogle className="" />
                     </span>
                   </button>
                   <a
                     href=""
-                    className="bg-[#1a73e8] p-2 rounded-md sm:inline-block hidden"
+                    className="bg-own-primary p-2 rounded-md sm:inline-block hidden"
                   >
-                    <GrFacebookOption className="text-own-secondary dark:text-own-white text-2x " />
+                    <GrFacebookOption className="text-own-white text-2x " />
                   </a>
                   <a href="">
                     <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
@@ -163,28 +165,25 @@ const SignUp = () => {
                   </a>
                 </div>
                 <div className="flex flex-col w-full]">
-                  <div className="divider after:bg-[#484d61] before:bg-[#484d61] text-own-primary">
+                  <div className="divider after:bg-own-primary before:bg-own-primary text-own-primary">
                     OR
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <label
-                    htmlFor=""
-                    className="text-own-secondary dark:text-own-white mb-1"
-                  >
+                  <label className="text-own-secondary font-bold dark:text-own-white mb-1">
                     Username or Email Address
                   </label>
                   <input
                     type="text"
-                    placeholder="email"
-                    className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary  mb-3"
+                    placeholder="@gmail.com"
+                    className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor=""
-                      className="text-own-secondary dark:text-own-white"
+                      className="text-own-secondary font-bold dark:text-own-white"
                     >
                       Password
                     </label>
@@ -198,7 +197,7 @@ const SignUp = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      className="input text-own-primary font-semibold text-lg bg-[#323644] placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-secondary "
+                      className="input text-own-primary font-semibold text-lg bg-own-white dark:bg-own-ternary border-[1px] border-own-primary placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-primary  mb-3 "
                       {...register("password")}
                     />
                     <span

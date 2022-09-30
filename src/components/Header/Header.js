@@ -78,7 +78,7 @@ const Header = () => {
   };
 
   return (
-    <div className="shadow-sm  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg">
+    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg">
       <div className="navbar   container mx-auto">
         <div className="navbar-start">
           <a
@@ -112,7 +112,7 @@ const Header = () => {
                       isActive ? "text-own-primary" : " "
                     }
                   >
-                    Buy Products
+                    Shops
                   </NavLink>
                 </li>
                 <li className="text-[#62759d] px-3 font-semibold ">
@@ -132,7 +132,7 @@ const Header = () => {
                       isActive ? "text-own-primary" : " "
                     }
                   >
-                    Repair
+                    Service
                   </NavLink>
                 </li>
                 <li className="text-[#62759d]   px-3 font-semibold ">
@@ -142,7 +142,7 @@ const Header = () => {
                       isActive ? "text-own-primary" : " "
                     }
                   >
-                    Bookmark
+                    Contact Us
                   </NavLink>
                 </li>
 
@@ -153,7 +153,17 @@ const Header = () => {
                       isActive ? "text-own-primary" : " "
                     }
                   >
-                    DashBoart
+                    About Us
+                  </NavLink>
+                </li>
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/dashBoart"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Leaderboard
                   </NavLink>
                 </li>
               </ul>
@@ -170,8 +180,8 @@ const Header = () => {
                   to="/add_new_products"
                   className={({ isActive }) =>
                     isActive
-                      ? "bg-transparent border-[2px] border-own-primary text-own-secondary dark:text-own-white px-3 py-2 rounded-md font-semibold"
-                      : "bg-own-primary text-own-secondary dark:text-own-white px-3 py-2 rounded-md font-semibold"
+                      ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-3 py-2 rounded-md font-bold transition-all ease-in"
+                      : " text-own-white bg-own-primary  px-3 py-2 border-[1px] border-transparent rounded-md font-bold transition-all ease-in"
                   }
                 >
                   Upload

@@ -7,8 +7,8 @@ import { NavLink } from "react-router-dom";
 const Menu = ({ handleLogOut }) => {
   return (
     <>
-      <ul className="text-own-secondary dark:text-own-white bg-own-ternary rounded-md absolute top-3 shadow-md right-0 w-[250px] ">
-        <li className="text-lg pointer-events-none rounded-sm bg-[#101126] py-1 px-5">
+      <ul className="text-own-secondary dark:text-own-white dark:bg-own-dark-bg bg-own-white  rounded-md absolute top-3 shadow-md right-0 w-[250px] ">
+        <li className="text-lg pointer-events-none rounded-sm bg-own-primary text-own-white font-bold py-1 px-5">
           Settings
         </li>
         <NavLink to="/myProfile">

@@ -8,7 +8,10 @@ const ThemeToggle = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div>
-      <span onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      <span
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        className="cursor-pointer"
+      >
         {theme === "light" ? (
           <MdOutlineDarkMode className="text-[#62759d] text-3xl" />
         ) : (

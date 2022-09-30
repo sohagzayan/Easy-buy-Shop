@@ -10,21 +10,21 @@ const CardSingleProducts = ({ data, mutateAsync }) => {
       <li className="flex items-center gap-3 mb-3">
         <img className="w-[50px]" src={image} alt="" />
         <div className="w-full">
-          <h3 className="">{name}</h3>
+          <h3 className="text-own-secondary  dark:text-own-white">{name}</h3>
           <h5 className="text-xl text-own-primary mb-1">${price}</h5>
           <div className="flex justify-between items-center w-full">
             <NavLink
               to={`/ProductsDetails/${productId}`}
-              className="bg-own-primary px-2 py-1 rounded-md flex items-center gap-2"
+              className="bg-own-primary text-own-white px-2 py-1 rounded-md flex items-center gap-2"
             >
               Buy Now <MdSell />
             </NavLink>
             <button
               onClick={() => mutateAsync(_id)}
-              className="text-[#C3575C] cursor-pointer group"
+              className=" cursor-pointer group"
             >
               {" "}
-              <CgTrashEmpty className="text-2xl group-hover:scale-125 transition-all ease-in" />{" "}
+              <CgTrashEmpty className="text-2xl text-own-soft-red font-bold text group-hover:scale-125 transition-all ease-in" />{" "}
             </button>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { useContext } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import HeroSlider from "../HeroSlider/HeroSlider";
+import HeroAnimation from "../HeroAnimation/HeroAnimation";
 const Hero = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const userId = Cookies.get("id");
@@ -14,9 +15,10 @@ const Hero = () => {
   // console.log(response?.data?.currentuser[0].image);
   return (
     <>
-      <div className="">
+      <div className="overflow-x-hidden">
         <div className="hero-content mx-auto flex-col lg:flex-row-reverse  relative ">
-          <div className="w-full ">
+          <HeroAnimation />
+          <div className=" ">
             <HeroSlider />
             {/* <img src={commerce} className="  rounded-lg mx-auto" alt="img" /> */}
           </div>
@@ -53,15 +55,15 @@ const Hero = () => {
             </p>
             <div className="flex items-center  mt-2">
               <img
-                className="w-[50px] rounded-full mr-2"
+                className="w-[35px] rounded-full mr-2"
                 src={response?.data?.currentuser[0]?.image}
                 alt=""
               />
               <div>
-                <h3 className="text-own-secondary dark:text-own-white">
+                <h3 className="text-own-secondary text-[12px] dark:text-own-white">
                   {response?.data?.currentuser[0]?.name}
                 </h3>
-                <span className="text-own-text-light  dark:text-own-text-dark">
+                <span className="text-own-text-light text-[12px] dark:text-own-text-dark">
                   CEO @{response?.data?.currentuser[0]?.username}
                 </span>
               </div>

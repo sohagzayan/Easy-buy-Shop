@@ -3,10 +3,10 @@ import ImageGirl from "../../assets/images/bn1.webp";
 import ImageBoy from "../../assets/images/bn2.webp";
 const Fashion = () => {
   return (
-    <div className=" mt-24 mb-24">
-      <div className="grid md:grid-cols-2 grid-cols-1 items-center gap-16">
+    <div className=" mt-10 mb-24">
+      <div className=" container_c mx-auto grid md:grid-cols-2 grid-cols-1 items-center gap-16">
         <div className="fashion">
-          <img src={ImageGirl} className="rounded-md inner" alt="" />
+          <img src={ImageGirl} className="rounded-md  w-[80%]" alt="" />
           <div className="absolute top-[40%] left-[5%] ">
             <h4 className="text-6xl font-semibold text-own-secondary dark:text-own-white uppercase">
               Ladies
@@ -16,8 +16,8 @@ const Fashion = () => {
             </span>
           </div>
         </div>
-        <div className="fashion">
-          <img src={ImageBoy} className="rounded-md inner" alt="" />
+        <div className="fashion ">
+          <img src={ImageBoy} className="rounded-md  w-[80%]" alt="" />
           <div className="absolute top-[40%] left-[5%] ">
             <h4 className="text-6xl font-semibold text-own-secondary dark:text-own-white uppercase">
               Mens
