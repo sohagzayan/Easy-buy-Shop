@@ -64,7 +64,7 @@ tr:nth-child(even) {
   content: "";
   width: 100%;
   height: 100%;
-  background-color: #09be8b;
+  background-color: #008aff;
   top: 0;
   left: 0;
   position: absolute;
@@ -215,4 +215,14 @@ tr:nth-child(even) {
 .controlSmallPage {
   min-height: 100vh;
   max-height: 100% !important;
+}
+
+/* customize scrollber  */
+::-webkit-scrollbar {
+  background-color: #1c2836;
+  width: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #008aff;
+  border-radius: 10px;
 }

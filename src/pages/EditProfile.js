@@ -18,16 +18,31 @@ const EditProfile = () => {
   // console.log(response?.data?.currentuser[0]);
 
   const handleDeleteAccount = async () => {
-    await axios
-      .delete(
-        `http://localhost:5000/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
-      )
-      .then((res) => {
-        alert("success");
-        navigate("/");
-        window.location.reload(true);
-      })
-      .catch((error) => console.log(error));
+    swal({
+      title: "Are you sure?",
+      text: "Delete Your Account !",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        axios
+          .delete(
+            `http://localhost:5000/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
+          )
+          .then((res) => {
+            alert("success");
+            navigate("/");
+            window.location.reload(true);
+          })
+          .catch((error) => console.log(error));
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
   };
 
   return (
@@ -70,7 +85,9 @@ const EditProfile = () => {
                 <NavLink
                   to="/account"
                   className={({ isActive }) =>
-                    location.pathname === "/account" ? "text-own-primary" : ""
+                    location.pathname === "/account"
+                      ? "text-own-primary font-bold "
+                      : "font-bold "
                   }
                 >
                   <li className="mb-2">General</li>
@@ -78,7 +95,7 @@ const EditProfile = () => {
                 <NavLink
                   to="edit_profile"
                   className={({ isActive }) =>
-                    isActive ? "text-own-primary" : ""
+                    isActive ? "text-own-primary font-bold " : "font-bold "
                   }
                 >
                   <li className="mb-2">Edit Profile</li>
@@ -86,7 +103,7 @@ const EditProfile = () => {
                 <NavLink
                   to="password"
                   className={({ isActive }) =>
-                    isActive ? "text-own-primary" : ""
+                    isActive ? "text-own-primary font-bold " : "font-bold "
                   }
                 >
                   <li className="mb-2">Password</li>
@@ -94,7 +111,7 @@ const EditProfile = () => {
                 <NavLink
                   to="social_profiles"
                   className={({ isActive }) =>
-                    isActive ? "text-own-primary" : ""
+                    isActive ? "text-own-primary font-bold " : "font-bold "
                   }
                 >
                   <li className="mb-2">Social Profile</li>
@@ -103,7 +120,7 @@ const EditProfile = () => {
                 <NavLink
                   to="email_notifications"
                   className={({ isActive }) =>
-                    isActive ? "text-own-primary" : ""
+                    isActive ? "text-own-primary font-bold" : "font-bold "
                   }
                 >
                   <li className="mb-2">Email Notification</li>
@@ -111,18 +128,13 @@ const EditProfile = () => {
                 <hr className="border-own-text mb-2 mt-2" />
                 <li
                   onClick={handleDeleteAccount}
-                  className="mb-1 text-[#FF5555]"
+                  className="mb-1  text-own-soft-red font-bold cursor-pointer"
                 >
                   Delete Account
                 </li>
               </ul>
             </div>
-            <div className="col-span-9">
-              {<Outlet />}
-              {/* <General /> */}
-              {/* <EditProfileInfo /> */}
-              {/* <SocialProfile /> */}
-            </div>
+            <div className="col-span-9">{<Outlet />}</div>
           </div>
         </div>
       </div>

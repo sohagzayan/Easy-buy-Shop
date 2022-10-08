@@ -60,8 +60,8 @@ const BookMark = () => {
           </div>
           <div>
             <div className=" mt-10 w-[50%] mx-auto grid grid-cols-1">
-              {partsData.data?.map((item) => (
-                <OurPartsProducts item={item} />
+              {partsData.data?.map((item, index) => (
+                <OurPartsProducts item={item} key={index} />
               ))}
             </div>
           </div>

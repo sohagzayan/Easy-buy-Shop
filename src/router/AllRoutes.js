@@ -1,19 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import IphoneCategory from "../components/IphoneCategory/IphoneCategory";
 import EditProfileInfo from "../components/MyProfile/EditProfileInfo";
 import General from "../components/MyProfile/General";
 import SocialProfile from "../components/MyProfile/SocialProfile";
 import NotFound from "../components/NotFound/NotFound";
 import PrivateAdmin from "../components/PrivateRoute/PrivateAdmin";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
-import ServiceCare from "../components/ServiceCare/ServiceCare";
-import AddTools from "../DashBoart/AddTools";
-import AddUserReview from "../DashBoart/AddUserReview";
 import DashBoart from "../DashBoart/DashBoart";
-import MakeAdmin from "../DashBoart/MakeAdmin";
-import ManageAllOrder from "../DashBoart/ManageAllOrder";
-import ManageAllProducts from "../DashBoart/ManageAllProducts";
 import MyOrder from "../components/My_profile_deshbord/MyOrder";
 import MyProfile from "../DashBoart/MyProfile";
 import Payment from "../DashBoart/Payment";
@@ -23,24 +16,26 @@ import EditProfile from "../pages/EditProfile";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Purchase from "../pages/Purchase";
-import Repair from "../pages/Repair";
 import SignUp from "../pages/SignUp";
-import BuyProducts from "../pages/BuyProducts";
+import Shoops from "../pages/Shoops";
 import MyProductsD from "../components/My_profile_deshbord/MyProductsD";
 import MyBlogD from "../components/My_profile_deshbord/MyBlogD";
 import MyBookMarkD from "../components/My_profile_deshbord/MyBookMarkD";
-import MyFavoriteD from "../components/My_profile_deshbord/MyFavoriteD";
 import PasswordReset from "../components/MyProfile/PasswordReset";
 import EmailNotifecation from "../components/MyProfile/EmailNotifecation";
 import AddNewProducts from "../pages/AddNewProducts";
 import ProductsDetails from "../components/ProductsDetails/ProductsDetails";
-import ProductMainInfo from "../components/AddNewProducts/ProductMainInfo";
-import ProductsOthersInfo from "../components/AddNewProducts/ProductsOthersInfo";
 import UserProfile from "../pages/UserProfile";
+import UpdateProducts from "../pages/UpdateProducts";
+import Contactus from "../pages/Contactus";
+import About from "../pages/About";
+import MyFolloerD from "../components/My_profile_deshbord/MyFolloerD";
+import MyProductOrder from "../components/My_profile_deshbord/MyProductOrder";
+import Card from "../pages/Card";
 const AllRoutes = () => {
-  // const [admin] = useAdmin(username)
   return (
     <Routes>
+      {/* Our Page Route  */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
       <Route path="/ProductsDetails/:id" element={<ProductsDetails />} />
@@ -48,6 +43,10 @@ const AllRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/payment/:id" element={<Payment />} />
       <Route path="/user_profile/:id" element={<UserProfile />} />
+      <Route path="/update_products/:id" element={<UpdateProducts />} />
+      <Route path="/Contactus" element={<Contactus />} />
+      <Route path="/aboutus" element={<About />} />
+      <Route path="/card" element={<Card />} />
 
       <Route
         path="/blogs"
@@ -58,28 +57,10 @@ const AllRoutes = () => {
         }
       />
       <Route
-        path="/repair"
+        path="/shops"
         element={
           <PrivateRoute>
-            <Repair />
-          </PrivateRoute>
-        }
-      >
-        <Route
-          index={true}
-          element={
-            <PrivateRoute>
-              <ServiceCare />
-            </PrivateRoute>
-          }
-        />
-        <Route path="category/iphone" element={<IphoneCategory />} />
-      </Route>
-      <Route
-        path="/buy_products"
-        element={
-          <PrivateRoute>
-            <BuyProducts />
+            <Shoops />
           </PrivateRoute>
         }
       />
@@ -131,27 +112,17 @@ const AllRoutes = () => {
         }
       >
         <Route index element={<MyProductsD />} />
+        <Route path="my_folloer" element={<MyFolloerD />} />
         <Route path="my_blog" element={<MyBlogD />} />
         <Route path="my_bookmark" element={<MyBookMarkD />} />
         <Route path="my_ordered" element={<MyOrder />} />
-        {/* <Route index element={<MyProfile />} /> */}
-        {/* <Route path="myProfile" element={<MyProfile />} /> */}
-        {/* <Route  element={<ManageAllOrder />} /> */}
-        {/* <Route path="manageAllOrder" element={<ManageAllOrder />} />
-        <Route path="AddTools" element={<AddTools />} />
-        <Route path="myOrder" element={<MyOrder />}></Route>
-        <Route path="addUserReview" element={<AddUserReview />} />
-        <Route path="makeAdmin" element={<MakeAdmin />} />
-        <Route path="manageProducts" element={<ManageAllProducts />} />
-        <Route path="payment/:id" element={<Payment />} /> */}
-        {/* <Route path="manageAllOrder" element={<ManageAllOrder />} /> */}
+        <Route path="my_product_order" element={<MyProductOrder />} />
       </Route>
       <Route
         path="/purchase/:id"
         element={
           <PrivateRoute>
-            {" "}
-            <Purchase />{" "}
+            <Purchase />
           </PrivateRoute>
         }
       />

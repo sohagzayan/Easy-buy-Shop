@@ -1,36 +1,28 @@
 /** External Import */
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { FiLogIn } from "react-icons/fi";
 import Cookies from "js-cookie";
 import swal from "sweetalert";
 import React, { useState } from "react";
-import { FcLikePlaceholder } from "react-icons/fc";
-import { AiFillStar, AiOutlineShoppingCart } from "react-icons/ai";
-import { MdDriveFileMove, MdOutlineDarkMode } from "react-icons/md";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 /** Internal Import */
-import Icons from "../.././assets/icons/guarantee.png";
-import { useAuthContext } from "../../context/AuthContextProvider";
 import { useCurrentUserQuery } from "../../store/API/user";
-import demouser from "../../assets/clock.png";
-import { getAddToCard } from "../../Querys/BookmarkQuery";
-import { useQuery } from "react-query";
-import Loading from "../Loading/Loading";
-import Card from "./Card";
+import logo from "../../assets/apple-touch-icon.png";
 import Menu from "./Menu";
 import WithOutLoginMenu from "./WithOutLoginMenu";
 import Profile from "./Profile";
 import { useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../store/slices/cardSlice";
 
 const Header = () => {
   /** Hocks  */
   const location = useLocation();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [showCard, setShowCard] = useState(false);
   const token = Cookies.get("token");
+  const dispatch = useDispatch();
 
   /** Variable  */
   const userid = Cookies.get("id");
@@ -40,16 +32,11 @@ const Header = () => {
   // console.log(response);
   /** Handle Profile menu */
 
+  const cardData = useSelector((current) => current.card);
+
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/addToCard", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setCard(data));
-  }, [card]);
+    dispatch(fetchProducts());
+  }, []);
 
   const handleUserProfile = async () => {
     setShowMenu((prev) => !prev);
@@ -78,24 +65,22 @@ const Header = () => {
   };
 
   return (
-    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg">
-      <div className="navbar   container mx-auto">
-        <div className="navbar-start">
-          <a
-            className="btn text-own-primary btn-ghost normal-case text-xl text-own-secondary dark:text-own-white font-semibold"
-            href="/"
+    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-2">
+      <div className="navbar   container_c  mx-auto">
+        <div className="navbar-start ">
+          <NavLink
+            to="/"
+            className=" text-own-primary dark:text-own-white font-bold flex items-center "
           >
-            Digital{" "}
-            <span className="text-own-secondary dark:text-own-white font-semibold text-xl">
-              Store
-            </span>
-          </a>
+            <img className="w-[30px] mr-3" src={logo} alt="" />
+            Easy Buy
+          </NavLink>
         </div>
         <div className="navbar-center hidden lg:flex">
           {response?.data?.status === "success" &&
             response?.data?.currentuser?.length > 0 && (
               <ul className="  menu-horizontal p-0">
-                <li className="text-[#62759d] dark:text-own-white px-3 font-semibold ">
+                <li className="text-[#62759d]  px-3 font-semibold ">
                   <NavLink
                     to="/"
                     className={({ isActive }) =>
@@ -107,7 +92,7 @@ const Header = () => {
                 </li>
                 <li className="text-[#62759d]  px-3 font-semibold ">
                   <NavLink
-                    to="/buy_products"
+                    to="/shops"
                     className={({ isActive }) =>
                       isActive ? "text-own-primary" : " "
                     }
@@ -127,7 +112,7 @@ const Header = () => {
                 </li>
                 <li className="text-[#62759d]  px-3 font-semibold ">
                   <NavLink
-                    to="/repair"
+                    to="/service"
                     className={({ isActive }) =>
                       isActive ? "text-own-primary" : " "
                     }
@@ -137,7 +122,7 @@ const Header = () => {
                 </li>
                 <li className="text-[#62759d]   px-3 font-semibold ">
                   <NavLink
-                    to="/bookmark"
+                    to="/Contactus"
                     className={({ isActive }) =>
                       isActive ? "text-own-primary" : " "
                     }
@@ -148,7 +133,7 @@ const Header = () => {
 
                 <li className="text-[#62759d]  px-3 font-semibold ">
                   <NavLink
-                    to="/dashBoart"
+                    to="/aboutus"
                     className={({ isActive }) =>
                       isActive ? "text-own-primary" : " "
                     }
@@ -180,29 +165,27 @@ const Header = () => {
                   to="/add_new_products"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-3 py-2 rounded-md font-bold transition-all ease-in"
-                      : " text-own-white bg-own-primary  px-3 py-2 border-[1px] border-transparent rounded-md font-bold transition-all ease-in"
+                      ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-1 py-1 rounded-md font-bold transition-all ease-in text-sm"
+                      : " text-own-white bg-own-primary  px-1 py-1 border-[1px] border-transparent rounded-md font-bold transition-all ease-in text-sm"
                   }
                 >
                   Upload
                 </NavLink>
                 <div className="text-own-secondary dark:text-own-white  py-2 rounded-md font-semibold relative">
-                  <div
-                    onClick={() => setShowCard((prev) => !prev)}
-                    className="cursor-pointer"
-                  >
-                    <AiOutlineShoppingCart className="text-3xl  " />
-                    {card?.length ? (
-                      <span className="bg-own-primary  absolute top-0 right-3 text-own-secondary dark:text-own-white w-[25px] h-[25px] flex items-center justify-center  rounded-full text-sm">
-                        {card?.length}
+                  <NavLink to="/card" className="cursor-pointer">
+                    <AiOutlineShoppingCart className="text-3xl  text-own-primary" />
+                    {cardData?.cardProduct?.length ? (
+                      <span className="bg-own-primary  absolute top-0 right-3  dark:text-own-white w-[25px] h-[25px] flex items-center justify-center text-own-white  rounded-full text-sm">
+                        {cardData?.cardProduct?.length}
                       </span>
                     ) : null}
-                  </div>
-                  {showCard && <Card card={card} />}
+                  </NavLink>
                 </div>
               </div>
               <div className="relative">
-                {showMenu && <Menu handleLogOut={handleLogOut} />}
+                {showMenu && (
+                  <Menu handleLogOut={handleLogOut} setShowMenu={setShowMenu} />
+                )}
               </div>
             </div>
           ) : (

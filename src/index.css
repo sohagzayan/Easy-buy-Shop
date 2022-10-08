@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: sans-serif;
   margin: auto;
@@ -12,4 +16,12 @@ body {
   width: 90%;
   max-width: 1400px;
   padding: 10px 5px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
+}
+.swiper-pagination-bullet {
+  display: none;
 }

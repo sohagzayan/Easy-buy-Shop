@@ -1,18 +1,28 @@
+import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { AiOutlineLink } from "react-icons/ai";
+import { FaBackward } from "react-icons/fa";
 import { GrFacebookOption, GrLinkedinOption } from "react-icons/gr";
-import { useParams } from "react-router-dom";
+import { HiCheck } from "react-icons/hi";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Header from "../components/Header/Header";
-import UserProductCard from "../components/UserProductCard/UserProductCard";
+import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
+import OurPartsProducts from "../components/OurPartsProducts/OurPartsProducts";
+import { useCurrentUserQuery } from "../store/API/user";
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   const token = Cookies.get("token");
   const [user, setUser] = useState({});
   const [product, setProduct] = useState([]);
   const { id } = useParams();
+  const userid = Cookies.get("id");
+  const response = useCurrentUserQuery(userid);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
@@ -37,32 +47,75 @@ const UserProfile = () => {
         );
       })
       .then((data) => {
-        setUser(data[0][0]);
-        setProduct(data[1]);
+        if (data[1].status === 500 || data[1].message === "jwt expired") {
+          Cookies.remove("token");
+          Cookies.remove("id");
+          navigate("/login");
+        } else {
+          setProduct(data[1]);
+          setUser(data[0][0]);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [user]);
 
-  //   useEffect(() => {
-  //     fetch(`http://localhost:5000/api/v1/user/user/${id}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => setUser(data[0]));
-  //   }, []);
+  const handleFollowUser = async (id) => {
+    axios
+      .get(`http://localhost:5000/api/v1/user/user/follow_user?add=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(`You Folloing ${user?.name}`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((err) => {
+        toast.error(err.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
+  };
 
+  const handleUnFollowUser = async (id) => {
+    axios
+      .get(`http://localhost:5000/api/v1/user/user/follow_user?remove=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        toast.info(`You unFolloing ${user?.name}`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  if (loading) {
+    return <LoadingSpener />;
+  }
   return (
     <>
       <Header />
       <div>
         <div className="container_c mx-auto">
-          <div className="grid grid-cols-12 border-b-[1px] border-own-primary mb-5">
-            <div className=" md:col-span-8 col-span-12 flex  gap-5 py-10">
+          <div className="mb-2">
+            <span
+              className="text-own-primary underline font-bold text-lg cursor-pointer"
+              onClick={() => navigate(-1)}
+            >
+              <FaBackward className="text-3xl" />
+            </span>
+          </div>
+          <div className="grid grid-cols-12 border-b-[1px] dark:bg-own-dark-bg-special bg-own-white-special px-3 rounded-md border-[1px] border-own-text-light border-opacity-20  mb-5 md:py-0 py-5">
+            <div className=" md:col-span-8 col-span-12 flex  gap-5 py-10 ">
               <div>
                 <img
                   className="w-[200px] rounded-full"
@@ -71,24 +124,43 @@ const UserProfile = () => {
                 />
               </div>
               <div className="text-own-secondary dark:text-own-white">
-                <h2 className="text-2xl mb-1">{user?.name}</h2>
+                <h2 className="text-2xl mb-1 font-bold">{user?.name}</h2>
                 <h4>@{user?.username}</h4>
-                <h4>( {user?.country} )</h4>
+                <h4 className="font-semibold">( {user?.country} )</h4>
                 <p className="text-own-text-light  dark:text-own-text-dark">
                   {user?.bio}
                 </p>
                 <div className="text-own-secondary dark:text-own-white flex  items-center gap-10  py-3 rounded-md ">
                   <div>
-                    <button className="text-own-secondary dark:text-own-white bg-own-primary px-8 rounded-md py-2">
-                      +Follow
-                    </button>
+                    {user?.follor?.indexOf(
+                      response?.currentData?.currentuser[0]?._id
+                    ) === -1 ? (
+                      <button
+                        onClick={() => handleFollowUser(id)}
+                        className="text-own-white font-bold border-[1px]  border-transparent bg-own-primary px-5 rounded-md py-2"
+                      >
+                        + Follow
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleUnFollowUser(id)}
+                        className="dark:text-own-white text-own-secondary bg-transparent border-[1px] border-own-primary  px-5 rounded-md py-2 flex items-center gap-2"
+                      >
+                        <HiCheck className="text-2xl" />
+                        Following
+                      </button>
+                    )}
                   </div>
                   <div className="flex items-center flex-col">
-                    <span className="text-xl font-semibold">232</span>
+                    <span className="text-xl font-semibold">
+                      {product?.length}
+                    </span>
                     <span>Product</span>
                   </div>
                   <div className="flex items-center flex-col">
-                    <span className="text-xl font-semibold">232</span>
+                    <span className="text-xl font-semibold">
+                      {user?.follor?.length}
+                    </span>
                     <span>Flower</span>
                   </div>
                 </div>
@@ -114,9 +186,9 @@ const UserProfile = () => {
             </div>
           </div>
           <div>
-            <div className="grid grid-cols-3 items-center gap-12">
-              {product?.map((p) => (
-                <UserProductCard data={p} />
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-12">
+              {product?.map((item) => (
+                <OurPartsProducts item={item} />
               ))}
             </div>
           </div>

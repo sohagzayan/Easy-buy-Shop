@@ -19,4 +19,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery } = userApi;
+export const { useCurrentUserQuery } = userApi;

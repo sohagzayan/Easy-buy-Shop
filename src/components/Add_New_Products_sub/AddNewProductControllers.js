@@ -23,24 +23,19 @@ const AddNewProductControllers = ({ resetHandleForm }) => {
     });
   };
   return (
-    <div>
-      <div className="flex sm:items-center sm:justify-center   sm:flex-row flex-col">
-        <button
-          onClick={handleCalcel}
-          className="border-[1px] px-6 py-3    rounded-md border-own-primary border-opacity-50 bg-own-secondary text-[#EA4C89]"
-        >
-          Chancel
-        </button>
-
-        <div className="text-own-secondary dark:text-own-white flex sm:justify-end items-center mb-4  container mx-auto py-3">
-          <button
-            onClick={resetHandleForm}
-            className="border-[1px] px-6 py-3  rounded-md border-own-primary border-opacity-50 bg-own-secondary"
-          >
-            Reset Form
-          </button>
-        </div>
-      </div>
+    <div className="flex  ml-32 ">
+      <button
+        onClick={handleCalcel}
+        className="border-[1px] px-3 py-2 mr-3 rounded-md border-own-primary border-opacity-50 mb-3 bg-own-white font-bold dark:bg-own-dark-bg text-[#EA4C89]"
+      >
+        Chancel
+      </button>
+      <button
+        onClick={resetHandleForm}
+        className="border-[1px] px-3 py-2  rounded-md border-own-primary border-opacity-50 mb-3 text-own-primary font-bold bg-own-white dark:bg-own-dark-bg"
+      >
+        Reset Form
+      </button>
     </div>
   );
 };

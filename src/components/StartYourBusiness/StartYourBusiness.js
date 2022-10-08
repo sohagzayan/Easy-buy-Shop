@@ -1,12 +1,12 @@
 import React from "react";
-import ecomerace from "../../assets/commerce-dark.svg";
+import ecomerace from "../../assets/commerce-dark(2).svg";
 import { AiOutlineHome } from "react-icons/ai";
 import { FiWatch } from "react-icons/fi";
 import { FaOpencart } from "react-icons/fa";
 import { MdOutlineSell } from "react-icons/md";
 const StartYourBusiness = () => {
   return (
-    <div className="mt-10 mb-20">
+    <div className="mt-10 mb-20 overflow-hidden">
       <div>
         <div className=" container_c mx-auto grid lg:grid-cols-2 grid-cols-1 gap-10 items-center justify-center">
           <div className="text-own-white">
@@ -21,7 +21,7 @@ const StartYourBusiness = () => {
               quidem tibi studiose et diligenter tractandos.
             </p>
             <div className="mt-10 grid sm:grid-cols-2 grid-cols-1 gap-5">
-              <div>
+              <div data-aos="zoom-out" data-aos-delay="300">
                 <span className="mb-1 inline-block">
                   <AiOutlineHome className="text-2xl text-own-primary " />
                 </span>
@@ -33,7 +33,7 @@ const StartYourBusiness = () => {
                   videbimus.
                 </p>
               </div>
-              <div>
+              <div data-aos="zoom-out" data-aos-delay="400">
                 <span className="mb-1 inline-block">
                   <FiWatch className="text-2xl text-own-primary " />
                 </span>
@@ -45,7 +45,7 @@ const StartYourBusiness = () => {
                   videbimus.
                 </p>
               </div>
-              <div>
+              <div data-aos="zoom-out" data-aos-delay="500">
                 <span className="mb-1 inline-block">
                   <FaOpencart className="text-2xl text-own-primary " />
                 </span>
@@ -57,7 +57,7 @@ const StartYourBusiness = () => {
                   videbimus.
                 </p>
               </div>
-              <div>
+              <div data-aos="zoom-out" data-aos-delay="600">
                 <span className="mb-1 inline-block">
                   <MdOutlineSell className="text-2xl text-own-primary " />
                 </span>
@@ -71,7 +71,12 @@ const StartYourBusiness = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center">
+
+          <div
+            data-aos="zoom-in"
+            data-aos-delay="200"
+            className="flex items-center justify-center"
+          >
             <img src={ecomerace} alt="" />
           </div>
         </div>

@@ -3,8 +3,8 @@ import "./HeroAnimation.css";
 const HeroAnimation = () => {
   return (
     <div>
-      <div class="area">
-        <ul class="circles">
+      <div className="area">
+        <ul className="circles">
           <li className="bg-[#0088ff7a] "></li>
           <li className="bg-[#0088ff7a]"></li>
           <li className="bg-[#0088ff7a]"></li>

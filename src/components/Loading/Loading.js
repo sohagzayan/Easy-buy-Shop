@@ -4,14 +4,14 @@ import { Dna } from "react-loader-spinner";
 
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-own-secondary bg-opacity-50">
+    <div className="flex justify-center items-center h-screen dark:bg-own-dark-bg-special bg-own-white-special bg-opacity-50">
       <Dna
         visible={true}
         height="150"
         width="150"
         ariaLabel="dna-loading"
         wrapperStyle={{}}
-        wrapperClass="dna-wrapper"
+        wrapperclassName="dna-wrapper"
       />
     </div>
   );

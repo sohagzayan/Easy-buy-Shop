@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import Header from "../components/Header/Header";
-import UploadImage from "../assets/image_upload.png";
-import bannerImahe from "../assets/banner-img-1.png";
 import axios from "axios";
 import swal from "sweetalert";
-
+import coverImage from "../assets/5.jpg";
 import AddNewProductControllers from "../components/Add_New_Products_sub/AddNewProductControllers";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
 import LoadingSpenner from "../components/Loading/Loading";
-import prevImage from "../assets/preview.png";
 const AddNewProducts = () => {
   /** Hocks */
   const [name, setName] = useState("");
@@ -21,7 +18,6 @@ const AddNewProducts = () => {
   const [brand, setBrand] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
-  const [bgColor, setBgColor] = useState("");
   const imagebbKey = "0b8c4fea4eba3001acb5a66d0574e4b5";
   /** Current User Info */
   const userId = Cookies.get("id");
@@ -106,7 +102,7 @@ const AddNewProducts = () => {
   return (
     <>
       <Header />
-      <div className="relative">
+      <div className="relative  bg-own-white-special dark:bg-own-dark-bg-special">
         {loading && (
           <div className="absolute  left-0 top-0 h-full z-30 bg-[#101126a1] w-full   ">
             <LoadingSpenner />
@@ -115,117 +111,160 @@ const AddNewProducts = () => {
         <div className="container mx-auto sm:px-0 px-6">
           <div className="py-5 ">
             <AddNewProductControllers resetHandleForm={resetHandleForm} />
-            <div className="flex items-center lg:flex-row justify-between flex-col gap-10">
-              <div>
-                <label
-                  htmlFor="imageadd"
-                  className={
-                    file
-                      ? "flex flex-col justify-center items-center     "
-                      : "flex flex-col justify-center items-center  border-2 border-dashed   "
-                  }
-                >
-                  {file ? (
-                    <div className="flex justify-between items-center w-full gap-10 border-[1px] border-dashed border-own-primary">
-                      <img
-                        className="w-[130px] mr-auto border-2 border-own-primary"
-                        src={URL.createObjectURL(file)}
-                        alt=""
-                      />
-                      <div className="text-own-secondary dark:text-own-white mr-10">
-                        <h5 className="text-xl  text-own-primary ">
-                          Preview Your Image{" "}
-                        </h5>
-                        <span>{file.name}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="py-2">
-                      <img className="w-[50px]" src={UploadImage} alt="" />
-                      <p className="text-own-secondary dark:text-own-white text-sm">
-                        Drag and drop an image, or{" "}
-                        <span className="text-own-primary ">Browse</span>
-                      </p>
-                      <p className="text-own-secondary dark:text-own-white text-sm">
-                        1600x1200 or higher recommended. Max 5MB
-                      </p>
-                    </div>
-                  )}
-                </label>
-                <input
-                  id="imageadd"
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  className="mb-2 text-own-secondary dark:text-own-white hidden"
-                />
-
-                <form onSubmit={handleAddNewProducts} className=" mt-3">
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mb-2  border-[1px] border-[#7703fc46] rounded-md"
-                    placeholder="Give me a name"
-                    required
-                  />
-                  <p className=" text-secondary  mt-1"></p>
-                  <textarea
-                    type="text"
-                    value={details}
-                    onChange={(e) => setDetails(e.target.value)}
-                    className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mb-2  border-[1px] border-[#7703fc46] rounded-md"
-                    placeholder="Deatils Your Products"
-                    required
-                  />
-                  <p className=" text-secondary  "></p>
-                  <div className="flex items-center  justify-between gap-10">
-                    <input
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                      type="number"
-                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="Your Products Price"
-                      required
+            <div className="flex justify-center md:w-[80%] w-[98%] mx-auto md:flex-row  flex-col-reverse gap-6 items-start">
+              <div className="">
+                <h2 className="text-xl font-bold text-own-secondary dark:text-own-white mb-2">
+                  Upload Item
+                </h2>
+                <div className="bg-own-white dark:bg-own-dark-bg shadow-md p-7 rounded-md">
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={response?.currentData?.currentuser[0]?.image}
+                      alt=""
+                      className="w-[40px] rounded-full"
                     />
-                    <input
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      type="text"
-                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="Your Products Category"
-                      required
-                    />
+                    <div>
+                      <h2 className="text-own-text-light font-bold">
+                        {response?.currentData?.currentuser[0]?.name}
+                      </h2>
+                      <h2 className="text-own-secondary dark:text-own-white">
+                        {response?.currentData?.currentuser[0]?.country}
+                      </h2>
+                    </div>
                   </div>
-                  <div className="flex items-center mt-2 gap-10">
+                  <input
+                    id="imageadd"
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className="mb-2 text-own-text-light mt-4 dark:text-own-white "
+                  />
+                  <form onSubmit={handleAddNewProducts} className=" mt-3">
+                    <label
+                      htmlFor="productname"
+                      className="font-bold text-own-text-light"
+                    >
+                      Product Name
+                    </label>
                     <input
-                      value={inStock}
-                      onChange={(e) => setInStock(e.target.value)}
-                      type="number"
-                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary   border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="In Stock"
+                      id="productname"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="bg-own-white-special text-own-text-light font-bold dark:bg-own-dark-bg-special w-full py-2  dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-own-text-light border-opacity-20 rounded-md"
                       required
                     />
+                    <p className=" text-secondary  mt-1"></p>
+                    <label
+                      htmlFor="productname"
+                      className="font-bold text-own-text-light"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      type="text"
+                      value={details}
+                      onChange={(e) => setDetails(e.target.value)}
+                      className="bg-own-white-special  font-bold dark:bg-own-dark-bg-special w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-own-text-light border-opacity-20 rounded-md"
+                      required
+                    />
+                    <p className=" text-secondary  "></p>
+                    <label
+                      htmlFor="productname"
+                      className="font-bold text-own-text-light"
+                    >
+                      Brand Name
+                    </label>
                     <input
                       value={brand}
                       onChange={(e) => setBrand(e.target.value)}
                       type="text"
-                      className="bg-own-secondary w-full py-2 text-own-secondary dark:text-own-white   px-4 outline-none focus:outline-own-primary   border-[1px] border-[#7703fc46] rounded-md"
-                      placeholder="Brand Name"
+                      className="bg-own-white-special text-own-text-light font-bold dark:bg-own-dark-bg-special w-full py-2  dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-own-text-light border-opacity-20 rounded-md"
                       required
                     />
-                  </div>
+                    <label
+                      htmlFor="productname"
+                      className="font-bold text-own-text-light mt-2 inline-block"
+                    >
+                      In Stock
+                    </label>
+                    <input
+                      value={inStock}
+                      onChange={(e) => setInStock(e.target.value)}
+                      type="number"
+                      className="bg-own-white-special text-own-text-light font-bold dark:bg-own-dark-bg-special w-full py-2  dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-own-text-light border-opacity-20 rounded-md"
+                      required
+                    />
+                    <label
+                      htmlFor="productname"
+                      className="font-bold text-own-text-light mt-2 inline-block"
+                    >
+                      Price
+                    </label>
+                    <div className="flex items-center  justify-between gap-10 mt-2">
+                      <input
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        type="number"
+                        className="bg-own-white-special text-own-text-light font-bold dark:bg-own-dark-bg-special w-full py-2  dark:text-own-white   px-4 outline-none focus:outline-own-primary mt-1  border-[1px] border-own-text-light border-opacity-20 rounded-md"
+                        required
+                      />
 
-                  <button className="btn-animation flex items-center justify-center ml-0">
-                    Add Product
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </button>
-                </form>
+                      <select
+                        className="border-[1px] border-own-text-light px-6 py-2 w-full border-opacity-20 rounded-md bg-own-white-special text-own-text-light font-bold dark:bg-own-dark-bg-special"
+                        name=""
+                        id=""
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="clock">Clock</option>
+                        <option value="clock">Phone</option>
+                        <option value="gadget">Gadget</option>
+                        <option value="module">Module</option>
+                        <option value="others">Others</option>
+                      </select>
+                    </div>
+
+                    <button className="btn-animation w-full mt-5 flex items-center justify-center ml-0">
+                      Add Product
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
+                  </form>
+                </div>
               </div>
-              <div>
-                <img className="w-[600px]" src={bannerImahe} alt="" />
+              <div className="">
+                <h2 className="text-xl font-bold text-own-secondary dark:text-own-white mb-2">
+                  Preview
+                </h2>
+                <div className="bg-own-white dark:bg-own-dark-bg shadow-md p-7 rounded-md">
+                  {file ? (
+                    <img
+                      className="w-[130px] mr-auto border-2 border-own-primary"
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="w-[250px] mr-auto border-2 border-own-primary"
+                      src={coverImage}
+                      alt=""
+                    />
+                  )}
+                  <div>
+                    <h3 className="text-own-text-light font-bold mt-2">
+                      Title
+                    </h3>
+                    <div className="flex text-own-text-light mt-1 justify-between font-semibold">
+                      <span>Category</span>
+                      <span>Price</span>
+                    </div>
+                    <div className="flex text-sm mt-3 text-own-text-light  justify-between font-semibold">
+                      <span>in stock</span>
+                      <span>Brand Name</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

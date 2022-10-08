@@ -11,8 +11,6 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 /* Internal Import */
 import React, { useState } from "react";
-import Footer from "../components/Footer/Footer";
-import keyImage from "../assets/icons/key.png";
 import Headers from "../components/Header/Header";
 import { useAuthContext } from "../context/AuthContextProvider";
 import useToken from "../hock/useToken";
@@ -21,11 +19,14 @@ import Cookies from "js-cookie";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
 import LoadingSpenner from "../components/Loading/Loading";
+import { toast } from "react-toastify";
+import Loading from "../components/Loading/Loading";
+import { TailSpin } from "react-loader-spinner";
 
 const SignUp = () => {
   /* Hocks  */
-  const { login, googleLogin, username } = useAuthContext();
-  const [token, isLoading] = useToken(username);
+  const { googleLogin, username } = useAuthContext();
+  const [token] = useToken(username);
   const [error, setError] = useState("");
   const [mainError, setMainError] = useState("");
   const navigate = useNavigate();
@@ -34,7 +35,6 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const from = location.state?.from?.pathname || "/";
-  const accessToken = Cookies.get("access");
   const userId = Cookies.get("id");
   const response = useCurrentUserQuery(userId);
   console.log(response);
@@ -75,7 +75,6 @@ const SignUp = () => {
               res.data.message ===
               "Pleace Verify Your Account then again try to login"
             ) {
-              console.log("verify ---");
               setMainError("Please verify your account and try again");
               swal("Please verify your account and try again");
             }
@@ -93,7 +92,9 @@ const SignUp = () => {
       setError("");
     } catch (error) {
       if (error.message) {
-        console.log(error.message);
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
       setError(error.message);
     }
@@ -108,21 +109,34 @@ const SignUp = () => {
     navigate(from, { replace: true });
   }
 
+  if (response?.currentData?.currentuser.length > 0) {
+    navigate(from, { replace: true });
+  }
+
   return (
     <>
       <Headers />
       <div className="relative controlSmallPage">
         {mainError && (
           <div className="">
-            <p className="bg-[#FF5555] text-own-secondary dark:text-own-white text-center py-2 ">
+            <p className="bg-own-soft-red text-own-secondary dark:text-own-white text-center py-2 ">
               {mainError}
             </p>
           </div>
         )}
         <div className="login container_c mx-auto bg-own-white dark:bg-own-dark-bg relative">
           {loading && (
-            <div className="absolute left-0 top-0 h-full z-30 bg-own-dark-bg w-full">
-              <LoadingSpenner />
+            <div className="h-screen absolute top-0 left-0 z-40 dark:bg-[#1f2d3d67] w-full flex justify-center items-center pointer-events-none  ">
+              <TailSpin
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
             </div>
           )}
           <div className="relative">
@@ -153,12 +167,12 @@ const SignUp = () => {
                     </span>
                   </button>
                   <a
-                    href=""
+                    href="/facebook"
                     className="bg-own-primary p-2 rounded-md sm:inline-block hidden"
                   >
                     <GrFacebookOption className="text-own-white text-2x " />
                   </a>
-                  <a href="">
+                  <a href="/facebook">
                     <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
                       Facebook
                     </span>

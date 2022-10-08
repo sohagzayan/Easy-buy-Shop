@@ -1,110 +1,141 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Demo1 from "../../assets/clock1.png";
-import Demo2 from "../../assets/clock2.png";
-import Demo3 from "../../assets/clock3.png";
+
 import { FiBookmark } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoBagAddOutline } from "react-icons/io";
 import { BiBookmarkPlus } from "react-icons/bi";
-import { AiOutlineEye } from "react-icons/ai";
+import { AiFillStar, AiOutlineEye } from "react-icons/ai";
 import { FcLikePlaceholder } from "react-icons/fc";
+import { useCurrentUserQuery } from "../../store/API/user";
+import Cookies from "js-cookie";
+import axios from "axios";
+import swal from "sweetalert";
+import { toast } from "react-toastify";
 
-const OurPartsProducts = ({ item, handleAddToBookmark, mutateAsync, own }) => {
-  const { image, name, details, price, quantity, minimumOrder, _id, users } =
-    item;
-  const [alredyAddedBooks, setAlredyAddedBooks] = useState(false);
+const OurPartsProducts = ({ item }) => {
+  const {
+    image,
+    name,
+    details,
+    price,
+    quantity,
+    minimumOrder,
+    view,
+    _id,
+    users,
+    availability,
+  } = item;
+  const token = Cookies.get("token");
+  const reting = [1, 2, 3, 4, 5];
+
+  const addToCardProduct = async (id) => {
+    console.log(token);
+    console.log("addToCardProduct");
+    await axios
+      .post(
+        `http://localhost:5000/api/v1/addToCard/${id}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (
+          res.data.status === 5000 ||
+          res.data.message === "This Product Already Exits!"
+        ) {
+          toast.warn("This Product already Added", {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        } else {
+          toast.success("Success to add you card!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        console.log(res);
+        // setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
-      <div>
-        <div className="bg-[#18182F]  rounded-md relative">
-          {own && (
-            <span className=" text-own-secondary dark:text-own-white text-[11px] absolute -right-3 -bottom-3 p-2 flex flex-col justify-center items-center rounded-md cursor-pointer">
-              Own
-            </span>
-          )}
-
+      <NavLink
+        data-aos="zoom-in"
+        data-aos-delay="300"
+        to={`/ProductsDetails/${_id}`}
+        className="transition-all ease-in"
+      >
+        <div className="bg-own-white border-[1px] border-own-text-light border-opacity-10 dark:bg-own-dark-bg rounded-md relative shadow-md overflow-hidden group">
+          {/* <div className="flex ml-6 mb-1 ">
+            <NavLink
+              to={`/user_profile/${users?._id}`}
+              className="flex items-center  gap-3 mt-2 cursor-pointer"
+            >
+              <div>
+                <img
+                  className="w-[25px] rounded-full "
+                  src={users?.image}
+                  alt=""
+                />
+              </div>
+              <div className="border-l-2 pl-2 border-own-primary">
+                <h3 className="text-own-secondary font-bold -mb-2 dark:text-own-white text-sm">
+                  {users?.name}
+                </h3>
+                <sub className=" text-own-text-light ">{users?.country}</sub>
+              </div>
+            </NavLink>
+          </div> */}
           <div className="">
-            <div className="inline-flex flex-col py-3 px-4 items-center justify-center gap-2 absolute top-0 left-0">
-              <span
-                onClick={async () => await mutateAsync(_id)}
-                className="bg-[#0C0C18] p-2 rounded-full cursor-pointer"
-              >
-                <HiOutlineShoppingBag className=" text-own-primary text-xl" />
-              </span>
-
-              <span
-                onClick={() =>
-                  handleAddToBookmark(
-                    _id,
-                    alredyAddedBooks,
-                    setAlredyAddedBooks
-                  )
-                }
-                className="bg-[#0C0C18] p-2 rounded-full cursor-pointer"
-              >
-                <BiBookmarkPlus className=" text-own-primary text-xl" />
-              </span>
-            </div>
-
             <div
               className="flex items-center justify-center 
-         rounded-lg"
+                rounded-lg relative "
             >
-              <img className="h-[200px] " src={image} alt="" />
+              <img className="  " src={image} alt="" />
             </div>
 
-            <div className="flex flex-col px-5 py-2 ">
-              <h2 className="text-own-secondary dark:text-own-white mb-2 ">
+            <div className="flex flex-col px-5 py-4 ">
+              <h2 className="text-own-primary font-bold dark:text-own-white mb-1 text-2xl ">
                 {name}
               </h2>
-              <div className="flex items-center justify-between ">
-                <span className="text-2xl text-own-primary font-bold">
-                  ${price}
-                </span>
-                <NavLink
-                  to={`/ProductsDetails/${_id}`}
-                  className="bg-own-primary inline text-own-secondary dark:text-own-white font-bold px-2 py-1 rounded-md text-sm"
-                >
-                  Buy Products
-                </NavLink>
+              <div className="flex  justify-between">
+                <div className="flex flex-col">
+                  <span className="text-xl text-own-soft-red font-bold mb-1">
+                    ${price}
+                  </span>
+                  <span className="dark:text-own-white font-semibold text-own-secondary">
+                    Stock:{" "}
+                    <span
+                      className={
+                        availability === "in-stock"
+                          ? "text-own-primary"
+                          : "text-own-soft-red"
+                      }
+                    >
+                      {availability}
+                    </span>
+                  </span>
+                </div>
+                <div className="flex flex-col justify-end items-end">
+                  <div className="flex items-center">
+                    {reting.slice(0, 3).map((r) => (
+                      <AiFillStar className="text-[#FACA51]" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-own-secondary dark:text-own-white">
+                    Bangladesh
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex  justify-between">
-          <NavLink
-            to={`/user_profile/${users?._id}`}
-            className="flex items-center gap-3 mt-2 cursor-pointer"
-          >
-            <div>
-              <img
-                className="w-[30px] rounded-full "
-                src={users?.image}
-                alt=""
-              />
-            </div>
-            <div>
-              <h3 className="text-own-secondary dark:text-own-white text-sm">
-                {users?.name}
-              </h3>
-            </div>
-          </NavLink>
-          <div className="flex  items-center">
-            <span className="bg-[#0C0C18] p-2 flex gap-1 items-center rounded-md cursor-pointer">
-              <AiOutlineEye className=" text-own-primary  " />
-              <sub className="pb-1  text-own-secondary dark:text-own-white">
-                2.1k
-              </sub>
-              {/* <span className="">2.1k</span> */}
-            </span>
-            <span className="flex items-center justify-center  rounded-md text-own-secondary dark:text-own-white  bg-[#0C0C18] ">
-              <FcLikePlaceholder className="text-sm" />
-              500
-            </span>
-          </div>
-        </div>
-      </div>
+      </NavLink>
     </>
   );
 };

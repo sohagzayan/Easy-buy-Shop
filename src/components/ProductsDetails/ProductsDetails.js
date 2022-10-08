@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { TbShoppingCartDiscount } from "react-icons/tb";
 import axios from "axios";
 import discountimage from "../../assets/discount.png";
@@ -11,76 +11,184 @@ import { FcLikePlaceholder } from "react-icons/fc";
 import BuyProductsModal from "../BuyProducts/BuyProductsModal";
 import Cookies from "js-cookie";
 import { useCurrentUserQuery } from "../../store/API/user";
+import ReviewAddOnProducts from "./ReviewAddOnProducts";
+import { MdTextRotationAngleup } from "react-icons/md";
+import Reviews from "../Reviews/Reviews";
+import { AiOutlineEye } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { fetchProducts } from "../../store/slices/cardSlice";
+import { useDispatch } from "react-redux";
+import LoadingSpener from "../LoadingSpener/LoadingSpener";
+import { FaBackward } from "react-icons/fa";
+import swal from "sweetalert";
 
 const ProductsDetails = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const [detailsProduct, setDetailsProduct] = useState({});
   const [quentity, setQuentity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [subTotalPrice, setSubTotalPrice] = useState(0);
+  const [reviewValue, setReviewValue] = useState(0);
+  const [sendReviewActive, setSendReviewActive] = useState(false);
+  const [showBuyNowModal, setShowBuyNowModal] = useState(false);
+  const [alredyBuy, setAlredyBuy] = useState([]);
   const userid = Cookies.get("id");
+  const token = Cookies.get("token");
   const response = useCurrentUserQuery(userid);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // console.log(response?.currentData?.currentuser[0].email    );
   useEffect(() => {
-    const url = `http://localhost:5000/api/v1/tools/${id}`;
+    (async () => {
+      const url = `http://localhost:5000/api/v1/tools/${id}`;
+      await axios
+        .get(url)
+        .then((res) => {
+          setDetailsProduct(res.data);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    })();
+  }, []);
+
+  useEffect(() => {
     axios
-      .get(url)
-      .then((res) => setDetailsProduct(res.data))
-      .catch((err) => console.log(err));
-  }, [detailsProduct]);
+      .get(
+        `http://localhost:5000/api/v1/purchase/alredy_purchase?productId=${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setAlredyBuy(res.data);
+      });
+  }, [alredyBuy]);
 
   useEffect(() => {
     const productPrice = parseInt(detailsProduct?.price) || 0;
     const quentityAmount = parseInt(quentity) || 0;
-    setTotalPrice(quentityAmount * productPrice);
+    console.log(detailsProduct?.price);
+    setSubTotalPrice(quentityAmount * productPrice);
   }, [quentity]);
 
-  // console.log(detailsProduct?.users?.name);
+  const addToCardProduct = async (id) => {
+    if (quentity <= 0) {
+      toast.error("Quantity 0 or Negative value not allow!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } else {
+      await axios
+        .post(
+          `http://localhost:5000/api/v1/addToCard/${id}`,
+          { quantity: quentity, subTotal: subTotalPrice },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (
+            res.data.status === 5000 ||
+            res.data.message === "This Product Already Exits!"
+          ) {
+            toast.warn("This Product already Added", {
+              position: toast.POSITION.BOTTOM_CENTER,
+            });
+          } else {
+            toast.success("Success to add you card!", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            dispatch(fetchProducts());
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
+  const handleAddToBookmark = (id) => {
+    console.log("adding continew bookmark");
+    axios
+      .post(
+        `http://localhost:5000/api/v1/bookmark/${id}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res?.data?.status === 500) {
+          swal("Alredy Bookmark This Products!");
+        } else {
+          swal("Bookmark Success", "You clicked the button!", "success");
+        }
+      });
+  };
+
+  if (loading) {
+    return <LoadingSpener />;
+  }
   return (
     <>
       <Header />
       <div>
         <div className="container_c mx-auto">
-          <div className="text-own-secondary dark:text-own-white text-center py-7">
-            <h3 className="text-2xl  font-semibold mb-1">Products Details</h3>
-            <p className=" text-own-text-light  dark:text-own-text-dark">
-              Congratulations, your new shot is live and looking good.
-            </p>
-          </div>
+          <span
+            className="text-own-primary underline font-bold text-lg cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <FaBackward className="text-3xl" />
+          </span>
           <div className="grid grid-cols-12 py-10 items-center">
-            <div className="col-span-6 flex flex-col  relative">
-              <img className="w-[70%]" src={detailsProduct?.image} alt="" />
-              {/* <span className="flex items-center text-own-secondary dark:text-own-white text-2xl font-bold bg-[#18182F] px-3 rounded-md py-2 absolute top-0 left-20">
-                10
-                <img className="w-[60px] ml-3" src={discountimage} alt="" />
-              </span> */}
+            <div className="sm:col-span-6 col-span-12 flex flex-col  relative mb-10">
+              <img
+                className="w-[40%] mx-auto"
+                src={detailsProduct?.image}
+                alt=""
+              />
             </div>
-            <div className="col-span-6 text-own-secondary dark:text-own-white">
-              <div className="profile-info flex gap-2 items-center mb-4">
+            <div className="sm:col-span-6 col-span-12 text-own-secondary dark:text-own-white">
+              <NavLink
+                to={`/user_profile/${detailsProduct?.users?._id}`}
+                className="profile-info flex gap-2 items-center mb-4 bg-own-white-special dark:bg-own-dark-bg-special py-2 px-2 rounded-md  border-[1px] border-own-text-light border-opacity-10"
+              >
                 <img
                   className="w-[50px] rounded-full"
                   src={detailsProduct?.users?.image}
                   alt=""
                 />
                 <div className="">
-                  <h2 className="text-own-secondary dark:text-own-white">
+                  <h2 className=" dark:text-own-white-special text-own-secondary font-bold text-xl">
                     {detailsProduct?.users?.name}
                   </h2>
-                  <span className="text-own-secondary dark:text-own-white">
+                  <span className="text-own-secondary text-sm dark:text-own-white">
                     {detailsProduct?.users?.country}
                   </span>
                 </div>
-              </div>
+              </NavLink>
 
               <h2 className="text-2xl font-semibold text-own-primary border-own-primary inline-block mb-1">
-                {/* {detailsProduct?.name} */}
                 {detailsProduct?.name}
               </h2>
               <sup className="block py-2">
                 7 Reviews /{" "}
-                <NavLink className="underline cursor-pointer" to="/review">
-                  Write A Review
-                </NavLink>
+                {alredyBuy.length > 0 && (
+                  <button
+                    onClick={() => setSendReviewActive(true)}
+                    className="underline cursor-pointer"
+                    to="/review"
+                  >
+                    Write A Review
+                  </button>
+                )}
               </sup>
               <p className="text-own-text-light  dark:text-own-text-dark py-1">
                 {detailsProduct?.details}
@@ -88,32 +196,33 @@ const ProductsDetails = () => {
               <hr className="border-[1px] border-own-primary border-opacity-20 my-1" />
               <p className="py-1">
                 Availability:{" "}
-                <span className="text-own-primary">
+                <span
+                  className={
+                    detailsProduct?.availability === "in-stock"
+                      ? "text-own-primary mr-1 font-bold"
+                      : "text-own-soft-red mr-1 font-bold"
+                  }
+                >
                   {detailsProduct?.availability}
-                </span>{" "}
-                Brand:{" "}
+                </span>
+                Brand:
                 <span className="text-own-primary">
                   {detailsProduct?.Brand}
                 </span>{" "}
                 SKU:
-                <span className="text-own-primary"> 83690/32</span>
               </p>
-              <h3 className="text-2xl text-own-primary">
+              <h3 className="text-2xl font-bold text-own-primary">
                 ${detailsProduct?.price}
               </h3>
               <div className="flex items-center gap-1 ">
-                <span>In Stock:{detailsProduct?.InStock}</span>
+                <span className="font-bold">
+                  In Stock:{detailsProduct?.InStock}
+                </span>
                 <span className="text-2xl font-semibold text-own-primary  ">
                   {detailsProduct?.quantity}
                 </span>
               </div>
-              <h3>
-                Products Warranty{" "}
-                <span className="text-xl text-own-primary">
-                  {detailsProduct?.Warranty}
-                </span>{" "}
-                Year
-              </h3>
+              <h3>Our shop every product have 1 year warranty</h3>
               <div>
                 <h2 className="mt-4">QUANTITY</h2>
                 <div className="flex items-center mt-1">
@@ -121,51 +230,62 @@ const ProductsDetails = () => {
                     min="1"
                     value={quentity}
                     onChange={(e) => setQuentity(e.target.value)}
-                    className="w-[80px] py-1 bg-own-ternary text-center rounded-md border-[1px] border-own-primary mr-2"
+                    className="w-[80px] bg-own-white-special py-1 dark:bg-own-dark-bg-special text-center rounded-md border-[1px] border-own-primary mr-2"
                     type="number"
                   />
-                  <button
-                    title="Add Your Wish list"
-                    className="bg-own-ternary p-3 rounded-md flex items-center gap-1"
-                  >
-                    <FcLikePlaceholder />
-                    <span>{detailsProduct?.like}</span>
-                  </button>
                 </div>
-                <h3>
-                  Total Price :{" "}
+                <h3 className="font-bold">
+                  SubTotal:{" "}
                   <span className="text-own-primary text-xl">
                     {/* {parseInt(quentity) * parseInt(detailsProduct?.price)} */}
-                    {totalPrice}
+                    {subTotalPrice}
                   </span>
                 </h3>
               </div>
-              <div className="flex justify-between items-center mt-4">
-                <label
-                  htmlFor="my-modal-6"
-                  className="btn modal-button border-transparent text-own-secondary dark:text-own-white bg-own-primary"
+              <div className="flex  md:flex-row flex-col justify-between md:items-center mt-4">
+                <button
+                  onClick={() => addToCardProduct(id)}
+                  className={
+                    detailsProduct?.availability === "in-stock"
+                      ? "btn modal-button border-transparent md:mb-0 mb-6 text-own-white dark:text-own-white bg-own-primary"
+                      : "btn modal-button border-transparent md:mb-0 mb-6 text-own-white dark:text-own-white bg-own-primary opacity-10 pointer-events-none"
+                  }
                 >
-                  Buy Now
-                </label>
-
-                <button className="flex items-center gap-3 bg-own-primary px-3 py-2 rounded-md ">
-                  {" "}
-                  <TbShoppingCartDiscount /> Add To Card
+                  Add To Card
+                </button>
+                <button
+                  onClick={() => handleAddToBookmark(id)}
+                  className="btn modal-button border-transparent md:mb-0 mb-6 text-own-white font-sm dark:text-own-white bg-own-primary"
+                >
+                  Bookmark
                 </button>
               </div>
             </div>
           </div>
         </div>
-
-        <ProductReview />
-        <BuyProductsModal
-          totalPrice={totalPrice}
-          ProductId={detailsProduct?._id}
-          email={response?.currentData?.currentuser[0].email}
-          name={response?.currentData?.currentuser[0].name}
-          price={detailsProduct?.price}
-          quentity={quentity}
-        />
+        {sendReviewActive && (
+          <ReviewAddOnProducts
+            className=""
+            setReviewValue={setReviewValue}
+            reviewValue={reviewValue}
+            setSendReviewActive={setSendReviewActive}
+            id={id}
+          />
+        )}
+        {showBuyNowModal && (
+          <BuyProductsModal
+            totalPrice={subTotalPrice}
+            ProductId={detailsProduct?._id}
+            email={response?.currentData?.currentuser[0].email}
+            name={response?.currentData?.currentuser[0].name}
+            price={detailsProduct?.price}
+            quentity={quentity}
+            setSendReviewActive={setSendReviewActive}
+            setShowBuyNowModal={setShowBuyNowModal}
+            showBuyNowModal={showBuyNowModal}
+          />
+        )}
+        <ProductReview id={id} category={detailsProduct?.category} />
       </div>
       <Footer />
     </>

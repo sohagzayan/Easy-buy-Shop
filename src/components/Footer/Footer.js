@@ -10,8 +10,8 @@ const Footer = () => {
             className="btn btn-ghost normal-case text-xl text-own-secondary dark:text-own-white font-semibold"
             href="/"
           >
-            <img width="25px" className="mr-2" src={Icons} alt="icons" />{" "}
-            Quality <span className="text-own-secondary">C</span> ookie
+            <img width="25px" className="mr-2" src={Icons} alt="icons" /> Easy
+            Buy
           </a>
         </span>
         <a

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ManageAllOrderRow from "./ManageAllOrderRow";
-import "../Table.css";
 
 const ManageAllOrder = () => {
   const [manageOrder, setManageOrder] = useState([]);

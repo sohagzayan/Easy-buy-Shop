@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useCurrentUserQuery } from "../../store/API/user";
 
 const General = () => {
@@ -30,9 +31,15 @@ const General = () => {
         }
       )
       .then((res) => {
-        alert("success");
+        toast.success("Change Successfull", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
   };
 
   return (

@@ -27,7 +27,6 @@ const CheckoutForm = ({ data }) => {
     })
       .then((res) => res.json())
       .then((info) => {
-        console.log(info);
         if (info?.clientSecret) {
           setClientSecret(info.clientSecret);
         }
@@ -98,13 +97,9 @@ const CheckoutForm = ({ data }) => {
         .then((data) => {
           setProcessing(false);
           swal("payment Success ");
-          console.log(data);
         });
     }
   };
-  // if(processing){
-  //     return <Loading />
-  // }
 
   return (
     <>

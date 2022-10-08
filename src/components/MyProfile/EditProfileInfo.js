@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import swal from "sweetalert";
 import {
   useCurrentUserQuery,
@@ -42,23 +43,26 @@ const EditProfileInfo = () => {
         }
       )
       .then((res) => {
-        alert("success");
+        toast.success("Change SuccessFull", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
   };
 
   const handleuploadPicture = async (e) => {
     if (file) {
       const fileName = file;
-      console.log(file);
       const formData = new FormData();
       formData.append("image", fileName);
       const url = `https://api.imgbb.com/1/upload?key=${imagebbKey}`;
       await axios
         .post(url, formData)
         .then((result) => {
-          console.log(result?.data?.data?.url);
-          console.log(result?.data?.success);
           if (result?.data?.success) {
             console.log("come inner");
             axios
@@ -67,8 +71,9 @@ const EditProfileInfo = () => {
                 { image: result?.data?.data?.url }
               )
               .then((res) => {
-                console.log(res);
-                swal("success to update your profile");
+                toast.success("success to update your profile", {
+                  position: toast.POSITION.TOP_CENTER,
+                });
                 window.location.reload(true);
               })
               .catch((err) => {
@@ -77,10 +82,14 @@ const EditProfileInfo = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          toast.error(error.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         });
     } else {
-      alert("select image");
+      toast.error("Selected image", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     }
   };
 
@@ -91,11 +100,16 @@ const EditProfileInfo = () => {
         { image: "https://i.ibb.co/ZK5CBDW/demouser.png" }
       )
       .then((res) => {
-        swal("Default image Set Success");
+        toast.success("Change Successfull", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         window.location.reload(true);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       });
   };
 

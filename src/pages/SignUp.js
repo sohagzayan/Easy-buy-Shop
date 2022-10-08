@@ -2,7 +2,7 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "react-country-dropdown/dist/index.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import GoogleButton from "react-google-button";
+// import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
@@ -17,17 +17,21 @@ import React, { useState } from "react";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
 import LoadingSpenner from "../components/Loading/Loading";
+import { useCurrentUserQuery } from "../store/API/user";
+import Cookies from "js-cookie";
+import { TailSpin } from "react-loader-spinner";
 
 const SignUp = () => {
   /* Hocks */
+  const userId = Cookies.get("id");
   const [region, setRegion] = useState("");
   const [country, setCountry] = useState("");
   const [error, setError] = useState("");
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  // const navigate = useNavigate();
+  const response = useCurrentUserQuery(userId);
+  const navigate = useNavigate();
 
   /* select Country  Func */
   const selectCountry = (val) => {
@@ -40,10 +44,8 @@ const SignUp = () => {
   };
 
   /* Others */
-  const { username, googleLogin } = useAuthContext();
+  const { googleLogin } = useAuthContext();
   const from = location.state?.from?.pathname || "/";
-  // const response = useCurrentUserQuery();
-  // console.log("form Signup :", response);
 
   /* React Hock Form yup validation Schema*/
   let schema = yup.object().shape({
@@ -64,7 +66,7 @@ const SignUp = () => {
   /** SingUp Func  */
   const onSubmit = async (data) => {
     setLoading(true);
-    const { username, name, email, password, ConformPassword } = data;
+    const { username, name, email, password } = data;
     const url = "http://localhost:5000/api/v1/user/signin";
     const newUser = {
       name,
@@ -110,9 +112,13 @@ const SignUp = () => {
   };
 
   /* Google SingUp*/
-  const handleGoogleLogin = async () => {
-    await googleLogin();
-  };
+  // const handleGoogleLogin = async () => {
+  //   await googleLogin();
+  // };
+
+  if (response?.currentData?.currentuser.length > 0) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <>
@@ -120,8 +126,17 @@ const SignUp = () => {
       <div className="controlSmallPage">
         <div className="login container_c mx-auto relative">
           {loading && (
-            <div className="absolute left-0 top-0 h-full z-20 bg-[#101126a1] w-full">
-              <LoadingSpenner />
+            <div className="h-screen absolute top-0 left-0 z-40 dark:bg-[#1f2d3d67] w-full flex justify-center items-center pointer-events-none  ">
+              <TailSpin
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
             </div>
           )}
           <div className="relative">
@@ -149,12 +164,12 @@ const SignUp = () => {
                     </span>
                   </button>
                   <a
-                    href=""
+                    href="/facebook"
                     className="bg-own-primary  p-2 rounded-md sm:inline-block hidden"
                   >
                     <GrFacebookOption className="text-own-secondary dark:text-own-white text-2x " />
                   </a>
-                  <a href="">
+                  <a href="/facebook">
                     <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
                       Facebook
                     </span>
@@ -261,11 +276,11 @@ const SignUp = () => {
                       className="text-own-secondary dark:text-own-white text-sm"
                     >
                       Creating an account means you’re okay with our{" "}
-                      <a href="" className="text-own-primary">
+                      <a href="/facebook" className="text-own-primary">
                         Terms of Service, Privacy Policy,
                       </a>{" "}
                       and our default{" "}
-                      <a href="" className="text-own-primary">
+                      <a href="/facebook" className="text-own-primary">
                         Notification Settings.
                       </a>
                     </label>
@@ -281,12 +296,12 @@ const SignUp = () => {
                   </div>
                   <p className="text-own-secondary dark:text-own-white text-sm mt-5">
                     This site is protected by reCAPTCHA and the Google{" "}
-                    <a href="" className="text-own-primary">
+                    <a href="/facebook" className="text-own-primary">
                       {" "}
                       Privacy Policy
                     </a>{" "}
                     and{" "}
-                    <a href="" className="text-own-primary">
+                    <a href="/facebook" className="text-own-primary">
                       Terms of Service
                     </a>{" "}
                     apply.

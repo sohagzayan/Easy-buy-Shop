@@ -12,7 +12,7 @@ const Profile = ({ handleUserProfile }) => {
         className="bg-own-white-special dark:bg-own-dark-bg-special overflow-hidden inline-block p-1 rounded-full cursor-pointer"
       >
         <img
-          className="w-[40px] rounded-full"
+          className="w-[30px] rounded-full"
           src={response?.data?.currentuser[0]?.image}
           alt=""
         />

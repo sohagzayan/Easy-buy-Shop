@@ -1,38 +1,61 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useCurrentUserQuery } from "../../store/API/user";
 
 const PasswordReset = () => {
   /** Hocks  */
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-
+  const [oldpassword, setOldpassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const navigate = useNavigate();
+  const token = Cookies.get("token");
   /** Current User Info */
   const userId = Cookies.get("id");
   const response = useCurrentUserQuery(userId);
-  // console.log(response?.data?.currentuser[0]);
 
-  useEffect(() => {
-    setUsername(response?.data?.currentuser[0]?.username);
-    setEmail(response?.data?.currentuser[0]?.email);
-  }, [response]);
-
-  /** Handle Update User user name also user email */
   const handleGeneralUserUpdate = async (e) => {
     e.preventDefault();
     await axios
-      .put(
-        `http://localhost:5000/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
+      .post(
+        `http://localhost:5000/api/v1/user/user/reset_password`,
         {
-          username: username,
-          email: email,
+          oldpassword: oldpassword,
+          newpassword: newPassword,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       .then((res) => {
-        alert("success");
+        if (res.data.status === 500 || res.data.message === "jwt expired") {
+          Cookies.remove("token");
+          Cookies.remove("id");
+          navigate("/login");
+          toast.success("You Access Token Expear!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        } else {
+          if (res.data === "Old password don't match") {
+            toast.error(res.data, {
+              position: toast.POSITION.BOTTOM_CENTER,
+            });
+          } else {
+            toast.success("Change SuccessFully", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+          }
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
   };
 
   return (
@@ -48,9 +71,8 @@ const PasswordReset = () => {
           <input
             id="username"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="username"
+            value={oldpassword}
+            onChange={(e) => setOldpassword(e.target.value)}
             className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
           <label
@@ -62,9 +84,8 @@ const PasswordReset = () => {
           <input
             id="email"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="email"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             className="w-full py-2 px-3 bg-transparent border-[1px] border-own-primary rounded-md text-own-secondary dark:text-own-white"
           />
 
