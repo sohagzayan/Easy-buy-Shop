@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const toolsApi = createApi({
   reducerPath: "toolsapi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1",
+    baseUrl: "https://easy-buy.onrender.com/api/v1",
   }),
 
   endpoints: (builder) => ({

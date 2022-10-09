@@ -4,7 +4,7 @@ const ManageAllProducts = () => {
   const [manageAllData, setmMnageAllData] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/tools`)
+    fetch(`https://easy-buy.onrender.com/api/tools`)
       .then((res) => res.json())
       .then((data) => setmMnageAllData(data));
   }, [manageAllData]);

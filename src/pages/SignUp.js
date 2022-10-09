@@ -66,7 +66,7 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const { username, name, email, password } = data;
-    const url = "http://localhost:5000/api/v1/user/signin";
+    const url = "https://easy-buy.onrender.com/api/v1/user/signin";
     const newUser = {
       name,
       username,

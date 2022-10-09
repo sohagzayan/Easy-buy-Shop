@@ -18,7 +18,7 @@ const AddShoopReview = () => {
       try {
         axios
           .post(
-            `http://localhost:5000/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
+            `https://easy-buy.onrender.com/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
             {
               rating: reviewValue,
               message: message,
