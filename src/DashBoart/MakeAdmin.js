@@ -15,7 +15,7 @@ const MakeAdmin = () => {
     error,
     data: allUser,
   } = useQuery("userData", () =>
-    fetch(`http://localhost:5000/api/user`, {
+    fetch(`https://easy-buy.onrender.com/api/user`, {
       method: "GET",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,

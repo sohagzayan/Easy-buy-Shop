@@ -19,7 +19,7 @@ const AddUserReview = () => {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     await axios
-      .post(`http://localhost:5000/api/review`, reviewPost)
+      .post(`https://easy-buy.onrender.com/api/review`, reviewPost)
       .then((res) => res);
     setDase("");
     swal("add to review success");

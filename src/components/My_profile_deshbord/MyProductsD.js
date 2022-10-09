@@ -18,7 +18,7 @@ const MyProductsD = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
+      `https://easy-buy.onrender.com/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
       {
         headers: {
           "Content-Type": "application/json",

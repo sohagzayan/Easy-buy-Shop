@@ -5,7 +5,7 @@ import BuyModal from "../components/BuyModal/BuyModal";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 
-const MF = "http://localhost:5000/upload/";
+const MF = "https://easy-buy.onrender.com/upload/";
 const Purchase = () => {
   const [singleData, setSingleData] = useState({});
   const [parsesError, setParsesError] = useState("");
@@ -15,7 +15,7 @@ const Purchase = () => {
   useEffect(() => {
     const getData = async () => {
       await axios
-        .get(`http://localhost:5000/api/tools/${id}`)
+        .get(`https://easy-buy.onrender.com/api/tools/${id}`)
         .then((data) => setSingleData(data.data));
     };
     getData();

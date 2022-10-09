@@ -40,7 +40,7 @@ const AddNewProducts = () => {
           if (result?.data?.success) {
             axios
               .post(
-                `http://localhost:5000/api/v1/tools`,
+                `https://easy-buy.onrender.com/api/v1/tools`,
                 {
                   name,
                   details,

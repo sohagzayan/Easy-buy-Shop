@@ -12,7 +12,9 @@ const BookMark = () => {
     isLoading,
     error,
     data: partsData,
-  } = useQuery("toolsData", () => axios.get(`http://localhost:5000/api/tools`));
+  } = useQuery("toolsData", () =>
+    axios.get(`https://easy-buy.onrender.com/api/tools`)
+  );
 
   if (isLoading) {
     return <Loading />;

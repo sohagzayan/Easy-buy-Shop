@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import swal from "sweetalert";
-const MF = "http://localhost:5000/upload/";
+const MF = "https://easy-buy.onrender.com/upload/";
 const ManageAllProdutsCard = ({ data }) => {
   const { image, name, price, details, minimumOrder, quantity, _id } = data;
   console.log(data);
@@ -18,7 +18,7 @@ const ManageAllProdutsCard = ({ data }) => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        axios.delete(`http://localhost:5000/api/tools/${_id}`);
+        axios.delete(`https://easy-buy.onrender.com/api/tools/${_id}`);
       } else {
         swal("Your imaginary file is safe!");
       }
