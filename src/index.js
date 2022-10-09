@@ -9,6 +9,7 @@ import "./index.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 AOS.init({
   disable: false,
   startEvent: "DOMContentLoaded",
@@ -39,11 +40,9 @@ root.render(
   <ThemeProvider>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <HashRouter>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </HashRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </BrowserRouter>
     </QueryClientProvider>
   </ThemeProvider>
