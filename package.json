@@ -2,6 +2,7 @@
   "name": "exclusive-computer-hardware-fair-client-ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.9.8",
@@ -16,7 +17,6 @@
     "bcrypt": "^5.0.1",
     "daisyui": "^2.15.0",
     "date-fns": "^2.28.0",
-    "firebase": "^9.8.1",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "react": "^18.1.0",
@@ -42,7 +42,6 @@
     "sweetalert": "^2.1.2",
     "swiper": "^8.4.2",
     "web-vitals": "^2.1.4",
-    "wow.js": "^1.2.2",
     "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },
