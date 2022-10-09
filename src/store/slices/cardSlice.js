@@ -22,7 +22,7 @@ export const cardSlice = createSlice({
     setProduct(state, action) {
       state.subTotal = 0;
       state.productIds = [];
-      action.payload?.map((r) => {
+      action?.payload?.map((r) => {
         state.subTotal = state.subTotal + r.subTotal;
         state.productIds.push(r?.productId);
       });

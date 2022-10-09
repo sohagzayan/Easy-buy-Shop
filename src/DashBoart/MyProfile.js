@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header/Header";
-import { useAuthContext } from "../context/AuthContextProvider";
-import { AiOutlineMenu } from "react-icons/ai";
 import Footer from "../components/Footer/Footer";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useCurrentUserQuery } from "../store/API/user";
-import axios from "axios";
 import { toast } from "react-toastify";
 const MyProfile = () => {
   /** component needed state and data */

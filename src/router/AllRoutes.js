@@ -4,9 +4,7 @@ import EditProfileInfo from "../components/MyProfile/EditProfileInfo";
 import General from "../components/MyProfile/General";
 import SocialProfile from "../components/MyProfile/SocialProfile";
 import NotFound from "../components/NotFound/NotFound";
-import PrivateAdmin from "../components/PrivateRoute/PrivateAdmin";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
-import DashBoart from "../DashBoart/DashBoart";
 import MyOrder from "../components/My_profile_deshbord/MyOrder";
 import MyProfile from "../DashBoart/MyProfile";
 import Payment from "../DashBoart/Payment";
@@ -15,7 +13,6 @@ import BookMark from "../pages/BookMark";
 import EditProfile from "../pages/EditProfile";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Purchase from "../pages/Purchase";
 import SignUp from "../pages/SignUp";
 import Shoops from "../pages/Shoops";
 import MyProductsD from "../components/My_profile_deshbord/MyProductsD";
@@ -81,20 +78,13 @@ const AllRoutes = () => {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/dashBoart"
-        element={
-          <PrivateAdmin>
-            <DashBoart />
-          </PrivateAdmin>
-        }
-      />
+
       <Route
         path="/account"
         element={
-          <PrivateAdmin>
+          <PrivateRoute>
             <EditProfile />
-          </PrivateAdmin>
+          </PrivateRoute>
         }
       >
         <Route index={true} element={<General />} />
@@ -106,9 +96,9 @@ const AllRoutes = () => {
       <Route
         path="/myProfile"
         element={
-          <PrivateAdmin>
+          <PrivateRoute>
             <MyProfile />
-          </PrivateAdmin>
+          </PrivateRoute>
         }
       >
         <Route index element={<MyProductsD />} />
@@ -118,14 +108,6 @@ const AllRoutes = () => {
         <Route path="my_ordered" element={<MyOrder />} />
         <Route path="my_product_order" element={<MyProductOrder />} />
       </Route>
-      <Route
-        path="/purchase/:id"
-        element={
-          <PrivateRoute>
-            <Purchase />
-          </PrivateRoute>
-        }
-      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

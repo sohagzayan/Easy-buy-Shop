@@ -11,7 +11,6 @@ import swal from "sweetalert";
 import { useLocation } from "react-router-dom";
 const EditProfile = () => {
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
   const userId = Cookies.get("id");
   const response = useCurrentUserQuery(userId);

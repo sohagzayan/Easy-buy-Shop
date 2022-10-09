@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Loading from "./components/Loading/Loading";
-import { AuthContextProvider } from "./context/AuthContextProvider";
+// import { AuthContextProvider } from "./context/AuthContextProvider";
 import AllRoutes from "./router/AllRoutes";
 import "swiper/css/bundle";
 import "./components/HeroSlider/styles.css";
@@ -25,11 +25,11 @@ function App() {
         <Loading />
       ) : (
         <QueryClientProvider client={queryClient}>
-          <AuthContextProvider>
-            <AllRoutes />
+          {/* <AuthContextProvider> */}
+          <AllRoutes />
 
-            <ToastContainer />
-          </AuthContextProvider>
+          <ToastContainer />
+          {/* </AuthContextProvider> */}
         </QueryClientProvider>
       )}
     </div>

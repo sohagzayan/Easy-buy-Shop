@@ -2,7 +2,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "react-country-dropdown/dist/index.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import swal from "sweetalert";
@@ -12,7 +11,6 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 /* Internal Import*/
 import Headers from "../components/Header/Header";
-import { useAuthContext } from "../context/AuthContextProvider";
 import React, { useState } from "react";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
@@ -44,7 +42,6 @@ const SignUp = () => {
   };
 
   /* Others */
-  const { googleLogin } = useAuthContext();
   const from = location.state?.from?.pathname || "/";
 
   /* React Hock Form yup validation Schema*/

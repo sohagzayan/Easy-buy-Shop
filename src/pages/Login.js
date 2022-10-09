@@ -12,21 +12,16 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 /* Internal Import */
 import React, { useState } from "react";
 import Headers from "../components/Header/Header";
-import { useAuthContext } from "../context/AuthContextProvider";
 import useToken from "../hock/useToken";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
 import { GrFacebookOption } from "react-icons/gr";
 import { FcGoogle } from "react-icons/fc";
-import LoadingSpenner from "../components/Loading/Loading";
 import { toast } from "react-toastify";
-import Loading from "../components/Loading/Loading";
 import { TailSpin } from "react-loader-spinner";
 
 const SignUp = () => {
   /* Hocks  */
-  const { googleLogin, username } = useAuthContext();
-  const [token] = useToken(username);
   const [error, setError] = useState("");
   const [mainError, setMainError] = useState("");
   const navigate = useNavigate();
@@ -36,6 +31,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const from = location.state?.from?.pathname || "/";
   const userId = Cookies.get("id");
+  const token = Cookies.get("token");
   const response = useCurrentUserQuery(userId);
   console.log(response);
 
@@ -101,7 +97,7 @@ const SignUp = () => {
   };
 
   const handleLoginWithGoogle = async () => {
-    await googleLogin();
+    // await googleLogin();
     // navigate(from , {replace : true})
   };
 
@@ -109,9 +105,9 @@ const SignUp = () => {
     navigate(from, { replace: true });
   }
 
-  if (response?.currentData?.currentuser.length > 0) {
-    navigate(from, { replace: true });
-  }
+  // if (response?.currentData?.currentuser.length > 0) {
+  //   navigate(from, { replace: true });
+  // }
 
   return (
     <>
