@@ -12,7 +12,6 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 /* Internal Import */
 import React, { useState } from "react";
 import Headers from "../components/Header/Header";
-import useToken from "../hock/useToken";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
 import { GrFacebookOption } from "react-icons/gr";
@@ -54,7 +53,7 @@ const SignUp = () => {
     setLoading(true);
     console.log("tart");
     const { email, password } = data;
-    const url = "https://easy-buy.onrender.com/api/v1/user/login";
+    const url = "http://localhost:5000/api/v1/user/login";
     try {
       await axios
         .post(url, { email, password })
@@ -65,14 +64,21 @@ const SignUp = () => {
               setMainError(
                 "We couldnt find an account matching the username and password you entered. Please check your username and password and try again"
               );
-              swal("This User Not Valid! Please try again with Valid Email ");
+              toast.error(
+                "This User Not Valid! Please try again with Valid Email!",
+                {
+                  position: toast.POSITION.BOTTOM_CENTER,
+                }
+              );
             }
             if (
               res.data.message ===
               "Pleace Verify Your Account then again try to login"
             ) {
               setMainError("Please verify your account and try again");
-              swal("Please verify your account and try again");
+              toast.error("Please verify your account and try again!", {
+                position: toast.POSITION.TOP_CENTER,
+              });
             }
           } else {
             setMainError("");
@@ -80,11 +86,13 @@ const SignUp = () => {
             cookie.set("id", res.data.userId);
             navigate(from, { replace: true });
             setLoading(false);
+            toast.success("Login SuccessFull", {
+              position: toast.POSITION.TOP_CENTER,
+            });
             reset();
           }
         })
         .catch((error) => setMainError(error.message));
-
       setError("");
     } catch (error) {
       if (error.message) {
@@ -148,31 +156,10 @@ const SignUp = () => {
             <div className=" sm:w-[60%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
               <div className=" z-20 relative">
                 <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
-                  Sign in to QualityCookie
+                  Sign in to Easy Buy
                 </h2>
-                <div className="flex sm:flex-row flex-col sm:items-center mb-5">
-                  <button
-                    className=" bg-own-primary text-own-white dark:text-own-white rounded-md flex items-center justify-between w-[300px] p-1 mr-8 sm:mb-0 mb-3"
-                    onClick={handleLoginWithGoogle}
-                  >
-                    <span className="block ml-3">
-                      Sign In Your Google Account
-                    </span>
-                    <span className="block bg-own-white text-2xl py-2 px-3 rounded-r-md">
-                      <FcGoogle className="" />
-                    </span>
-                  </button>
-                  <a
-                    href="/facebook"
-                    className="bg-own-primary p-2 rounded-md sm:inline-block hidden"
-                  >
-                    <GrFacebookOption className="text-own-white text-2x " />
-                  </a>
-                  <a href="/facebook">
-                    <span className="sm:hidden inline-block text-own-secondary dark:text-own-white bg-[#1a73e8] px-3 tracking-widest py-1 rounded-sm ">
-                      Facebook
-                    </span>
-                  </a>
+                <div className="flex sm:flex-row flex-col sm:items-center mb-2">
+                  <GoogleButton />
                 </div>
                 <div className="flex flex-col w-full]">
                   <div className="divider after:bg-own-primary before:bg-own-primary text-own-primary">
@@ -229,7 +216,7 @@ const SignUp = () => {
                     {/* <button className=" bg-own-primary text-own-secondary dark:text-own-white py-2 rounded-md text-white px-24 mt-3 ">
                       Sign In
                     </button> */}
-                    <button className="btn-animation flex items-center justify-center ml-0">
+                    <button className="btn-animation capitalize flex items-center justify-center ml-0">
                       Sign In
                       <span></span>
                       <span></span>

@@ -40,7 +40,7 @@ const ProductsDetails = () => {
   // console.log(response?.currentData?.currentuser[0].email    );
   useEffect(() => {
     (async () => {
-      const url = `https://easy-buy.onrender.com/api/v1/tools/${id}`;
+      const url = `http://localhost:5000/api/v1/tools/${id}`;
       await axios
         .get(url)
         .then((res) => {
@@ -54,7 +54,7 @@ const ProductsDetails = () => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy.onrender.com/api/v1/purchase/alredy_purchase?productId=${id}`,
+        `http://localhost:5000/api/v1/purchase/alredy_purchase?productId=${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const ProductsDetails = () => {
     } else {
       await axios
         .post(
-          `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+          `http://localhost:5000/api/v1/addToCard/${id}`,
           { quantity: quentity, subTotal: subTotalPrice },
           {
             headers: {
@@ -114,7 +114,7 @@ const ProductsDetails = () => {
     console.log("adding continew bookmark");
     axios
       .post(
-        `https://easy-buy.onrender.com/api/v1/bookmark/${id}`,
+        `http://localhost:5000/api/v1/bookmark/${id}`,
         {},
         {
           headers: {

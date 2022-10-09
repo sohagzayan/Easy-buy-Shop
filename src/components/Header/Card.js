@@ -9,7 +9,7 @@ const Card = ({ card }) => {
 
   const deleteFormCard = async (id) => {
     await axios
-      .delete(`https://easy-buy.onrender.com/api/v1/addToCard/${id}`, {
+      .delete(`http://localhost:5000/api/v1/addToCard/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

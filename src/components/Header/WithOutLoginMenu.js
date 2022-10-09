@@ -1,16 +1,17 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 
 const WithOutLoginMenu = () => {
+  const location = useLocation();
   return (
     <>
       <div className="flex items-center gap-6">
         <ThemeToggle />
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive
+          className={
+            location.pathname === "/"
               ? " text-own-primary uppercase font-bold text-lg"
               : " text-own-secondary dark:text-own-white uppercase font-bold  text-lg"
           }

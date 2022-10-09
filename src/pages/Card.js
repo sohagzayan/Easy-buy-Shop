@@ -29,7 +29,7 @@ const Card = () => {
 
   const deleteFormCard = async (id) => {
     await axios
-      .delete(`https://easy-buy.onrender.com/api/v1/addToCard/${id}`, {
+      .delete(`http://localhost:5000/api/v1/addToCard/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const Card = () => {
 
   const ResetCard = async () => {
     await axios
-      .delete(`https://easy-buy.onrender.com/api/v1/addToCard/23232`, {
+      .delete(`http://localhost:5000/api/v1/addToCard/23232`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

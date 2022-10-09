@@ -6,7 +6,10 @@ import coverImage from "../assets/5.jpg";
 import AddNewProductControllers from "../components/Add_New_Products_sub/AddNewProductControllers";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
-import LoadingSpenner from "../components/Loading/Loading";
+import { Puff } from "react-loader-spinner";
+import { useLayoutEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const AddNewProducts = () => {
   /** Hocks */
   const [name, setName] = useState("");
@@ -14,6 +17,7 @@ const AddNewProducts = () => {
   const [price, setPrice] = useState("");
   const [minOrder, setMinOrder] = useState("");
   const [inStock, setInStock] = useState("");
+  const navigate = useNavigate();
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,13 +28,23 @@ const AddNewProducts = () => {
   const accesToken = Cookies.get("token");
   const response = useCurrentUserQuery(userId);
 
+  // useLayoutEffect(() => {
+  //   if (loading) {
+  //     document.body.style.overflow = "hidden";
+  //     document.body.style.height = "100%";
+  //   }
+  //   if (!loading) {
+  //     document.body.style.overflow = "auto";
+  //     document.body.style.height = "auto";
+  //   }
+  // }, [loading]);
+
   /** Hnalde Add Products */
   const handleAddNewProducts = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (file) {
       const fileName = file;
-      console.log(file);
       const formData = new FormData();
       formData.append("image", fileName);
       const url = `https://api.imgbb.com/1/upload?key=${imagebbKey}`;
@@ -40,12 +54,12 @@ const AddNewProducts = () => {
           if (result?.data?.success) {
             axios
               .post(
-                `https://easy-buy.onrender.com/api/v1/tools`,
+                `http://localhost:5000/api/v1/tools`,
                 {
                   name,
                   details,
                   price,
-                  inStock,
+                  InStock: inStock,
                   Brand: brand,
                   category,
                   image: result?.data?.data?.url,
@@ -57,34 +71,48 @@ const AddNewProducts = () => {
                 }
               )
               .then((res) => {
-                if (res.data.message === "jwt expired") {
+                console.log(res?.data);
+                if (res?.data.status === 500 || res?.data?.message) {
+                  setLoading(false);
+                  toast.error(res?.data?.message, {
+                    position: toast.POSITION.BOTTOM_CENTER,
+                  });
+                } else if (
+                  res?.data.status === 500 ||
+                  res?.data?.message === "jwt expired"
+                ) {
                   Cookies.remove("token");
                   Cookies.remove("id");
                   window.location.reload(true);
+                  setLoading(false);
                   return;
+                } else {
+                  toast.success("SuccessFull To Add Your Product", {
+                    position: toast.POSITION.TOP_CENTER,
+                  });
+                  setLoading(false);
+                  navigate("/myProfile");
                 }
-
-                setLoading(false);
-                swal("success to update your profile");
-                setName("");
-                setDetails("");
-                setPrice("");
-                setMinOrder("");
-                setInStock("");
-                setFile(null);
-                URL.createObjectURL({});
               })
               .catch((err) => {
+                toast.error(err.message, {
+                  position: toast.POSITION.BOTTOM_CENTER,
+                });
                 setLoading(false);
               });
           }
         })
         .catch((error) => {
+          toast.error(error.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
           setLoading(false);
-          console.log(error);
         });
     } else {
-      alert("select image");
+      setLoading(false);
+      toast.error("Select Image Must", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     }
   };
 
@@ -104,8 +132,17 @@ const AddNewProducts = () => {
       <Header />
       <div className="relative  bg-own-white-special dark:bg-own-dark-bg-special">
         {loading && (
-          <div className="absolute  left-0 top-0 h-full z-30 bg-[#101126a1] w-full   ">
-            <LoadingSpenner />
+          <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-screen bg-[#152c5b46] pointer-events-none overflow-hidden">
+            <Puff
+              height="80"
+              width="80"
+              radisu={1}
+              color="#4fa94d"
+              ariaLabel="puff-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
           </div>
         )}
         <div className="container mx-auto sm:px-0 px-6">

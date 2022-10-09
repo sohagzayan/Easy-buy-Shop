@@ -79,7 +79,7 @@ const Hero = () => {
                 data-aos-offset="0"
                 className=" border-[1px]  border-own-primary rounded-lg text-own-secondary dark:text-own-white font-bold px-5  py-3  text-white mr-3"
               >
-                Add Product
+                Sell Product
               </button>
             </div>
             <p

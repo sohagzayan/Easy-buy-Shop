@@ -1,9 +1,12 @@
+import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { MutatingDots } from "react-loader-spinner";
 import { Navigate, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import swal from "sweetalert";
 import { useCurrentUserQuery } from "../../store/API/user";
 import Loadings from "../Loading/Loading";
 import LoadingSpener from "../LoadingSpener/LoadingSpener";
@@ -18,7 +21,7 @@ const MyProductsD = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy.onrender.com/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
+      `http://localhost:5000/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +45,42 @@ const MyProductsD = () => {
           setLoading(false);
         }
       });
-  }, []);
+  }, [myProduct]);
+
+  const handleRemoveTools = async (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, You Will Delete You Product! ",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        axios
+          .delete(`http://localhost:5000/api/v1/tools/${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            toast.success("Delete SuccessFull Your Product!", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+          })
+          .catch((err) => {
+            toast.success(err.message, {
+              position: toast.POSITION.BOTTOM_CENTER,
+            });
+          });
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  };
 
   // console.log(response?.data?.currentuser[0]?.tools);
 
@@ -67,7 +105,11 @@ const MyProductsD = () => {
           ) : (
             <div className=" container_c mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-20 mt-10">
               {myProduct?.map((p, index) => (
-                <MyProducts key={index} data={p} />
+                <MyProducts
+                  key={index}
+                  data={p}
+                  handleRemoveTools={handleRemoveTools}
+                />
               ))}
             </div>
           )}

@@ -42,7 +42,7 @@ export function fetchProducts() {
     dispatch(setStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        "https://easy-buy.onrender.com/api/v1/addToCard",
+        "http://localhost:5000/api/v1/addToCard",
         {
           headers: {
             "Content-Type": "application/json",

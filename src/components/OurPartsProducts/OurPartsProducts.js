@@ -34,7 +34,7 @@ const OurPartsProducts = ({ item }) => {
     console.log("addToCardProduct");
     await axios
       .post(
-        `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+        `http://localhost:5000/api/v1/addToCard/${id}`,
         {},
         {
           headers: {
