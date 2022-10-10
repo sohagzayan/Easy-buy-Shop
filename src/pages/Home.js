@@ -31,20 +31,8 @@ const Home = () => {
           <OurParts />
           <BusinessSummary />
           <Repair />
-          <div className="dark:bg-own-dark-bg-special py-6 bg-own-white-special">
-            <div className="text-center">
-              <span className="text-xl font-bold text-own-primary ">
-                Our Shop Reviews
-              </span>
-              <p className="text-2xl font-bold text-own-secondary  dark:text-own-white">
-                Share your experience with us
-              </p>
-            </div>
-            <div className="grid grid-cols-2 items-center overflow-x-hidden">
-              <ShopReview />
-              <AddShoopReview />
-            </div>
-          </div>
+          <ShopReview />
+          <AddShoopReview />
           {/* <Capabilities /> */}
           <HowItWorks />
           <Footer />

@@ -65,7 +65,7 @@ const Header = () => {
   };
 
   return (
-    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-2">
+    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-1">
       <div className="navbar   container_c  mx-auto">
         <div className="navbar-start ">
           <NavLink

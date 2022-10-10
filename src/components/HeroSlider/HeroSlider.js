@@ -38,34 +38,26 @@ const HeroSlider = () => {
           },
         }}
         modules={[EffectCreative, Autoplay]}
-        className=""
+        className="our_hero_slider"
       >
-        <SwiperSlide>
-          <img className="w-[260px]" src={image1} alt="" />
+        <SwiperSlide className="slider_image">
+          <img className="w-[300px] " src={image1} alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-[260px]" src={image2} alt="" />
+          <img className="w-[300px]" src={image2} alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-[260px]" src={image3} alt="" />
+          <img className="w-[300px]" src={image3} alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-[260px]" src={image4} alt="" />
+          <img className="w-[300px]" src={image4} alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-[260px]" src={image5} alt="" />
+          <img className="w-[300px]" src={image5} alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-[260px]" src={image6} alt="" />
+          <img className="w-[300px]" src={image6} alt="" />
         </SwiperSlide>
-        {/* <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide> */}
       </Swiper>
     </>
   );

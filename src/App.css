@@ -193,7 +193,9 @@ tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.459) !important;
   /* opacity: background-color 0.2; */
 }
-
+.ratingFunc > span {
+  margin: 5px;
+}
 /* payment styles  */
 
 /* .ElementsApp .InputElement.is-invalid {

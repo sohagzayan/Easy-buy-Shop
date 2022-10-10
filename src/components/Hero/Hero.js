@@ -14,7 +14,6 @@ const Hero = () => {
   const userId = Cookies.get("id");
   const response = useCurrentUserQuery(userId);
   const navigate = useNavigate();
-  // console.log(response?.data?.currentuser[0].image);
   return (
     <>
       <div className="overflow-x-hidden h-[100%]">
@@ -38,17 +37,13 @@ const Hero = () => {
             >
               Product Trending With Lowest Commission
             </span>
-            <h1
+            <h3
               data-aos="zoom-in-left"
               data-aos-offset="0"
-              className="text-5xl lg:text-6xl font-bold text-own-secondary dark:text-own-white  mt-2 "
+              className="text-5xl lg:text-6xl  font-bold text-own-secondary dark:text-own-white  mt-2 "
             >
-              Sell{" "}
-              <span className="text-own-primary  border-b-[7px] mb-2 inline-block">
-                Digital-Goods
-              </span>{" "}
-              Products and Buy
-            </h1>
+              Sell Digital-Goods Products and Buy
+            </h3>
 
             <p
               data-aos="zoom-in-right"
