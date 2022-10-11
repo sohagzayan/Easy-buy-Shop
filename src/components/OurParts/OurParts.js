@@ -14,7 +14,9 @@ const OurParts = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/v1/tools/getToolswithOutAuth/?limit=6`)
+      .get(
+        `https://easy-buy.onrender.com/api/v1/tools/getToolswithOutAuth/?limit=6`
+      )
       .then((res) => {
         setData(res.data);
       })
