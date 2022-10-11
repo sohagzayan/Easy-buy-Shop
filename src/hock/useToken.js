@@ -8,7 +8,7 @@ const useToken = (user) => {
     const currentUser = { email: email };
 
     if (email) {
-      fetch(`https://easy-buy.onrender.com/api/user/${email}`, {
+      fetch(`https://easy-buy-shop-server.onrender.com/api/user/${email}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

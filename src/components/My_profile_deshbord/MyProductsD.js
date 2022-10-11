@@ -21,7 +21,7 @@ const MyProductsD = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy.onrender.com/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
+      `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -60,12 +60,15 @@ const MyProductsD = () => {
           icon: "success",
         });
         axios
-          .delete(`https://easy-buy.onrender.com/api/v1/tools/${id}`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .delete(
+            `https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((res) => {
             toast.success("Delete SuccessFull Your Product!", {
               position: toast.POSITION.TOP_CENTER,

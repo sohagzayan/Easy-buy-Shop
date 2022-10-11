@@ -19,7 +19,7 @@ const AddShoopReview = ({ setShopReviewModalTrue }) => {
       try {
         axios
           .post(
-            `https://easy-buy.onrender.com/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
+            `https://easy-buy-shop-server.onrender.com/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
             {
               rating: reviewValue,
               heading: title,

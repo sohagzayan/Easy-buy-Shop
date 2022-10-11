@@ -32,7 +32,7 @@ const ShopReview = () => {
   useEffect(() => {
     const fetchShopReview = async () => {
       const { data } = await axios.get(
-        `https://easy-buy.onrender.com/api/v1/shopReview`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/shopReview`,
         {
           headers: {
             "Content-Type": "application/json",

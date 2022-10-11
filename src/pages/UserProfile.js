@@ -26,18 +26,24 @@ const UserProfile = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`https://easy-buy.onrender.com/api/v1/user/user/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      fetch(`https://easy-buy.onrender.com/api/v1/tools?currentUser=${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      fetch(
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+      fetch(
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser=${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
     ])
       .then((responses) => {
         return Promise.all(
@@ -65,7 +71,7 @@ const UserProfile = () => {
   const handleFollowUser = async (id) => {
     axios
       .get(
-        `https://easy-buy.onrender.com/api/v1/user/user/follow_user?add=${id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?add=${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -88,7 +94,7 @@ const UserProfile = () => {
   const handleUnFollowUser = async (id) => {
     axios
       .get(
-        `https://easy-buy.onrender.com/api/v1/user/user/follow_user?remove=${id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?remove=${id}`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -13,7 +13,7 @@ const BookMark = () => {
     error,
     data: partsData,
   } = useQuery("toolsData", () =>
-    axios.get(`https://easy-buy.onrender.com/api/tools`)
+    axios.get(`https://easy-buy-shop-server.onrender.com/api/tools`)
   );
 
   if (isLoading) {

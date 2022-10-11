@@ -37,7 +37,7 @@ export function fetchProducts() {
     dispatch(setMyStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        `https://easy-buy.onrender.com/api/v1/tools?currentUser/`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser/`,
         {
           headers: {
             "Content-Type": "application/json",

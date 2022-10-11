@@ -20,7 +20,7 @@ const MyFolloerD = () => {
   useEffect(() => {
     axios
       .get(
-        "https://easy-buy.onrender.com/api/v1/user/user/follow_user?getMyFolloer=12",
+        "https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?getMyFolloer=12",
         {
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const MyFolloerD = () => {
           icon: "success",
         });
         axios.get(
-          `https://easy-buy.onrender.com/api/v1/user/user/follow_user_remove?removeFollowList=${id}`,
+          `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user_remove?removeFollowList=${id}`,
           {
             headers: {
               "Content-Type": "application/json",

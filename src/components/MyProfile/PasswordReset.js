@@ -19,7 +19,7 @@ const PasswordReset = () => {
     e.preventDefault();
     await axios
       .post(
-        `https://easy-buy.onrender.com/api/v1/user/user/reset_password`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/reset_password`,
         {
           oldpassword: oldpassword,
           newpassword: newPassword,

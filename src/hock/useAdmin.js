@@ -7,7 +7,7 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user?.email;
     if (email) {
-      fetch(`https://easy-buy.onrender.com/api/admin/${email}`, {
+      fetch(`https://easy-buy-shop-server.onrender.com/api/admin/${email}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

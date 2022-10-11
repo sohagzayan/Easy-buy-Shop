@@ -34,7 +34,7 @@ const EditProfileInfo = () => {
     e.preventDefault();
     await axios
       .put(
-        `https://easy-buy.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
         {
           name: name,
           country: location,
@@ -67,7 +67,7 @@ const EditProfileInfo = () => {
             console.log("come inner");
             axios
               .put(
-                `https://easy-buy.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
+                `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
                 { image: result?.data?.data?.url }
               )
               .then((res) => {
@@ -96,7 +96,7 @@ const EditProfileInfo = () => {
   const defaultPictureSet = () => {
     axios
       .put(
-        `https://easy-buy.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
         { image: "https://i.ibb.co/ZK5CBDW/demouser.png" }
       )
       .then((res) => {

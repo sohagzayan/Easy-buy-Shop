@@ -4,7 +4,7 @@ const token = cookie.get("token");
 
 export const getBookMarkData = async () => {
   const { data } = await axios.get(
-    "https://easy-buy.onrender.com/api/v1/bookmark",
+    "https://easy-buy-shop-server.onrender.com/api/v1/bookmark",
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -16,7 +16,7 @@ export const getBookMarkData = async () => {
 
 export const getAddToCard = async () => {
   const { data } = await axios.get(
-    "https://easy-buy.onrender.com/api/v1/addToCard",
+    "https://easy-buy-shop-server.onrender.com/api/v1/addToCard",
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ export const getAddToCard = async () => {
 
 export const addToCardPost = async (id) => {
   const res = await axios.post(
-    `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+    `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
     {},
     {
       headers: {
@@ -42,7 +42,7 @@ export const addToCardPost = async (id) => {
 
 export const deleteFormCard = async (id) => {
   const res = await axios.delete(
-    `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+    `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
     {
       headers: {
         "Content-Type": "application/json",
