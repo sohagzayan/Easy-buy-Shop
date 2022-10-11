@@ -30,7 +30,7 @@ const EditProfile = () => {
         });
         axios
           .delete(
-            `https://easy-buy.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
+            `http://localhost:5000/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
           )
           .then((res) => {
             alert("success");

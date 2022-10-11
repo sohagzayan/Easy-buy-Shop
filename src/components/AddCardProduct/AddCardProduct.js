@@ -24,7 +24,7 @@ const AddCardProduct = ({
   useEffect(() => {
     axios
       .put(
-        `https://easy-buy.onrender.com/api/v1/addToCard/${_id}`,
+        `http://localhost:5000/api/v1/addToCard/${_id}`,
         {
           quantity: quentitys,
           subTotal: parseInt(price) * parseInt(quentitys),

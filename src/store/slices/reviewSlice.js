@@ -6,7 +6,8 @@ const token = Cookies.get("token");
 const userId = Cookies.get("id");
 
 const initialState = {
-  myProduct: [],
+  review: [],
+  pageSize: 0,
   status: "",
 };
 
@@ -16,12 +17,13 @@ const STATUS = Object.freeze({
   LOADING: "loading",
 });
 
-export const myProductSlice = createSlice({
-  name: "my_product",
+export const reviewSlice = createSlice({
+  name: "review",
   initialState,
   reducers: {
-    setMyProduct(state, action) {
-      state.myProduct = action.payload;
+    setReview(state, action) {
+      state.review = action.payload;
+      state.pageSize = Math.ceil(state.review.length / 2);
     },
     setMyStatus(state, action) {
       state.status = action.payload;
@@ -29,15 +31,15 @@ export const myProductSlice = createSlice({
   },
 });
 
-export const { setMyProduct, setMyStatus } = myProductSlice.actions;
-export default myProductSlice.reducer;
+export const { setReview, setMyStatus } = reviewSlice.actions;
+export default reviewSlice.reducer;
 
-export function fetchProducts() {
+export function fetchProductReview(id, currentPage, pageSize) {
   return async function fetchProductThunk(dispatch, getState) {
     dispatch(setMyStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/v1/tools?currentUser/`,
+        `http://localhost:5000/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -45,11 +47,11 @@ export function fetchProducts() {
           },
         }
       );
-      dispatch(setMyProduct(data));
+      dispatch(setReview(data));
       dispatch(setMyStatus(STATUS.IDLE));
     } catch (error) {
       console.log(
-        `Error Form our Card reducer Slice error is ${error.message}`
+        `Error Form our Review reducer Slice error is ${error.message}`
       );
       dispatch(setMyStatus(STATUS.ERROR));
     }

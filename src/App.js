@@ -28,7 +28,7 @@ function App() {
           {/* <AuthContextProvider> */}
           <AllRoutes />
 
-          <ToastContainer />
+          <ToastContainer autoClose={1500} />
           {/* </AuthContextProvider> */}
         </QueryClientProvider>
       )}

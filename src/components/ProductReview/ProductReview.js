@@ -1,17 +1,22 @@
 import React from "react";
 import { AiFillStar, AiOutlineArrowRight, AiOutlineLike } from "react-icons/ai";
-import { BsArrowLeftCircle, BsThreeDotsVertical } from "react-icons/bs";
+import {
+  BsArrowLeftCircle,
+  BsCheckLg,
+  BsThreeDotsVertical,
+} from "react-icons/bs";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductReview } from "../../store/slices/reviewSlice";
 const ProductReview = ({ id, category }) => {
   const token = Cookies.get("token");
-  const [reviews, setReviews] = useState([]);
   const [suggetion, setSuggetion] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(3);
@@ -19,9 +24,7 @@ const ProductReview = ({ id, category }) => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://easy-buy.onrender.com/api/v1/review/review_count?productId=${id}`
-      )
+      .get(`http://localhost:5000/api/v1/review/review_count?productId=${id}`)
       .then((res) => {
         const count = res?.data?.tools_count;
         const page = Math.ceil(count / pageSize);
@@ -29,26 +32,31 @@ const ProductReview = ({ id, category }) => {
         setPageCount(page - 1);
       })
       .catch((err) => console.log(err));
-  }, [pageSize]);
+  }, [currentPage]);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://easy-buy.onrender.com/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+    const fetchReview = async () => {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-      .then((res) => setReviews(res.data));
-  }, [currentPage, pageCount, reviews]);
+      );
+      console.log(data);
+      setReviews(data);
+    };
+    fetchReview();
+  }, [reviews]);
+
+  // console.log(reviews);
 
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy.onrender.com/api/v1/tools/toolsSuggetion?category=${category}`,
+        `http://localhost:5000/api/v1/tools/toolsSuggetion?category=${category}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,10 +66,6 @@ const ProductReview = ({ id, category }) => {
       )
       .then((res) => setSuggetion(res.data));
   }, [suggetion]);
-
-  if (loading) {
-    return <loadingSpner />;
-  }
 
   // console.log(pageCount);
 
@@ -91,7 +95,12 @@ const ProductReview = ({ id, category }) => {
                       src={r?.user?.image}
                       alt=""
                     />
-                    <span>{r?.user?.name}</span>
+                    <div>
+                      <h5 className="-mb-2 text-xl font-bold">
+                        {r?.user?.name}
+                      </h5>
+                      <span className="text-sm "> {r?.user?.country}</span>
+                    </div>
                   </NavLink>
                   <span className="flex items-center gap-2 text-own-secondary dark:text-own-white">
                     <BsThreeDotsVertical className=" text-2xl" />
@@ -99,20 +108,23 @@ const ProductReview = ({ id, category }) => {
                 </div>
                 <div>
                   <div className="flex items-center gap-3 mt-4">
-                    <div className="rating rating-lg flex  items-center">
-                      {ratingStar.slice(0, r?.rating).map((s) => (
-                        <AiFillStar className="text-own-primary text-xl" />
-                      ))}
-                      {/* <span className="text-own-primary">{r?.rating}</span> */}
-                    </div>
-                    <div className="flex items-center text-own-secondary dark:text-own-white">
+                    <div className="flex text-sm items-center text-own-text-light dark:text-own-white">
                       <span className="font-bold">{r?.date}</span>
                     </div>
                   </div>
                 </div>
-                <p className="mt-2 text-own-text-light  dark:text-own-text-dark">
-                  {r?.title}
+                <h4 className="font-bold text-2xl my-1  dark:text-own-white text-own-secondary">
+                  {r?.heading}
+                </h4>
+                <p className="   dark:text-own-white text-own-white">
+                  {r?.message}
                 </p>
+                <div className="rating rating-lg flex  items-center mt-1">
+                  {ratingStar.slice(0, r?.rating).map((s) => (
+                    <AiFillStar className="text-own-primary text-2xl" />
+                  ))}
+                  {/* <span className="text-own-primary">{r?.rating}</span> */}
+                </div>
                 <span className="bg-own-white-special border-[1px] border-own-primary cursor-pointer dark:bg-own-dark-bg-special text-own-secondary dark:text-own-white px-3 py-2 rounded-md mt-2 inline-flex items-center gap-1">
                   <AiOutlineLike className="text-2xl" /> 5{" "}
                 </span>

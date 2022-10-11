@@ -22,11 +22,13 @@ export const cardSlice = createSlice({
     setProduct(state, action) {
       state.subTotal = 0;
       state.productIds = [];
-      action?.payload?.map((r) => {
-        state.subTotal = state.subTotal + r.subTotal;
-        state.productIds.push(r?.productId);
-      });
       state.cardProduct = action.payload;
+      if (state.cardProduct.length > 0) {
+        state.cardProduct.map((r) => {
+          state.subTotal = state.subTotal + r.subTotal;
+          state.productIds.push(r?.productId);
+        });
+      }
     },
     setStatus(state, action) {
       state.status = action.payload;
@@ -42,7 +44,7 @@ export function fetchProducts() {
     dispatch(setStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        "https://easy-buy.onrender.com/api/v1/addToCard",
+        "http://localhost:5000/api/v1/addToCard",
         {
           headers: {
             "Content-Type": "application/json",

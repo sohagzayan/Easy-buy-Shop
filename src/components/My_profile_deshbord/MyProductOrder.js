@@ -19,7 +19,7 @@ const MyOrder = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://easy-buy.onrender.com/api/v1/purchase/my_product_order`, {
+    fetch(`http://localhost:5000/api/v1/purchase/my_product_order`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const MyOrder = () => {
 
   const handleDeleteMyOrder = async (id) => {
     await axios
-      .delete(`https://easy-buy.onrender.com/api/v1/purchase/${id}`)
+      .delete(`http://localhost:5000/api/v1/purchase/${id}`)
       .then((res) => console.log(res));
   };
 

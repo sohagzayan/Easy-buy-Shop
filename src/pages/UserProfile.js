@@ -7,7 +7,7 @@ import { AiOutlineLink } from "react-icons/ai";
 import { FaBackward } from "react-icons/fa";
 import { GrFacebookOption, GrLinkedinOption } from "react-icons/gr";
 import { HiCheck } from "react-icons/hi";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../components/Header/Header";
 import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
@@ -26,13 +26,13 @@ const UserProfile = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`https://easy-buy.onrender.com/api/v1/user/user/${id}`, {
+      fetch(`http://localhost:5000/api/v1/user/user/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }),
-      fetch(`https://easy-buy.onrender.com/api/v1/tools?currentUser=${id}`, {
+      fetch(`http://localhost:5000/api/v1/tools?currentUser=${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -64,15 +64,12 @@ const UserProfile = () => {
 
   const handleFollowUser = async (id) => {
     axios
-      .get(
-        `https://easy-buy.onrender.com/api/v1/user/user/follow_user?add=${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get(`http://localhost:5000/api/v1/user/user/follow_user?add=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         toast.success(`You Folloing ${user?.name}`, {
           position: toast.POSITION.TOP_CENTER,
@@ -87,15 +84,12 @@ const UserProfile = () => {
 
   const handleUnFollowUser = async (id) => {
     axios
-      .get(
-        `https://easy-buy.onrender.com/api/v1/user/user/follow_user?remove=${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get(`http://localhost:5000/api/v1/user/user/follow_user?remove=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         toast.info(`You unFolloing ${user?.name}`, {
           position: toast.POSITION.TOP_CENTER,
@@ -110,7 +104,7 @@ const UserProfile = () => {
   return (
     <>
       <Header />
-      <div>
+      <div className="min-h-screen mx-h-[100%]">
         <div className="container_c mx-auto">
           <div className="mb-2">
             <span
@@ -120,8 +114,8 @@ const UserProfile = () => {
               <FaBackward className="text-3xl" />
             </span>
           </div>
-          <div className="grid grid-cols-12 border-b-[1px] dark:bg-own-dark-bg-special bg-own-white-special px-3 rounded-md border-[1px] border-own-text-light border-opacity-20  mb-5 md:py-0 py-5">
-            <div className=" md:col-span-8 col-span-12 flex  gap-5 py-10 ">
+          <div className=" border-b-[1px] dark:bg-own-dark-bg-special bg-own-white-special px-3 rounded-md border-[1px] border-own-text-light border-opacity-20  mb-5 md:py-0 py-5 relative">
+            <div className=" flex sm:flex-row flex-col sm:justify-start justify-center items-center   gap-5 py-10 ">
               <div>
                 <img
                   className="w-[200px] rounded-full"
@@ -129,7 +123,7 @@ const UserProfile = () => {
                   alt=""
                 />
               </div>
-              <div className="text-own-secondary dark:text-own-white">
+              <div className="text-own-secondary dark:text-own-white sm:text-left text-center">
                 <h2 className="text-2xl mb-1 font-bold">{user?.name}</h2>
                 <h4>@{user?.username}</h4>
                 <h4 className="font-semibold">( {user?.country} )</h4>
@@ -172,8 +166,13 @@ const UserProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="md:col-span-4 col-span-12 flex md:items-center flex-col gap-10 justify-center">
-              <div className="flex items-center text-own-primary  gap-6">
+            <div className="flex items-center gap-4 absolute bottom-5 sm:right-5 right-[20%] ">
+              <div>
+                <button className="border-[1px] border-own-primary text-own-secondary dark:text-own-white px-3 py-1 rounded-md">
+                  Send Message
+                </button>
+              </div>
+              <div className="flex items-center text-own-primary  gap-6 ">
                 <span>
                   <GrFacebookOption className="text-2xl" />
                 </span>
@@ -184,19 +183,22 @@ const UserProfile = () => {
                   <AiOutlineLink className="text-2xl" />
                 </span>
               </div>
-              <div>
-                <button className="border-[1px] border-own-primary text-own-secondary dark:text-own-white px-3 py-1 rounded-md">
-                  Send Message
-                </button>
-              </div>
             </div>
           </div>
           <div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-12">
-              {product?.map((item) => (
-                <OurPartsProducts item={item} />
-              ))}
-            </div>
+            {product.length <= 0 ? (
+              <div className="border-2 border-dashed w-[320px] p-7 mt-7 flex flex-col">
+                <h2 className="text-own-primary text-2xl mb-2">
+                  User Don't add Product Yet
+                </h2>
+              </div>
+            ) : (
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-12">
+                {product?.map((item) => (
+                  <OurPartsProducts item={item} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

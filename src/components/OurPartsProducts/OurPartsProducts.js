@@ -30,11 +30,10 @@ const OurPartsProducts = ({ item }) => {
   const reting = [1, 2, 3, 4, 5];
 
   const addToCardProduct = async (id) => {
-    console.log(token);
     console.log("addToCardProduct");
     await axios
       .post(
-        `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+        `http://localhost:5000/api/v1/addToCard/${id}`,
         {},
         {
           headers: {
@@ -66,31 +65,12 @@ const OurPartsProducts = ({ item }) => {
     <>
       <NavLink
         data-aos="zoom-in"
+        data-aos-offset="100"
         data-aos-delay="300"
         to={`/ProductsDetails/${_id}`}
         className="transition-all ease-in"
       >
         <div className="bg-own-white border-[1px] border-own-text-light border-opacity-10 dark:bg-own-dark-bg rounded-md relative shadow-md overflow-hidden group">
-          {/* <div className="flex ml-6 mb-1 ">
-            <NavLink
-              to={`/user_profile/${users?._id}`}
-              className="flex items-center  gap-3 mt-2 cursor-pointer"
-            >
-              <div>
-                <img
-                  className="w-[25px] rounded-full "
-                  src={users?.image}
-                  alt=""
-                />
-              </div>
-              <div className="border-l-2 pl-2 border-own-primary">
-                <h3 className="text-own-secondary font-bold -mb-2 dark:text-own-white text-sm">
-                  {users?.name}
-                </h3>
-                <sub className=" text-own-text-light ">{users?.country}</sub>
-              </div>
-            </NavLink>
-          </div> */}
           <div className="">
             <div
               className="flex items-center justify-center 
@@ -123,8 +103,8 @@ const OurPartsProducts = ({ item }) => {
                 </div>
                 <div className="flex flex-col justify-end items-end">
                   <div className="flex items-center">
-                    {reting.slice(0, 3).map((r) => (
-                      <AiFillStar className="text-[#FACA51]" />
+                    {reting.slice(0, 3).map((r, index) => (
+                      <AiFillStar key={index} className="text-[#FACA51]" />
                     ))}
                   </div>
                   <span className="text-sm text-own-secondary dark:text-own-white">

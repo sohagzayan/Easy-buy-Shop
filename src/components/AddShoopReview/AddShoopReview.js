@@ -6,9 +6,10 @@ import Rating from "react-rating";
 import { toast } from "react-toastify";
 import { useCurrentUserQuery } from "../../store/API/user";
 
-const AddShoopReview = () => {
+const AddShoopReview = ({ setShopReviewModalTrue }) => {
   const [reviewValue, setReviewValue] = useState([]);
   const [message, setMessage] = useState("");
+  const [title, setTitle] = useState("");
   const token = Cookies.get("token");
   const userid = Cookies.get("id");
   const response = useCurrentUserQuery(userid);
@@ -18,9 +19,10 @@ const AddShoopReview = () => {
       try {
         axios
           .post(
-            `https://easy-buy.onrender.com/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
+            `http://localhost:5000/api/v1/shopReview/${response?.currentData?.currentuser[0]?._id}`,
             {
               rating: reviewValue,
+              heading: title,
               message: message,
             },
             {
@@ -39,6 +41,9 @@ const AddShoopReview = () => {
               toast.success(res?.data, {
                 position: toast.POSITION.TOP_CENTER,
               });
+              setShopReviewModalTrue(false);
+              setTitle("");
+              setMessage("");
             }
           });
       } catch (error) {
@@ -83,6 +88,8 @@ const AddShoopReview = () => {
                     <input
                       type="Title"
                       placeholder="Title.."
+                      onChange={(e) => setTitle(e.target.value)}
+                      value={title}
                       className="bg-own-white-special outline-none px-3 text-xl dark:bg-own-dark-bg-special text-own-secondary dark:text-own-white w-full border-[1px] border-own-primary py-2 rounded-md border-opacity-20 mb-3"
                     />
                     <textarea

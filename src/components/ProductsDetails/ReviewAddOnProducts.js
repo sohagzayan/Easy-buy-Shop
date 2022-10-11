@@ -4,42 +4,78 @@ import Rating from "react-rating";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { BsCheckLg } from "react-icons/bs";
+import { fetchProductReview } from "../../store/slices/reviewSlice";
+import { useDispatch } from "react-redux";
 
 const ReviewAddOnProducts = ({
   setReviewValue,
   reviewValue,
   setSendReviewActive,
   id,
+  pageSize,
+  currentPage,
+  setCurrentPage,
+  setPageCount,
+  pageCount,
 }) => {
+  const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
   const token = Cookies.get("token");
+  const dispatch = useDispatch();
+
   const handleAddProductReview = async () => {
-    await axios
-      .post(
-        "https://easy-buy.onrender.com/api/v1/review",
-        {
-          title: title,
-          rating: reviewValue,
-          productId: id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        setSendReviewActive(false);
-        toast.success("Successfully Add Your Review This Product !", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      })
-      .catch((error) => {
-        toast.error(error.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+    if (message.length <= 0) {
+      toast.warning("Message Emty Not Allaw!", {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+    } else if (title.length <= 0) {
+      toast.warning("Title Emty Not Allaw!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } else if (reviewValue <= 0) {
+      toast.warning("Rating Mimimum 1 star Requred!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } else {
+      await axios
+        .post(
+          "http://localhost:5000/api/v1/review",
+          {
+            heading: title,
+            rating: reviewValue,
+            message: message,
+            productId: id,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          if (res?.data.status === 500) {
+            toast.error(res?.data.message, {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 5000,
+            });
+          } else {
+            dispatch(fetchProductReview(id, currentPage, pageSize));
+            toast.success("Successfully Add Your Review This Product !", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            setSendReviewActive(false);
+            setReviewValue(0);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        });
+    }
   };
 
   return (
@@ -53,11 +89,20 @@ const ReviewAddOnProducts = ({
             onChange={(e) => setReviewValue(e)}
             initialRating={reviewValue}
           />
-          <textarea
-            className="textarea w-full border-[1px] border-own-primary"
-            placeholder="Bio"
+          <input
+            type="text"
+            placeholder="Heading..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
+            className="bg-own-white-special w-full border-[1px] border-own-text-light border-opacity-50 py-2 px-3 rounded-md mb-3  focus:outline-own-primary"
+          />
+          <textarea
+            className="textarea w-full border-[1px] border-own-primary"
+            placeholder="Message"
+            value={message}
+            required
+            onChange={(e) => setMessage(e.target.value)}
           ></textarea>
           <div className="flex justify-between">
             <button

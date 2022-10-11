@@ -18,11 +18,11 @@ const ShopReviewSlide = ({ data, retingArray }) => {
               <span className="text-[12px]">{data?.user?.country}</span>
             </div>
           </div>
-          <h3 className="my-3">Awesome shop and Fine</h3>
+          <h3 className="my-3">{data?.heading}</h3>
           <p className="text-sm">{data?.message}</p>
         </div>
         <div className="flex items-center gap-2 ">
-          {retingArray.slice(0, data?.data).map((r, index) => (
+          {retingArray.slice(0, data?.rating).map((r, index) => (
             <AiFillStar
               key={index}
               className="text-own-primary text-[1.6rem]"

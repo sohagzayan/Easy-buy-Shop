@@ -16,7 +16,7 @@ const Payment = () => {
   const { id } = useParams();
   const token = Cookies.get("token");
   const { isLoading, error, data } = useQuery(["orderSingle", id], () =>
-    fetch(`https://easy-buy.onrender.com/api/v1/purchase/${id}`, {
+    fetch(`http://localhost:5000/api/v1/purchase/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,22 +38,20 @@ const Payment = () => {
           <h2 className="text-own-secondary dark:text-own-white text-2xl font-semibold mb-10 underline text-center">
             Conform You Payment
           </h2>
-          <div className="p-8 text-own-secondary dark:text-own-white">
+          <div className=" mb-3 text-own-secondary dark:text-own-white">
             <div className="">
-              <h2 className="card-title text-own-primary font-bold mb-2">
-                hello , {data.name}
+              <h2 className="card-title  font-bold mb-2">
+                Hello , <span className="text-own-primary">{data.name}</span>
               </h2>
               <span>
-                you Order on{" "}
+                you Order on
                 <span className="text-own-primary font-semibold mb-2 inline-block ">
                   {data?.date}
                 </span>{" "}
-                please payment your Order .
+                please payment your Order
               </span>
-              <h3 className="text-xl mb-2">
-                Order amount : {data.orderAmount}
-              </h3>
-              <h2 className="font-semibold ">Price : ${data.price}</h2>
+              <h3 className=" mb-2">Product Quantity : {data.orderAmount}</h3>
+              <h2 className="font-semibold text-xl">Price : ${data.price}</h2>
             </div>
           </div>
           <div className="p-8 bg-[#fff] rounded-md border-[2px] border-own-primary">

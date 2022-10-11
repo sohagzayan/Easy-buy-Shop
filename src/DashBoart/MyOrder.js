@@ -10,7 +10,7 @@ const MyProducts = () => {
   const { username } = useAuthContext();
 
   useEffect(() => {
-    fetch(`https://easy-buy.onrender.com/api/purchase?email=gdsohag360`, {
+    fetch(`http://localhost:5000/api/purchase?email=gdsohag360`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

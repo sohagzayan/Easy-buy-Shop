@@ -6,27 +6,26 @@ import { TbShoppingCartDiscount } from "react-icons/tb";
 import axios from "axios";
 import discountimage from "../../assets/discount.png";
 import ProductReview from "../ProductReview/ProductReview";
-import demouser from "../../assets/demouser.png";
-import { FcLikePlaceholder } from "react-icons/fc";
 import BuyProductsModal from "../BuyProducts/BuyProductsModal";
 import Cookies from "js-cookie";
 import { useCurrentUserQuery } from "../../store/API/user";
 import ReviewAddOnProducts from "./ReviewAddOnProducts";
-import { MdTextRotationAngleup } from "react-icons/md";
+import { MdOutlineRemove, MdTextRotationAngleup } from "react-icons/md";
 import Reviews from "../Reviews/Reviews";
-import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye, AiOutlinePlus } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { fetchProducts } from "../../store/slices/cardSlice";
 import { useDispatch } from "react-redux";
 import LoadingSpener from "../LoadingSpener/LoadingSpener";
 import { FaBackward } from "react-icons/fa";
 import swal from "sweetalert";
+import { HiPlusSm } from "react-icons/hi";
 
 const ProductsDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [detailsProduct, setDetailsProduct] = useState({});
-  const [quentity, setQuentity] = useState(0);
+  const [quentity, setQuentity] = useState(1);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
   const [reviewValue, setReviewValue] = useState(0);
   const [sendReviewActive, setSendReviewActive] = useState(false);
@@ -37,10 +36,11 @@ const ProductsDetails = () => {
   const response = useCurrentUserQuery(userid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   // console.log(response?.currentData?.currentuser[0].email    );
   useEffect(() => {
     (async () => {
-      const url = `https://easy-buy.onrender.com/api/v1/tools/${id}`;
+      const url = `http://localhost:5000/api/v1/tools/${id}`;
       await axios
         .get(url)
         .then((res) => {
@@ -54,7 +54,7 @@ const ProductsDetails = () => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy.onrender.com/api/v1/purchase/alredy_purchase?productId=${id}`,
+        `http://localhost:5000/api/v1/purchase/alredy_purchase?productId=${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const ProductsDetails = () => {
     } else {
       await axios
         .post(
-          `https://easy-buy.onrender.com/api/v1/addToCard/${id}`,
+          `http://localhost:5000/api/v1/addToCard/${id}`,
           { quantity: quentity, subTotal: subTotalPrice },
           {
             headers: {
@@ -103,6 +103,7 @@ const ProductsDetails = () => {
             toast.success("Success to add you card!", {
               position: toast.POSITION.TOP_CENTER,
             });
+            navigate("/card");
             dispatch(fetchProducts());
           }
         })
@@ -114,7 +115,7 @@ const ProductsDetails = () => {
     console.log("adding continew bookmark");
     axios
       .post(
-        `https://easy-buy.onrender.com/api/v1/bookmark/${id}`,
+        `http://localhost:5000/api/v1/bookmark/${id}`,
         {},
         {
           headers: {
@@ -126,18 +127,46 @@ const ProductsDetails = () => {
       .then((res) => {
         console.log(res);
         if (res?.data?.status === 500) {
-          swal("Alredy Bookmark This Products!");
+          toast.warning("Already have this product your bookmark list!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1000,
+          });
         } else {
-          swal("Bookmark Success", "You clicked the button!", "success");
+          toast.success("Bookmark Added SuccessFull", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1000,
+          });
+          navigate("/card");
         }
       });
+  };
+
+  const handleIncremetntQuentity = () => {
+    if (quentity >= detailsProduct?.InStock) {
+      toast.warning("You Can't Buy more then product in stock", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1300,
+      });
+    } else {
+      setQuentity((prev) => prev + 1);
+    }
+  };
+  const handleDecrementQuentity = () => {
+    if (quentity <= 1) {
+      toast.warning("Mimimum 1 Quentity Required!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1300,
+      });
+    } else {
+      setQuentity((prev) => prev - 1);
+    }
   };
 
   if (loading) {
     return <LoadingSpener />;
   }
   return (
-    <>
+    <div key="23">
       <Header />
       <div>
         <div className="container_c mx-auto">
@@ -157,15 +186,16 @@ const ProductsDetails = () => {
             </div>
             <div className="sm:col-span-6 col-span-12 text-own-secondary dark:text-own-white">
               <NavLink
+                data-title="User Profile"
                 to={`/user_profile/${detailsProduct?.users?._id}`}
-                className="profile-info flex gap-2 items-center mb-4 bg-own-white-special dark:bg-own-dark-bg-special py-2 px-2 rounded-md  border-[1px] border-own-text-light border-opacity-10"
+                className=" tooltip_c expand   profile-info inline-flex  gap-2 items-center mb-4 bg-own-white-special dark:bg-own-dark-bg-special py-2  rounded-md  border-[1px] border-own-text-light border-opacity-10 px-4"
               >
                 <img
                   className="w-[50px] rounded-full"
                   src={detailsProduct?.users?.image}
                   alt=""
                 />
-                <div className="">
+                <div className="text-left">
                   <h2 className=" dark:text-own-white-special text-own-secondary font-bold text-xl">
                     {detailsProduct?.users?.name}
                   </h2>
@@ -175,7 +205,7 @@ const ProductsDetails = () => {
                 </div>
               </NavLink>
 
-              <h2 className="text-2xl font-semibold text-own-primary border-own-primary inline-block mb-1">
+              <h2 className="text-2xl  font-semibold text-own-primary border-own-primary block mb-1">
                 {detailsProduct?.name}
               </h2>
               <sup className="block py-2">
@@ -195,7 +225,7 @@ const ProductsDetails = () => {
               </p>
               <hr className="border-[1px] border-own-primary border-opacity-20 my-1" />
               <p className="py-1">
-                Availability:{" "}
+                Availability :{" "}
                 <span
                   className={
                     detailsProduct?.availability === "in-stock"
@@ -205,18 +235,20 @@ const ProductsDetails = () => {
                 >
                   {detailsProduct?.availability}
                 </span>
-                Brand:
+                Brand :
                 <span className="text-own-primary">
                   {detailsProduct?.Brand}
                 </span>{" "}
-                SKU:
               </p>
               <h3 className="text-2xl font-bold text-own-primary">
                 ${detailsProduct?.price}
               </h3>
               <div className="flex items-center gap-1 ">
                 <span className="font-bold">
-                  In Stock:{detailsProduct?.InStock}
+                  InStock:{" "}
+                  <span className="font-bold text-own-primary">
+                    {detailsProduct?.InStock}
+                  </span>
                 </span>
                 <span className="text-2xl font-semibold text-own-primary  ">
                   {detailsProduct?.quantity}
@@ -224,15 +256,23 @@ const ProductsDetails = () => {
               </div>
               <h3>Our shop every product have 1 year warranty</h3>
               <div>
-                <h2 className="mt-4">QUANTITY</h2>
+                <h2 className="mt-4 text-sm tracking-widest">QUANTITY</h2>
                 <div className="flex items-center mt-1">
-                  <input
-                    min="1"
-                    value={quentity}
-                    onChange={(e) => setQuentity(e.target.value)}
-                    className="w-[80px] bg-own-white-special py-1 dark:bg-own-dark-bg-special text-center rounded-md border-[1px] border-own-primary mr-2"
-                    type="number"
-                  />
+                  <div className="flex items-center gap-4 dark:bg-own-dark-bg-special px-3 py-1 rounded-md mb-2 bg-own-white-special">
+                    <button
+                      onClick={handleIncremetntQuentity}
+                      className="active:scale-75"
+                    >
+                      <HiPlusSm className="text-3xl" />
+                    </button>
+                    <h5 className="text-2xl font-bold">{quentity}</h5>
+                    <button
+                      onClick={handleDecrementQuentity}
+                      className="active:scale-75"
+                    >
+                      <MdOutlineRemove className="text-3xl" />
+                    </button>
+                  </div>
                 </div>
                 <h3 className="font-bold">
                   SubTotal:{" "}
@@ -255,7 +295,7 @@ const ProductsDetails = () => {
                 </button>
                 <button
                   onClick={() => handleAddToBookmark(id)}
-                  className="btn modal-button border-transparent md:mb-0 mb-6 text-own-white font-sm dark:text-own-white bg-own-primary"
+                  className="btn  modal-button border-transparent md:mb-0 mb-6 text-own-white font-sm dark:text-own-white bg-own-primary"
                 >
                   Bookmark
                 </button>
@@ -288,7 +328,7 @@ const ProductsDetails = () => {
         <ProductReview id={id} category={detailsProduct?.category} />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

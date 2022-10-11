@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { FreeMode, Pagination } from "swiper";
+import { Autoplay, FreeMode, Pagination } from "swiper";
 
 // import "./styles.css";
 import "./styles_review_slider.css";
@@ -28,10 +28,11 @@ const ShopReview = () => {
   const userid = Cookies.get("id");
   const response = useCurrentUserQuery(userid);
   const retingArray = [1, 2, 3, 4, 5];
+
   useEffect(() => {
     const fetchShopReview = async () => {
       const { data } = await axios.get(
-        `https://easy-buy.onrender.com/api/v1/shopReview`,
+        `http://localhost:5000/api/v1/shopReview`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -52,22 +53,28 @@ const ShopReview = () => {
         Our Shop Review
       </div>
       <div className="relative">
-        <div>
+        <div className="">
           <label
             htmlFor="my-modal-6"
-            className=" modal-button absolute top-0 right-20 modal-modify-add-review"
+            className=" modal-button absolute -top-2 gap-3 cursor-pointer  right-20 modal-modify-add-review text-own-text-light font-bold flex items-center "
           >
+            Add your reviw
             <MdRateReview className="text-4xl cursor-pointer text-own-primary relative z-20  " />
           </label>
         </div>
         <Swiper
           slidesPerView={3}
           spaceBetween={30}
+          loop={true}
           freeMode={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
           pagination={{
             clickable: true,
           }}
-          modules={[FreeMode, Pagination]}
+          modules={[FreeMode, Pagination, Autoplay]}
           breakpoints={{
             1058: {
               slidesPerView: 3,

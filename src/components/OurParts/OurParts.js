@@ -14,9 +14,7 @@ const OurParts = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://easy-buy.onrender.com/api/v1/tools/getToolswithOutAuth/?limit=6`
-      )
+      .get(`http://localhost:5000/api/v1/tools/getToolswithOutAuth/?limit=6`)
       .then((res) => {
         setData(res.data);
       })
@@ -40,7 +38,7 @@ const OurParts = () => {
       </div>
       <div className="flex justify-center ">
         <NavLink
-          to="/buy_products"
+          to="/shops"
           className="btn-animation flex justify-center items-center"
         >
           All Products

@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import AddShoopReview from "../components/AddShoopReview/AddShoopReview";
 import BusinessSummary from "../components/BusinessSummary/BusinessSummary";
 import Fashion from "../components/Fashion/Fashion";
@@ -13,6 +14,7 @@ import ShopReview from "../components/ShopReview/ShopReview";
 import StartYourBusiness from "../components/StartYourBusiness/StartYourBusiness";
 
 const Home = () => {
+  const [shopReviewModalTrue, setShopReviewModalTrue] = useState(true);
   return (
     <>
       <Header />
@@ -32,7 +34,10 @@ const Home = () => {
           <BusinessSummary />
           <Repair />
           <ShopReview />
-          <AddShoopReview />
+          {shopReviewModalTrue && (
+            <AddShoopReview setShopReviewModalTrue={setShopReviewModalTrue} />
+          )}
+
           {/* <Capabilities /> */}
           <HowItWorks />
           <Footer />

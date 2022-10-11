@@ -29,6 +29,7 @@ import About from "../pages/About";
 import MyFolloerD from "../components/My_profile_deshbord/MyFolloerD";
 import MyProductOrder from "../components/My_profile_deshbord/MyProductOrder";
 import Card from "../pages/Card";
+import ServicesDetails from "../pages/ServicesDetails";
 const AllRoutes = () => {
   return (
     <Routes>
@@ -44,6 +45,7 @@ const AllRoutes = () => {
       <Route path="/Contactus" element={<Contactus />} />
       <Route path="/aboutus" element={<About />} />
       <Route path="/card" element={<Card />} />
+      <Route path="/service" element={<ServicesDetails />} />
 
       <Route
         path="/blogs"

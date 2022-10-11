@@ -13,9 +13,6 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 /* Internal Import*/
 import Headers from "../components/Header/Header";
 import React, { useState } from "react";
-import { GrFacebookOption } from "react-icons/gr";
-import { FcGoogle } from "react-icons/fc";
-import LoadingSpenner from "../components/Loading/Loading";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
 import { TailSpin } from "react-loader-spinner";
@@ -66,7 +63,7 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const { username, name, email, password } = data;
-    const url = "https://easy-buy.onrender.com/api/v1/user/signin";
+    const url = "http://localhost:5000/api/v1/user/signin";
     const newUser = {
       name,
       username,
@@ -100,6 +97,7 @@ const SignUp = () => {
             toast.success("Verification Email Send SuccessFull!", {
               position: toast.POSITION.TOP_CENTER,
             });
+            navigate("/login");
           }
         })
         .catch((err) => console.log(err));

@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import swal from "sweetalert";
 
 const CheckoutForm = ({ data }) => {
@@ -16,7 +17,7 @@ const CheckoutForm = ({ data }) => {
   const { _id, price, email, name } = data;
 
   useEffect(() => {
-    fetch("https://easy-buy.onrender.com/api/v1/payment", {
+    fetch("http://localhost:5000/api/v1/payment", {
       method: "POST",
       body: JSON.stringify({
         price,
@@ -80,7 +81,7 @@ const CheckoutForm = ({ data }) => {
         transactionId: paymentIntent.id,
         productId: _id,
       };
-      fetch(`https://easy-buy.onrender.com/api/v1/payment/${_id}`, {
+      fetch(`http://localhost:5000/api/v1/payment/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -96,18 +97,21 @@ const CheckoutForm = ({ data }) => {
         .then((res) => res.json())
         .then((data) => {
           setProcessing(false);
-          swal("payment Success ");
+          toast.success("Your paymnet Successfully Complete ", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: "5000",
+          });
         });
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mb-5 ">
         <CardElement />
         <button
           type="submit"
-          className="bg-own-primary text-own-secondary dark:text-own-white btn mt-2"
+          className="bg-own-primary text-own-white  btn mt-2"
           disabled={!stripe || !clientSecret}
         >
           Pay
