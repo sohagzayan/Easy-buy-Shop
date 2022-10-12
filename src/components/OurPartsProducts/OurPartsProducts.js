@@ -1,31 +1,122 @@
-import React from "react";
-import { NavLink } from 'react-router-dom';
-const OurPartsProducts = ({ item }) => {
-  const MF = "https://tranquil-shelf-42201.herokuapp.com/upload/"
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-  const { image , name , details , price , quantity , minimumOrder  , _id} = item;
+import { FiBookmark } from "react-icons/fi";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { IoBagAddOutline } from "react-icons/io";
+import { BiBookmarkPlus } from "react-icons/bi";
+import { AiFillStar, AiOutlineEye } from "react-icons/ai";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { useCurrentUserQuery } from "../../store/API/user";
+import Cookies from "js-cookie";
+import axios from "axios";
+import swal from "sweetalert";
+import { toast } from "react-toastify";
+
+const OurPartsProducts = ({ item }) => {
+  const {
+    image,
+    name,
+    details,
+    price,
+    quantity,
+    minimumOrder,
+    view,
+    _id,
+    users,
+    availability,
+  } = item;
+  const token = Cookies.get("token");
+  const reting = [1, 2, 3, 4, 5];
+
+  const addToCardProduct = async (id) => {
+    console.log("addToCardProduct");
+    await axios
+      .post(
+        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (
+          res.data.status === 5000 ||
+          res.data.message === "This Product Already Exits!"
+        ) {
+          toast.warn("This Product already Added", {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        } else {
+          toast.success("Success to add you card!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        console.log(res);
+        // setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <div className="bg-base-100 border-2 rounded-2xl shadow-lg">
-      <div className="p-4 flex flex-col justify-between items-center">
-        <div style={{height : '300px', overflow : 'hidden'}} className="mb-3">
-          <img className="max-w-sm" src={image ? MF + image : null} alt="" />
-          {/* <img className="w-sm" src={image} alt="" /> */}
-        </div>
-        <div>
-            <h2 className="text-primary text-lg">{name}</h2>
-            <div className="flex flex-col my-2">
-              <span className="text-primary font-medium">Minimum Order Quantity : <span className="text-2xl font-bold text-secondary">{minimumOrder}</span></span>
-              <span className="text-primary font-medium">Available Quantity : <span className="text-2xl font-bold text-secondary">{quantity}</span></span>
+    <>
+      <NavLink
+        data-aos="zoom-in"
+        data-aos-offset="100"
+        data-aos-delay="300"
+        to={`/ProductsDetails/${_id}`}
+        className="transition-all ease-in"
+      >
+        <div className="bg-own-white border-[1px] border-own-text-light border-opacity-10 dark:bg-own-dark-bg rounded-md relative shadow-md overflow-hidden group">
+          <div className="">
+            <div
+              className="flex items-center justify-center 
+                rounded-lg relative "
+            >
+              <img className="  " src={image} alt="" />
             </div>
-          
-            <p className="text-sm font-light text-primary">{details}</p>
-            <div className="flex items-center justify-between mt-5">
-            <span className="text-2xl text-secondary font-bold">৳ {price}</span>
-                <NavLink to={`/purchase/${_id}`} className="bg-secondary text-white font-bold px-4 py-2 rounded-lg">Purchase</NavLink>
+
+            <div className="flex flex-col px-5 py-4 ">
+              <h2 className="text-own-primary font-bold dark:text-own-white mb-1 text-2xl ">
+                {name}
+              </h2>
+              <div className="flex  justify-between">
+                <div className="flex flex-col">
+                  <span className="text-xl text-own-soft-red font-bold mb-1">
+                    ${price}
+                  </span>
+                  <span className="dark:text-own-white font-semibold text-own-secondary">
+                    Stock:{" "}
+                    <span
+                      className={
+                        availability === "in-stock"
+                          ? "text-own-primary"
+                          : "text-own-soft-red"
+                      }
+                    >
+                      {availability}
+                    </span>
+                  </span>
+                </div>
+                <div className="flex flex-col justify-end items-end">
+                  <div className="flex items-center">
+                    {reting.slice(0, 3).map((r, index) => (
+                      <AiFillStar key={index} className="text-[#FACA51]" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-own-secondary dark:text-own-white">
+                    Bangladesh
+                  </span>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </NavLink>
+    </>
   );
 };
 

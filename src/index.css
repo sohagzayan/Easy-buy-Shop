@@ -3,8 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Roboto", sans-serif;
-  max-width: 1400px;
+  font-family: sans-serif;
   margin: auto;
+}
+
+.container_c {
+  width: 90%;
+  max-width: 1400px;
+  padding: 10px 5px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
+}
+.swiper-pagination-bullet {
+  display: none;
 }

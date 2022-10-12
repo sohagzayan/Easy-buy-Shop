@@ -1,119 +1,238 @@
+/* External Import */
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import * as yup from "yup";
-import keyImage from "../assets/icons/key.png";
-import Footer from "../components/Footer/Footer";
-import Headers from "../components/Header/Header";
-import { useAuthContext } from "../context/AuthContextProvider";
-import useToken from "../hock/useToken";
-const SignUp = () => {
-  const [error, setError] = useState("");
-  const { login, googleLogin, username } = useAuthContext();
+import axios from "axios";
+import cookie from "js-cookie";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
+/* Internal Import */
+import React, { useState } from "react";
+import Headers from "../components/Header/Header";
+import { useCurrentUserQuery } from "../store/API/user";
+import Cookies from "js-cookie";
+import { GrFacebookOption } from "react-icons/gr";
+import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
+import { TailSpin } from "react-loader-spinner";
+
+const SignUp = () => {
+  /* Hocks  */
+  const [error, setError] = useState("");
+  const [mainError, setMainError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  /* Orders  */
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const from = location.state?.from?.pathname || "/";
+  const userId = Cookies.get("id");
+  const token = Cookies.get("token");
+  const response = useCurrentUserQuery(userId);
+  console.log(response);
 
-  const [token, isLoading] = useToken(username);
-
+  /* Form validation Yap schema  */
   let schema = yup.object().shape({
     password: yup.string().required().min(6).max(20),
     email: yup.string().required("Please enter your email !").email(),
   });
 
+  /* Form validation Yap Resolver  */
   const {
     register,
+    reset,
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = async (data) => {
-    const { username, email, password, firstName, ConformPassword } = data;
-    try {
-      await login(email, password);
-      swal("Good job!", "Your Login success!", "success");
 
+  /** Login User Handler */
+  const onSubmit = async (data) => {
+    setLoading(true);
+    console.log("tart");
+    const { email, password } = data;
+    const url = "https://easy-buy-shop-server.onrender.com/api/v1/user/login";
+    try {
+      await axios
+        .post(url, { email, password })
+        .then((res) => {
+          if (res.data.status === 500) {
+            setLoading(false);
+            if (res.data.message === "This User Not Valid") {
+              setMainError(
+                "We couldnt find an account matching the username and password you entered. Please check your username and password and try again"
+              );
+              toast.error(
+                "This User Not Valid! Please try again with Valid Email!",
+                {
+                  position: toast.POSITION.BOTTOM_CENTER,
+                }
+              );
+            }
+            if (
+              res.data.message ===
+              "Pleace Verify Your Account then again try to login"
+            ) {
+              setMainError("Please verify your account and try again");
+              toast.error("Please verify your account and try again!", {
+                position: toast.POSITION.TOP_CENTER,
+              });
+            }
+          } else {
+            setMainError("");
+            cookie.set("token", res.data.Access_Token);
+            cookie.set("id", res.data.userId);
+            navigate(from, { replace: true });
+            setLoading(false);
+            toast.success("Login SuccessFull", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            reset();
+          }
+        })
+        .catch((error) => setMainError(error.message));
       setError("");
     } catch (error) {
+      if (error.message) {
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
       setError(error.message);
     }
   };
+
   const handleLoginWithGoogle = async () => {
-    await googleLogin();
+    // await googleLogin();
     // navigate(from , {replace : true})
   };
 
   if (token) {
     navigate(from, { replace: true });
   }
+
+  // if (response?.currentData?.currentuser.length > 0) {
+  //   navigate(from, { replace: true });
+  // }
+
   return (
     <>
       <Headers />
-      <div className="my-10">
-        <div class="hero ">
-          <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Login Now</h1>
-              <p class="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem
-              </p>
-              <img width="200px" src={keyImage} alt="" />
+      <div className="relative controlSmallPage">
+        {mainError && (
+          <div className="">
+            <p className="bg-own-soft-red text-own-secondary dark:text-own-white text-center py-2 ">
+              {mainError}
+            </p>
+          </div>
+        )}
+        <div className="login container_c mx-auto bg-own-white dark:bg-own-dark-bg relative">
+          {loading && (
+            <div className="h-screen absolute top-0 left-0 z-40 dark:bg-[#1f2d3d67] w-full flex justify-center items-center pointer-events-none  ">
+              <TailSpin
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-              <div class="card-body">
+          )}
+          <div className="relative">
+            <p className="text-own-secondary font-semibold dark:text-own-white absolute top-2 right-5 z-10">
+              Not a member?{" "}
+              <NavLink
+                className="text-own-primary font-bold text-lg"
+                to="/SignUp"
+              >
+                Sign up now
+              </NavLink>
+            </p>
+            <div className=" sm:w-[60%] w-[90%]  mx-auto sm:mx-0 sm:ml-24 py-20">
+              <div className=" z-20 relative">
+                <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3">
+                  Sign in to Easy Buy
+                </h2>
+                <div className="flex sm:flex-row flex-col sm:items-center mb-2">
+                  <GoogleButton />
+                </div>
+                <div className="flex flex-col w-full]">
+                  <div className="divider after:bg-own-primary before:bg-own-primary text-own-primary">
+                    OR
+                  </div>
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                  <label className="text-own-secondary font-bold dark:text-own-white mb-1">
+                    Username or Email Address
+                  </label>
                   <input
                     type="text"
-                    placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
+                    placeholder="@gmail.com"
+                    className="input text-own-primary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-[#5a5e70] dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
                     {...register("email")}
                   />
                   <p className=" text-secondary">{errors.email?.message}</p>
-                  <input
-                    type="text"
-                    placeholder="password"
-                    class="input input-bordered w-full focus:outline-secondary"
-                    {...register("password")}
-                  />
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor=""
+                      className="text-own-secondary font-bold dark:text-own-white"
+                    >
+                      Password
+                    </label>
+                    <label className=" inline-block">
+                      <a href="/" className=" text-own-primary">
+                        Forgot password?
+                      </a>
+                    </label>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className="input text-own-primary font-semibold text-lg bg-own-white dark:bg-own-ternary border-[1px] border-own-primary placeholder:text-[#5a5e70]  placeholder:font-bold w-full focus:outline-own-primary  mb-3 "
+                      {...register("password")}
+                    />
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-5 top-[20%]"
+                    >
+                      {showPassword ? (
+                        <AiOutlineEye className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
+                      ) : (
+                        <AiOutlineEyeInvisible className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
+                      )}
+                    </span>
+                  </div>
                   <p className=" text-secondary">{errors.password?.message}</p>
-                  <label class="label">
-                    <a href="/" class="label-text-alt link link-hover">
-                      Forgot password?
-                    </a>
-                  </label>
+
                   <p className="text-secondary text-sm">{error}</p>
 
-                  <div class="form-control mt-2">
-                    <button class="btn btn-primary text-white ">Login</button>
+                  <div className=" mt-2">
+                    {/* <button className=" bg-own-primary text-own-secondary dark:text-own-white py-2 rounded-md text-white px-24 mt-3 ">
+                      Sign In
+                    </button> */}
+                    <button className="btn-animation capitalize flex items-center justify-center ml-0">
+                      Sign In
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
                   </div>
                 </form>
 
-                <div className="w-[300px]">
-                  <GoogleButton
-                    style={{ width: "320px" }}
-                    className="rounded-lg"
-                    onClick={handleLoginWithGoogle}
-                  />
-                </div>
-                <p>
-                  Not Have a account ?{" "}
-                  <NavLink
-                    className="text-secondary font-bold text-lg"
-                    to="/SignUp"
-                  >
-                    SignUp
-                  </NavLink>
-                </p>
+                {/* <div className="w-[300px]"></div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

@@ -1,13 +1,49 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+/** External Import */
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import swal from "sweetalert";
-import { useAuthContext } from "../../context/AuthContextProvider";
+import React, { useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
+/** Internal Import */
+import { useCurrentUserQuery } from "../../store/API/user";
+import logo from "../../assets/apple-touch-icon.png";
+import Menu from "./Menu";
+import WithOutLoginMenu from "./WithOutLoginMenu";
+import Profile from "./Profile";
+import { useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../store/slices/cardSlice";
 
 const Header = () => {
-  const { username, logOut } = useAuthContext();
-  const navigate = useNavigate()
+  /** Hocks  */
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  const token = Cookies.get("token");
+  const dispatch = useDispatch();
 
-  const handleLogout = async () => {
+  /** Variable  */
+  const userid = Cookies.get("id");
+  const response = useCurrentUserQuery(userid);
+  const [card, setCard] = useState([]);
+
+  // console.log(response);
+  /** Handle Profile menu */
+
+  const cardData = useSelector((current) => current.card);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  const handleUserProfile = async () => {
+    setShowMenu((prev) => !prev);
+  };
+
+  /** Out Out Func Handler */
+  const handleLogOut = () => {
     swal({
       title: "Are you sure?",
       text: "LogOut user and !",
@@ -19,10 +55,9 @@ const Header = () => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        logOut();
-        localStorage.removeItem('accessToken')
-        navigate('/login')
-
+        Cookies.remove("id");
+        Cookies.remove("token");
+        navigate("/login");
       } else {
         swal("Your imaginary file is safe!");
       }
@@ -30,125 +65,133 @@ const Header = () => {
   };
 
   return (
-    <div class="shadow-sm  sticky top-0 z-50  bg-[#ffffffdc]">
-      <div className="navbar   container mx-auto">
-      <div class="navbar-start">
-        <div class="dropdown">
-          <label tabindex="0" class="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-secondary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </label>
-
-          <ul
-            tabindex="0"
-            class="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-1">
+      <div className="navbar   container_c  mx-auto">
+        <div className="navbar-start ">
+          <NavLink
+            to="/"
+            className=" text-own-primary dark:text-own-white font-bold flex items-center "
           >
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/blogs">Blogs</NavLink>
-            </li>
-            <li>
-              <NavLink to="/myProtFolio">My Portfolio</NavLink>
-            </li>
-            {username && (
-              <li>
-                <NavLink to="/dashBoart">DashBoart</NavLink>
-              </li>
-            )}
-          </ul>
+            <img className="w-[30px] mr-3" src={logo} alt="" />
+            Easy Buy
+          </NavLink>
         </div>
-        <a
-          class="btn btn-ghost normal-case text-xl text-primary font-semibold"
-          href="/"
-        >
-          Hardware
-          <span className="text-secondary font-bold text-2xl">Fair </span>
-        </a>
-      </div>
-      <div class="navbar-center hidden lg:flex">
-        <ul class="  menu-horizontal p-0">
-          <li className="text-primary px-3 font-bold ">
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li className="text-primary px-3 font-bold ">
-            <NavLink to="/blogs">Blogs</NavLink>
-          </li>
-          <li className="text-primary  px-3 font-bold ">
-            <NavLink to="/myProtFolio">My Portfolio</NavLink>
-          </li>
-          {username && (
-            <li className="text-primary px-3 font-bold ">
-              <NavLink to="/dashBoart">DashBoart</NavLink>
-            </li>
-          )}
-        </ul>
-      </div>
-      <div class="navbar-end">
-        <div>
-        <label for="my-drawer-2" class="px-5 py-2 swap drawer-button lg:hidden swap-rotate">
-            <input type="checkbox" />
-            <svg
-              class="swap-off fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 512 512"
-            >
-              <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-            </svg>
+        <div className="navbar-center hidden lg:flex">
+          {response?.data?.status === "success" &&
+            response?.data?.currentuser?.length > 0 && (
+              <ul className="  menu-horizontal p-0">
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      location.pathname === "/" ? "text-own-primary" : " "
+                    }
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/shops"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Shops
+                  </NavLink>
+                </li>
+                <li className="text-[#62759d] px-3 font-semibold ">
+                  <NavLink
+                    to="/blogs"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Blogs
+                  </NavLink>{" "}
+                </li>
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/service"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Service
+                  </NavLink>
+                </li>
+                <li className="text-[#62759d]   px-3 font-semibold ">
+                  <NavLink
+                    to="/Contactus"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Contact Us
+                  </NavLink>
+                </li>
 
-            <svg
-              class="swap-on fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 512 512"
-            >
-              <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
-            </svg>
-          </label>
-       
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/aboutus"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    About Us
+                  </NavLink>
+                </li>
+                <li className="text-[#62759d]  px-3 font-semibold ">
+                  <NavLink
+                    to="/dashBoart"
+                    className={({ isActive }) =>
+                      isActive ? "text-own-primary" : " "
+                    }
+                  >
+                    Leaderboard
+                  </NavLink>
+                </li>
+              </ul>
+            )}
         </div>
-        {username ? (
-          <div>
-            <span
-              onClick={handleLogout}
-              className="bg-secondary text-white font-bold px-4 py-2 rounded-lg cursor-pointer"
-            >
-              LogOut
-            </span>
-          </div>
-        ) : (
-          <div>
-            <NavLink
-              to="/login"
-              className=" text-primary font-bold mr-6 text-lg"
-            >
-              Login
-            </NavLink>
-            <NavLink
-              to="/signup"
-              className="px-4 py-2 rounded-lg btn-secondary text-white font-bold "
-            >
-              Sign Up
-            </NavLink>
-          </div>
-        )}
-      </div>
+        <div className="navbar-end">
+          {response?.data?.status === "success" &&
+          response?.data?.currentuser?.length > 0 ? (
+            <div>
+              <div className="flex items-center gap-5">
+                <ThemeToggle />
+                <Profile handleUserProfile={handleUserProfile} />
+                <NavLink
+                  to="/add_new_products"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-1 py-1 rounded-md font-bold transition-all ease-in text-sm"
+                      : " text-own-white bg-own-primary  px-1 py-1 border-[1px] border-transparent rounded-md font-bold transition-all ease-in text-sm"
+                  }
+                >
+                  Upload
+                </NavLink>
+                <div className="text-own-secondary dark:text-own-white  py-2 rounded-md font-semibold relative">
+                  <NavLink to="/card" className="cursor-pointer">
+                    <AiOutlineShoppingCart className="text-3xl  text-own-primary" />
+                    {cardData?.cardProduct?.length ? (
+                      <span className="bg-own-primary  absolute top-0 right-3  dark:text-own-white w-[25px] h-[25px] flex items-center justify-center text-own-white  rounded-full text-sm">
+                        {cardData?.cardProduct?.length}
+                      </span>
+                    ) : null}
+                  </NavLink>
+                </div>
+              </div>
+              <div className="relative">
+                {showMenu && (
+                  <Menu handleLogOut={handleLogOut} setShowMenu={setShowMenu} />
+                )}
+              </div>
+            </div>
+          ) : (
+            <WithOutLoginMenu />
+          )}
+        </div>
       </div>
     </div>
   );

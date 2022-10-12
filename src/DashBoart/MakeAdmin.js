@@ -15,7 +15,7 @@ const MakeAdmin = () => {
     error,
     data: allUser,
   } = useQuery("userData", () =>
-    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/user`, {
+    fetch(`https://easy-buy-shop-server.onrender.com/api/user`, {
       method: "GET",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -36,26 +36,24 @@ const MakeAdmin = () => {
   }
 
   return (
-    <div className="px-4 mt-6">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Date</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Make Admin</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUser?.map((user , index) => (
-              <MakeAdminRow key={index} refetch={refetch} user={user} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="table-wrapper">
+      <table className="fl-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Make Admin</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allUser?.map((user, index) => (
+            <MakeAdminRow key={index} refetch={refetch} user={user} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

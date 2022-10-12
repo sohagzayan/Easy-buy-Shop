@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 const MyOrderRow = ({ order }) => {
   const {
@@ -15,32 +15,29 @@ const MyOrderRow = ({ order }) => {
     transactionId,
   } = order;
 
-  const handleDeleteProduct = ()=>{
+  const handleDeleteProduct = () => {
     swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          swal("Poof! Your imaginary file has been deleted!", {
-            icon: "success",
-          });
-          fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase/${_id}`, {
-            method: "DELETE",
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          })
-          .then(res => res.json())
-          
-        } else {
-          swal("Your imaginary file is safe!");
-        }
-      });
-  }
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        fetch(`https://easy-buy-shop-server.onrender.com/api/purchase/${_id}`, {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }).then((res) => res.json());
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  };
   return (
     <tr>
       <th>1</th>
@@ -49,7 +46,12 @@ const MyOrderRow = ({ order }) => {
       <td>{email}</td>
       <td>{transactionId}</td>
       <td>
-        <button onClick={handleDeleteProduct} className="text-secondary mr-2 cursor-pointer ">Cancel</button>
+        <button
+          onClick={handleDeleteProduct}
+          className="text-secondary mr-2 cursor-pointer "
+        >
+          Cancel
+        </button>
         {payed ? (
           <span className=" cursor-pointer font-bold text-green-400">
             Payed

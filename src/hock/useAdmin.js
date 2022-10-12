@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 
-const useAdmin = (user)=>{
-    console.log(user);
-    const [admin , setAdmin] = useState(false)
-    const [adminLoading , setAdminLoading] = useState(true)
-    useEffect(()=>{
-        const email = user?.email 
-        if(email){
-            fetch(`https://tranquil-shelf-42201.herokuapp.com/api/admin/${email}` , {
-                method : "GET",
-                headers : {
-                    'content-type' : 'application/json',
-                    authorization : `Bearer ${localStorage.getItem('accessToken')}`
-                },
-            })
-            .then(res => res.json())
-            .then(data => {
-                setAdmin(data.admin)
-                setAdminLoading(false)
-            })
-        }
-    },[user])
-    return [admin , adminLoading]
-}
-export default useAdmin
+const useAdmin = (user) => {
+  console.log(user);
+  const [admin, setAdmin] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(true);
+  useEffect(() => {
+    const email = user?.email;
+    if (email) {
+      fetch(`https://easy-buy-shop-server.onrender.com/api/admin/${email}`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAdmin(data.admin);
+          setAdminLoading(false);
+        });
+    }
+  }, [user]);
+  return [admin, adminLoading];
+};
+export default useAdmin;

@@ -1,5 +1,5 @@
 .hero-wrapper {
-  background-image: url("./assets/images/bg.png");
+  background-image: linear-gradient(to left, #383459, 20%, #101126);
   width: 100%;
   position: relative;
 }
@@ -46,3 +46,229 @@ tr:nth-child(even) {
 .iconsStar .in-hover {
   color: rgba(255, 207, 135, 0.3);
 }
+
+/* fashion */
+
+.fashion {
+  position: relative;
+  overflow: hidden;
+}
+.inner {
+  transition: all 0.7s ease-in;
+}
+.fashion:hover > .inner {
+  transform: scale(1.1);
+  transition: all 0.7s ease-in;
+}
+.fashion:hover:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #008aff;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transform: scale(0.4);
+  opacity: 0;
+  transition: all 1s linear;
+
+  animation: fashionAnimation 1.5s ease-in forwards;
+}
+
+.repair {
+  background-image: url("./assets/images/banner.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@keyframes fashionAnimation {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(7);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.modal {
+  background-color: #383459 !important;
+  color: white !important;
+}
+
+.btn-animation {
+  --c: #008aff;
+  color: #008aff;
+  font-size: 16px;
+  border: 0.3em solid #008aff;
+  border-radius: 0.5em;
+  width: 12em;
+  height: 3em;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 3em;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: 0.5s;
+  margin: 1em;
+}
+
+.btn-animation span {
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  background-color: #008aff;
+  transform: translateY(150%);
+  border-radius: 50%;
+  left: calc((var(--n) - 1) * 25%);
+  transition: 0.5s;
+  transition-delay: calc((var(--n) - 1) * 0.1s);
+  z-index: -1;
+}
+
+.btn-animation:hover {
+  color: #ffffff;
+}
+
+.btn-animation:hover span {
+  transform: translateY(0) scale(2);
+}
+
+.btn-animation span:nth-child(1) {
+  --n: 1;
+}
+
+.btn-animation span:nth-child(2) {
+  --n: 2;
+}
+
+.btn-animation span:nth-child(3) {
+  --n: 3;
+}
+
+.btn-animation span:nth-child(4) {
+  --n: 4;
+}
+
+.modal-modifiy {
+  background-color: rgba(0, 0, 0, 0.459) !important;
+  /* opacity: background-color 0.2; */
+}
+.ratingFunc > span {
+  margin: 5px;
+}
+
+.shadow1 {
+  box-shadow: 0 0 1.25rem rgb(31 45 61 / 5%);
+}
+
+/* controlSmallPage */
+
+.controlSmallPage {
+  min-height: 100vh;
+  max-height: 100% !important;
+}
+
+/* customize scrollber  */
+::-webkit-scrollbar {
+  background-color: #1c2836;
+  width: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #008aff;
+  border-radius: 10px;
+}
+
+/* tooltip */
+/* setup tooltips */
+.tooltip_c {
+  position: relative;
+}
+.tooltip_c:before,
+.tooltip_c:after {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+.tooltip_c:after {
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid rgba(0, 0, 0, 0.75);
+  border-left: 6px solid transparent;
+  content: "";
+  height: 0;
+  top: 20px;
+  left: 20px;
+  width: 0;
+}
+.tooltip_c:before {
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 2px;
+  color: #fff;
+  content: attr(data-title);
+  font-size: 14px;
+  padding: 6px 10px;
+  bottom: -50%;
+  left: 40%;
+  white-space: nowrap;
+}
+
+/* the animations */
+/* fade
+.tooltip.fade:after,
+.tooltip.fade:before {
+  transform: translate3d(0,-10px,0);
+  transition: all .15s ease-in-out;
+}
+.tooltip.fade:hover:after,
+.tooltip.fade:hover:before {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+} */
+
+/* expand */
+.tooltip_c.expand:before {
+  transform: scale3d(0.2, 0.2, 1);
+  transition: all 0.2s ease-in-out;
+}
+.tooltip_c.expand:after {
+  transform: translate3d(0, 6px, 0);
+  transition: all 0.1s ease-in-out;
+}
+.tooltip_c.expand:hover:before,
+.tooltip_c.expand:hover:after {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+}
+.tooltip_c.expand:hover:after {
+  transition: all 0.2s 0.1s ease-in-out;
+}
+
+/* swing */
+/* .tooltip.swing:before,
+.tooltip.swing:after {
+  transform: translate3d(0,30px,0) rotate3d(0,0,1,60deg);
+  transform-origin: 0 0;
+  transition: transform .15s ease-in-out, opacity .2s;
+}
+.tooltip.swing:after {
+  transform: translate3d(0,60px,0);
+  transition: transform .15s ease-in-out, opacity .2s;
+}
+.tooltip.swing:hover:before,
+.tooltip.swing:hover:after {
+  opacity: 1;
+  transform: translate3d(0,0,0) rotate3d(1,1,1,0deg);
+}
+ */

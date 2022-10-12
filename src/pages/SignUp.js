@@ -1,131 +1,274 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from "react";
-import GoogleButton from "react-google-button";
-import { useForm } from "react-hook-form";
+/* External Import */
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import swal from 'sweetalert';
-import * as yup from 'yup';
-import addUserIcons from "../assets/icons/add-user.png";
-import Footer from "../components/Footer/Footer";
-import Headers from "../components/Header/Header";
-import { useAuthContext } from '../context/AuthContextProvider';
-import useToken from '../hock/useToken';
+import "react-country-dropdown/dist/index.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import swal from "sweetalert";
+import GoogleButton from "react-google-button";
+import * as yup from "yup";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
+/* Internal Import*/
+import Headers from "../components/Header/Header";
+import React, { useState } from "react";
+import { useCurrentUserQuery } from "../store/API/user";
+import Cookies from "js-cookie";
+import { TailSpin } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
-  const [error , setError] = useState('')
-  const {username , sinUp , googleLogin} = useAuthContext()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || '/';
+  /* Hocks */
+  const userId = Cookies.get("id");
+  const [region, setRegion] = useState("");
+  const [country, setCountry] = useState("");
+  const [error, setError] = useState("");
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const response = useCurrentUserQuery(userId);
   const navigate = useNavigate();
+
+  /* select Country  Func */
+  const selectCountry = (val) => {
+    console.log(val);
+    setCountry(val);
+  };
+  /* select Region Func */
+  const selectRegion = (val) => {
+    setRegion(val);
+  };
+
+  /* Others */
+  const from = location.state?.from?.pathname || "/";
+
+  /* React Hock Form yup validation Schema*/
   let schema = yup.object().shape({
+    name: yup.string().required(),
     username: yup.string().required(),
     password: yup.string().required().min(6).max(20),
-    ConformPassword: yup.string().required(),
     email: yup.string().required("Please enter your email !").email(),
   });
-
-const {register, formState: { errors }, handleSubmit,} = useForm({resolver: yupResolver(schema),});
-  
-const [toekn] = useToken(username)
-
-
-const onSubmit = async (data) => {
-  const { username, email, password, firstName, ConformPassword } = data
-    if(password === ConformPassword){
-      try {
-        await sinUp(email , password , username )
-        navigate("/login");
-        setError('')
-      } catch (error) {
-        setError(error.message)
-      }
-    }else{
-      setError("Your password and  conform password don't match")
-      swal("Your password and  conform password don't match!");
-
+  /* React Hock Form Resolver*/
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(schema) });
+  /*Custom Hocks*/
+  // const [toekn] = useToken(username);
+  /** SingUp Func  */
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const { username, name, email, password } = data;
+    const url = "https://easy-buy-shop-server.onrender.com/api/v1/user/signin";
+    const newUser = {
+      name,
+      username,
+      email,
+      bio: "Nothing Here bio ",
+      personalSite: "url",
+      socialAccount: [
+        { name: "Facebook", url: "google" },
+        { name: "twitter", url: "twitter" },
+      ],
+      AccountAccess: "freeUser",
+      password,
+      role: "user",
+      education: "Your Academic Info",
+      country: country,
+      city: region,
+      linkeDin: "url likedin url new",
+      image: "https://i.ibb.co/ZK5CBDW/demouser.png",
+    };
+    try {
+      await axios
+        .post(url, newUser)
+        .then((res) => {
+          console.log(res);
+          setLoading(false);
+          if (res?.data?.message) {
+            toast.error(res?.data?.message, {
+              position: toast.POSITION.BOTTOM_CENTER,
+            });
+          } else {
+            toast.success("Verification Email Send SuccessFull!", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            navigate("/login");
+          }
+        })
+        .catch((err) => console.log(err));
+      // navigate("/login");
+      setError("");
+      reset();
+      setCountry();
+      setRegion();
+    } catch (error) {
+      setError(error.message);
     }
   };
 
-  const handleGoogleLogin = async()=>{
-    await googleLogin()
-    // navigate("/login");
+  /* Google SingUp*/
+  // const handleGoogleLogin = async () => {
+  //   await googleLogin();
+  // };
+
+  if (response?.currentData?.currentuser.length > 0) {
+    navigate(from, { replace: true });
   }
+
   return (
     <>
       <Headers />
-      <div className="my-10">
-        <div class="hero ">
-          <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center flex flex-col items-center">
-              <h1 class="text-5xl font-bold">Sign Up Now</h1>
-              <p class="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem
-              </p>
-              <img width="200px" src={addUserIcons} alt="" />
+      <div className="controlSmallPage">
+        <div className="login container_c mx-auto relative">
+          {loading && (
+            <div className="h-screen fixed top-0 left-0 z-40 dark:bg-[#1f2d3d67] w-full flex justify-center items-center pointer-events-none  ">
+              <TailSpin
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
             </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-              <div class="card-body">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
-                    {...register("username")}
-                  />
-                     <p className=" text-secondary">{errors.username?.message}</p>
-                     <input
-                    type="text"
-                    placeholder="email"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
-                    {...register("email")}
-                  />
+          )}
+          <div className="relative">
+            <p className="text-own-secondary font-bold dark:text-own-white absolute top-2 right-5 z-10">
+              Already a member?{" "}
+              <NavLink
+                className="text-own-primary font-bold text-lg"
+                to="/login"
+              >
+                Sign In
+              </NavLink>
+            </p>
+            <div className=" md:w-[60%] sm:w-[80%] w-[95%] mx-auto py-6 ">
+              <div className="relative z-10">
+                <h2 className="text-own-secondary dark:text-own-white font-semibold text-3xl mb-3 text-center">
+                  Sign up to Easy Buy
+                </h2>
+                <div className="flex sm:flex-row flex-col sm:items-center justify-center mb-1">
+                  <GoogleButton />
+                  <div></div>
+                </div>
+                <div className="flex flex-col w-full]">
+                  <div className="divider after:bg-own-primary before:bg-own-primary text-own-primary ">
+                    OR
+                  </div>
+                </div>
+                <div className="">
+                  <form onSubmit={handleSubmit(onSubmit)} className=" ">
+                    <input
+                      type="text"
+                      placeholder="Your Account Name"
+                      className="input dark:text-own-white text-own-secondary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-own-text-light dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
+                      {...register("name")}
+                    />
+                    <p className=" text-secondary">{errors.name?.message}</p>
+
+                    <input
+                      type="text"
+                      placeholder="username must be unique"
+                      className="input dark:text-own-white text-own-secondary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-own-text-light dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
+                      {...register("username")}
+                    />
+
+                    <p className=" text-secondary">
+                      {errors.username?.message}
+                    </p>
+
+                    <input
+                      type="text"
+                      placeholder="Make Sure Add Your Valid Email"
+                      className="input dark:text-own-white text-own-secondary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-own-text-light dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3 "
+                      {...register("email")}
+                    />
                     <p className=" text-secondary">{errors.email?.message}</p>
-                     <input
-                    type="text"
-                    placeholder="Conform password"
-                    class="input input-bordered w-full mb-2 focus:outline-secondary"
-                    {...register("password")}
 
-                  />
-                     <p className=" text-secondary">{errors.ConformPassword?.message}</p>
-                
-                
-         
-                  <input
-                   
-                    type="text"
-                    placeholder="password"
-                    className="input  input-bordered w-full mb-2 focus:outline-secondary"
-                    {...register("ConformPassword")}
-                  />
-                     <p className=" text-secondary">{errors.password?.message}</p>
-                  <label class="label">
-                    <a href="#" class="label-text-alt link link-hover">
-                      Forgot password?
-                    </a>
-                  </label>
-                  <p className="text-secondary text-sm">{error}</p>
-                <div class="form-control mt-2">
-                  <button class="btn btn-primary text-white">Sign Up</button>
-                </div>
-                </form>
-                <div className="w-[300px]">
-                  <GoogleButton
-                 style={{width : "320px"}}
-                 className="rounded-lg"
-                    onClick={handleGoogleLogin}
-                  />
-                </div>
-                <p>AlReady Have a Account ? <NavLink className="text-secondary font-bold text-lg" to="/login">Login</NavLink></p>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="6+ Character"
+                        className="input dark:text-own-white text-own-secondary font-semibold text-lg bg-own-white border-[1px] border-own-primary placeholder:text-own-text-light dark:bg-own-ternary  placeholder:font-bold w-full focus:outline-own-primary  mb-3"
+                        {...register("password")}
+                      />
+                      <span
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-5 top-[20%]"
+                      >
+                        {showPassword ? (
+                          <AiOutlineEye className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
+                        ) : (
+                          <AiOutlineEyeInvisible className="text-own-secondary dark:text-own-white text-3xl cursor-pointer" />
+                        )}
+                      </span>
+                    </div>
 
+                    <p className=" text-secondary">
+                      {errors.password?.message}
+                    </p>
+                    <div className="flex gap-12 items-center justify-around mt-2">
+                      <CountryDropdown
+                        className=" dark:bg-own-dark-bg-special bg-own-white-special  font-semibold dark:text-own-white   text-own-secondary py-2  w-full focus:outline-own-primary px-3 rounded-md"
+                        value={country}
+                        onChange={(val) => selectCountry(val)}
+                        required
+                      />
+                      <RegionDropdown
+                        className="bg-own-white dark:bg-own-dark-bg-special text-own-secondary dark:text-own-white-special py-2  w-[160px] px-3 rounded-md focus:outline-own-primary font-semibold"
+                        country={country}
+                        value={region}
+                        onChange={(val) => selectRegion(val)}
+                        required
+                      />
+                    </div>
+
+                    <p className="text-secondary text-sm">{error}</p>
+                    <div className="flex items-center mt-4">
+                      <input
+                        type="checkbox"
+                        name=""
+                        id="tarms-condetion"
+                        className="mr-3"
+                      />
+                      <label
+                        htmlFor="tarms-condetion"
+                        className="text-own-secondary dark:text-own-white text-[13px]"
+                      >
+                        Creating an account means you’re okay with our{" "}
+                        <a href="/facebook" className="text-own-primary">
+                          Terms of Service, Privacy Policy,
+                        </a>{" "}
+                        and our default{" "}
+                        <a href="/facebook" className="text-own-primary">
+                          Notification Settings.
+                        </a>
+                      </label>
+                    </div>
+                    <div className=" mt-2">
+                      <button className="btn-animation capitalize text-sm flex items-center justify-center ml-0">
+                        Create Account
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

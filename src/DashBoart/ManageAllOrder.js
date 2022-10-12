@@ -1,43 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import ManageAllOrderRow from './ManageAllOrderRow';
+import React, { useEffect, useState } from "react";
+import ManageAllOrderRow from "./ManageAllOrderRow";
 
 const ManageAllOrder = () => {
-
-  const [manageOrder , setManageOrder] = useState([])
-  useEffect(()=>{
-    fetch(`https://tranquil-shelf-42201.herokuapp.com/api/purchase` , {
-      method : "GET",
-      headers : {
-        authorization : `Bearer ${localStorage.getItem('accessToken')}`
-      }
-
+  const [manageOrder, setManageOrder] = useState([]);
+  useEffect(() => {
+    fetch(`https://easy-buy-shop-server.onrender.com/api/purchase`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-    .then(res => res.json())
-    .then(data => setManageOrder(data))
-  },[manageOrder])
-  
-  console.log(manageOrder);
-    return (
-        <table className='px-4 mt-5'>
-        <tr>
-          <th>Date</th>
-          <th>Price</th>
-          <th>Order Amount</th>
-          <th>Email</th>
-          <th>Address</th>
-          <th>Pay</th>
-          <th>Action</th>
-        </tr>
+      .then((res) => res.json())
+      .then((data) => setManageOrder(data));
+  }, [manageOrder]);
 
-        {
-          manageOrder?.map((order , index) => <ManageAllOrderRow 
-              key={index}
-              order={order}
-            />)
-        }
-       
+  console.log(manageOrder);
+  return (
+    <div className="table-wrapper ">
+      <table className="fl-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Order Amount</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Pay</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {manageOrder?.map((order, index) => (
+            <ManageAllOrderRow key={index} order={order} />
+          ))}
+        </tbody>
       </table>
-    );
+    </div>
+  );
 };
 
 export default ManageAllOrder;
