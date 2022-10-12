@@ -121,7 +121,7 @@ const Card = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {cardData?.cardProduct.map((c) => {
+                    {cardData?.cardProduct?.map((c) => {
                       subPrice = subPrice + c?.subTotal;
 
                       return (
