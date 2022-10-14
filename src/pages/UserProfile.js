@@ -26,18 +26,24 @@ const UserProfile = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:5000/api/v1/user/user/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      fetch(`http://localhost:5000/api/v1/tools?currentUser=${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      fetch(
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+      fetch(
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser=${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
     ])
       .then((responses) => {
         return Promise.all(
@@ -64,12 +70,15 @@ const UserProfile = () => {
 
   const handleFollowUser = async (id) => {
     axios
-      .get(`http://localhost:5000/api/v1/user/user/follow_user?add=${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?add=${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         toast.success(`You Folloing ${user?.name}`, {
           position: toast.POSITION.TOP_CENTER,
@@ -84,12 +93,15 @@ const UserProfile = () => {
 
   const handleUnFollowUser = async (id) => {
     axios
-      .get(`http://localhost:5000/api/v1/user/user/follow_user?remove=${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?remove=${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         toast.info(`You unFolloing ${user?.name}`, {
           position: toast.POSITION.TOP_CENTER,

@@ -24,7 +24,7 @@ const MyProductOrderTableRow = ({ order }) => {
   const handleStatusUpdate = (text) => {
     axios
       .put(
-        `http://localhost:5000/api/v1/purchase/${_id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/purchase/${_id}`,
         { status: text },
         {
           headers: {

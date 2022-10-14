@@ -16,7 +16,7 @@ const Payment = () => {
   const { id } = useParams();
   const token = Cookies.get("token");
   const { isLoading, error, data } = useQuery(["orderSingle", id], () =>
-    fetch(`http://localhost:5000/api/v1/purchase/${id}`, {
+    fetch(`https://easy-buy-shop-server.onrender.com/api/v1/purchase/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

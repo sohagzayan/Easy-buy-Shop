@@ -17,7 +17,7 @@ const CheckoutForm = ({ data }) => {
   const { _id, price, email, name } = data;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/payment", {
+    fetch("https://easy-buy-shop-server.onrender.com/api/v1/payment", {
       method: "POST",
       body: JSON.stringify({
         price,
@@ -81,7 +81,7 @@ const CheckoutForm = ({ data }) => {
         transactionId: paymentIntent.id,
         productId: _id,
       };
-      fetch(`http://localhost:5000/api/v1/payment/${_id}`, {
+      fetch(`https://easy-buy-shop-server.onrender.com/api/v1/payment/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

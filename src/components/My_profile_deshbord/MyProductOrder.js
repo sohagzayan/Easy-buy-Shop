@@ -19,12 +19,15 @@ const MyOrder = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/purchase/my_product_order`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `https://easy-buy-shop-server.onrender.com/api/v1/purchase/my_product_order`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (
@@ -45,7 +48,7 @@ const MyOrder = () => {
 
   const handleDeleteMyOrder = async (id) => {
     await axios
-      .delete(`http://localhost:5000/api/v1/purchase/${id}`)
+      .delete(`https://easy-buy-shop-server.onrender.com/api/v1/purchase/${id}`)
       .then((res) => console.log(res));
   };
 

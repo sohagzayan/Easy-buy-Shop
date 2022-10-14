@@ -45,12 +45,15 @@ export function fetchProducts() {
   return async function fetchProductThunk(dispatch, getState) {
     dispatch(setStatus(STATUS.LOADING));
     try {
-      const data = await axios.get("http://localhost:5000/api/v1/addToCard", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const data = await axios.get(
+        "https://easy-buy-shop-server.onrender.com/api/v1/addToCard",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(data);
       // if (
       //   data?.data.message === "jwt expired" ||
