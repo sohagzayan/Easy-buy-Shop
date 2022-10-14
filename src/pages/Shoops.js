@@ -3,13 +3,14 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import { BsArrowLeftCircle, BsList } from "react-icons/bs";
-import OurPartsProducts from "../components/OurPartsProducts/OurPartsProducts";
 import axios from "axios";
 import Cookies from "js-cookie";
 import swal from "sweetalert";
-import { useCurrentUserQuery } from "../store/API/user";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
+import { category } from "../utiliti/Category";
+import GridView from "../components/ShopProductView/GridView";
+import RowView from "../components/ShopProductView/RowView";
 const Shoops = () => {
   const token = Cookies.get("token");
   const [data, setData] = useState([]);
@@ -17,15 +18,15 @@ const Shoops = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [sorted, setSorted] = useState("");
-  const userid = Cookies.get("id");
-  const response = useCurrentUserQuery(userid);
   const [loading, setLoading] = useState(true);
   const [priceRange, setPriceRange] = useState(0);
-
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [sortedByPrice, setSortedByPrice] = useState(-1);
+  const [shopView, setShopView] = useState(false);
   useEffect(() => {
     axios
-      .get("https://easy-buy-shop-server.onrender.com/api/v1/tools/tools_count")
+      .get("http://localhost:5000/api/v1/tools/tools_count")
       .then((res) => {
         const count = res?.data?.tools_count;
         const page = Math.ceil(count / pageSize);
@@ -36,8 +37,14 @@ const Shoops = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools?page=${currentPage}&size=${pageSize}`,
+      .post(
+        `http://localhost:5000/api/v1/tools/get_all_tools?page=${currentPage}&size=${pageSize}`,
+        {
+          priceRange: priceRange == 0 ? undefined : priceRange,
+          category: activeCategory === "all" ? undefined : activeCategory,
+          searchKeyword,
+          sortedByPrice,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,7 +66,14 @@ const Shoops = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, [currentPage, pageSize, sorted]);
+  }, [
+    currentPage,
+    pageSize,
+    searchKeyword,
+    activeCategory,
+    priceRange,
+    sortedByPrice,
+  ]);
 
   /** Handle add to bookmark */
 
@@ -67,7 +81,7 @@ const Shoops = () => {
     console.log("adding continew bookmark");
     axios
       .post(
-        `https://easy-buy-shop-server.onrender.com/api/v1/bookmark/${id}`,
+        `http://localhost:5000/api/v1/bookmark/${id}`,
         {},
         {
           headers: {
@@ -85,7 +99,16 @@ const Shoops = () => {
         }
       });
   };
+  const arr = [1, 2, 3, 4, 5, 6];
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  shuffleArray(data);
 
+  console.log();
   if (loading) {
     return <LoadingSpener />;
   }
@@ -95,22 +118,31 @@ const Shoops = () => {
       <Header />
       <div className="mt-10">
         <div className="grid grid-cols-12 gap-10 container_c mx-auto">
-          <div className="lg:col-span-2 col-span-12 flex  flex-col">
+          <div className="lg:col-span-3 col-span-12 flex  flex-col">
             <input
               type="text"
               placeholder="Search"
-              className="bg-own-white-special dark:bg-own-dark-bg-special text-own-secondary dark:text-own-white px-3 py-1 rounded-md w-[50%]"
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              className="bg-own-white-special dark:bg-own-dark-bg-special text-own-secondary dark:text-own-white px-3 py-1 rounded-md w-full"
             />
             <ul className="mb-6 text-own-secondary dark:text-own-white">
               <h2 className="text-own-secondary dark:text-own-white font-bold mt-3 ">
                 Category
               </h2>
-              <li className="cursor-pointer">All</li>
-              <li className="cursor-pointer">Watch</li>
-              <li className="cursor-pointer">Mobile</li>
-              <li className="cursor-pointer">Laptop</li>
-              <li className="cursor-pointer">Computer</li>
-              <li className="cursor-pointer">Accessories</li>
+              {category?.map((c, index) => (
+                <li
+                  key={index}
+                  className={
+                    activeCategory === c ? "underline text-own-primary" : ""
+                  }
+                  onClick={(e) => {
+                    console.log(e.target.innerText);
+                    setActiveCategory(e.target.innerText);
+                  }}
+                >
+                  {c}
+                </li>
+              ))}
             </ul>
             <div>
               <h2 className="font-bold text-own-secondary dark:text-own-white">
@@ -125,19 +157,37 @@ const Shoops = () => {
               />
             </div>
           </div>
-          <div className="lg:col-span-10 col-span-12">
+          <div className="lg:col-span-9 col-span-12">
             <div className="flex md:justify-between md:items-center container mx-auto md:flex-row flex-col ">
               <div className="flex items-center gap-5 md:mb-0 mb-3">
-                <span className="bg-own-white-special p-1 rounded-sm dark:bg-own-dark-bg-special">
-                  <HiOutlineViewGrid className="text-2xl text-own-text-light" />
+                <span
+                  onClick={() => setShopView(false)}
+                  className="bg-own-white-special p-1 rounded-sm dark:bg-own-dark-bg-special"
+                >
+                  <HiOutlineViewGrid
+                    className={
+                      shopView
+                        ? "text-2xl text-own-text-light"
+                        : "text-2xl text-own-primary"
+                    }
+                  />
                 </span>
-                <span className="bg-own-white-special p-1 rounded-sm dark:bg-own-dark-bg-special">
-                  <BsList className="text-2xl text-own-text-light" />
+                <span
+                  onClick={() => setShopView(true)}
+                  className="bg-own-white-special p-1 rounded-sm dark:bg-own-dark-bg-special"
+                >
+                  <BsList
+                    className={
+                      shopView
+                        ? "text-2xl  text-own-primary"
+                        : "text-2xl text-own-text-light"
+                    }
+                  />
                 </span>
               </div>
               <div className="md:mb-0 mb-3">
                 <span className="text-own-text-light font-semibold">
-                  10 total product
+                  {data?.length} total product
                 </span>
               </div>
               <div>
@@ -145,40 +195,35 @@ const Shoops = () => {
                   className="bg-own-white-special dark:bg-own-dark-bg-special dark:text-own-white px-2 py-1"
                   name=""
                   id=""
+                  onChange={(e) => setSortedByPrice(e.target.value)}
                 >
-                  <option value="a-z">Price(a-z)</option>
-                  <option value="z-a">Price(z-a)</option>
+                  {/* <option value="">Price Low To High</option> */}
+                  <option value="-1">Price High To Low</option>
+                  <option value="1">Price Low To High</option>
                 </select>
               </div>
             </div>
             <div>
               <div className="  ">
-                <div className=" mx-auto  grid md:grid-cols-3 grid-cols-1 gap-5 mt-10">
-                  {data?.map((item, index) => {
-                    if (
-                      item?.users?._id ===
-                      response?.currentData?.currentuser[0]?._id
-                    ) {
-                      return (
-                        <OurPartsProducts
-                          key={index}
-                          item={item}
-                          own={true}
-                          handleAddToBookmark={handleAddToBookmark}
-                        />
-                      );
-                    } else {
-                      return (
-                        <OurPartsProducts
-                          key={index}
-                          item={item}
-                          own={false}
-                          handleAddToBookmark={handleAddToBookmark}
-                        />
-                      );
-                    }
-                  })}
-                </div>
+                {!data?.length <= 0 ? (
+                  shopView ? (
+                    <RowView data={data} />
+                  ) : (
+                    <GridView
+                      data={data}
+                      handleAddToBookmark={handleAddToBookmark}
+                    />
+                  )
+                ) : (
+                  <div className="flex items-center justify-center flex-col h-[400px]">
+                    <h2 className="text-own-primary font-bold text-2xl mb-1 ">
+                      Product Not Found
+                    </h2>
+                    <button className="bg-own-primary text-own-white font-bold px-3 py-1 rounded-md">
+                      Reset Filtering
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex items-center justify-center mt-10">

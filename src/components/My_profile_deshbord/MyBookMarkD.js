@@ -15,7 +15,7 @@ const MyBookMarkD = () => {
 
   useEffect(() => {
     axios
-      .get(`https://easy-buy-shop-server.onrender.com/api/v1/bookmark`, {
+      .get(`http://localhost:5000/api/v1/bookmark`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -40,15 +40,12 @@ const MyBookMarkD = () => {
 
   const handleRemoveBookmark = async (id) => {
     await axios
-      .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/bookmark/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .delete(`http://localhost:5000/api/v1/bookmark/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => console.log(res));
   };
 

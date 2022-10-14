@@ -25,11 +25,9 @@ const UpdateProducts = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`)
-      .then((res) => {
-        setCurrentProduct(res.data);
-      });
+    axios.get(`http://localhost:5000/api/v1/tools/${id}`).then((res) => {
+      setCurrentProduct(res.data);
+    });
   }, []);
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const UpdateProducts = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     await axios
-      .put(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`, {
+      .put(`http://localhost:5000/api/v1/tools/${id}`, {
         name,
         details,
         InStock: availability === "in-stock" ? inStock : 0,

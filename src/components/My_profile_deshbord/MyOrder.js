@@ -20,7 +20,7 @@ const MyOrder = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy-shop-server.onrender.com/api/v1/purchase?email=${response?.currentData?.currentuser[0]?.email}`,
+      `http://localhost:5000/api/v1/purchase?email=${response?.currentData?.currentuser[0]?.email}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const MyOrder = () => {
 
   const handleDeleteMyOrder = async (id) => {
     await axios
-      .delete(`https://easy-buy-shop-server.onrender.com/api/v1/purchase/${id}`)
+      .delete(`http://localhost:5000/api/v1/purchase/${id}`)
       .then((res) => console.log(res));
   };
 
