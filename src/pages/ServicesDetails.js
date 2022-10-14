@@ -6,10 +6,12 @@ import videoImage from "../assets/video-bg.jpg";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { HiOutlineMail, HiPhone } from "react-icons/hi";
 import { FiCheckCircle } from "react-icons/fi";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const ServicesDetails = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <div>
         <div>
           <div>

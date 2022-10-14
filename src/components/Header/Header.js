@@ -143,7 +143,7 @@ const Header = () => {
                 </li>
                 <li className="text-[#62759d]  px-3 font-semibold ">
                   <NavLink
-                    to="/dashBoart"
+                    to="/leaderboard"
                     className={({ isActive }) =>
                       isActive ? "text-own-primary" : " "
                     }

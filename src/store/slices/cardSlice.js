@@ -25,7 +25,9 @@ export const cardSlice = createSlice({
       state.subTotal = 0;
       state.productIds = [];
       state.cardProduct = action.payload;
-      if (state.cardProduct.length > 0) {
+      // const cardProducts = state.cardProduct || [];
+      // console.log(cardProducts);
+      if (state?.cardProduct?.length > 0) {
         state?.cardProduct?.map((r) => {
           state.subTotal = state.subTotal + r.subTotal;
           state.productIds.push(r?.productId);
@@ -55,27 +57,26 @@ export function fetchProducts() {
         }
       );
       console.log(data);
-      // if (
-      //   data?.data.message === "jwt expired" ||
-      //   data?.data.message === "jwt malformed"
-      // ) {
-      //   Cookies.remove("id");
-      //   Cookies.remove("token");
-      //   // Navigate("/login");
-      //   toast.error(data?.data.message, {
-      //     position: toast.POSITION.BOTTOM_CENTER,
-      //   });
-      // } else {
-      //   dispatch(setProduct(data?.data));
-      //   dispatch(setStatus(STATUS.IDLE));
-      // }
+      if (
+        data?.data.message === "jwt expired" ||
+        data?.data.message === "jwt malformed"
+      ) {
+        Cookies.remove("id");
+        Cookies.remove("token");
+        // Navigate("/login");
+        toast.error(data?.data.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      } else {
+        dispatch(setProduct(data?.data));
+        dispatch(setStatus(STATUS.IDLE));
+      }
       dispatch(setProduct(data?.data));
       dispatch(setStatus(STATUS.IDLE));
     } catch (error) {
-      console.log(error);
-      console.log(
-        `Error Form our Card reducer Slice error is ${error.message}`
-      );
+      toast.error(error.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
       dispatch(setStatus(STATUS.ERROR));
     }
   };

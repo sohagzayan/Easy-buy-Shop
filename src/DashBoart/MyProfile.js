@@ -5,6 +5,7 @@ import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useCurrentUserQuery } from "../store/API/user";
 import { toast } from "react-toastify";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const MyProfile = () => {
   /** component needed state and data */
   const userId = Cookies.get("id");
@@ -103,6 +104,7 @@ const MyProfile = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <div className="p-4 pt-5 flex">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center gap-10 py-10">

@@ -11,6 +11,8 @@ import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
 import { category } from "../utiliti/Category";
 import GridView from "../components/ShopProductView/GridView";
 import RowView from "../components/ShopProductView/RowView";
+import { MagnifyingGlass } from "react-loader-spinner";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const Shoops = () => {
   const token = Cookies.get("token");
   const [data, setData] = useState([]);
@@ -18,12 +20,14 @@ const Shoops = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [priceRange, setPriceRange] = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [sortedByPrice, setSortedByPrice] = useState(-1);
   const [shopView, setShopView] = useState(false);
+  const [shopDataLoading, setShopDataLoading] = useState(false);
+
   useEffect(() => {
     axios
       .get("https://easy-buy-shop-server.onrender.com/api/v1/tools/tools_count")
@@ -36,6 +40,7 @@ const Shoops = () => {
   }, [pageSize]);
 
   useEffect(() => {
+    setShopDataLoading(true);
     axios
       .post(
         `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_all_tools?page=${currentPage}&size=${pageSize}`,
@@ -59,10 +64,10 @@ const Shoops = () => {
             title: "Your session is expired!, Login Please",
           });
           navigate("/login");
-          setLoading(false);
+          setShopDataLoading(false);
         } else {
           setData(res.data);
-          setLoading(false);
+          setShopDataLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -76,7 +81,6 @@ const Shoops = () => {
   ]);
 
   /** Handle add to bookmark */
-
   const handleAddToBookmark = (id) => {
     console.log("adding continew bookmark");
     axios
@@ -99,23 +103,11 @@ const Shoops = () => {
         }
       });
   };
-  const arr = [1, 2, 3, 4, 5, 6];
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-  shuffleArray(data);
-
-  console.log();
-  if (loading) {
-    return <LoadingSpener />;
-  }
 
   return (
     <>
       <Header />
+      <ScrollToTop />
       <div className="mt-10">
         <div className="grid grid-cols-12 gap-10 container_c mx-auto">
           <div className="lg:col-span-3 col-span-12 flex  flex-col">
@@ -133,7 +125,9 @@ const Shoops = () => {
                 <li
                   key={index}
                   className={
-                    activeCategory === c ? "underline text-own-primary" : ""
+                    activeCategory === c
+                      ? "underline text-own-primary cursor-pointer"
+                      : "cursor-pointer"
                   }
                   onClick={(e) => {
                     console.log(e.target.innerText);
@@ -167,8 +161,8 @@ const Shoops = () => {
                   <HiOutlineViewGrid
                     className={
                       shopView
-                        ? "text-2xl text-own-text-light"
-                        : "text-2xl text-own-primary"
+                        ? "text-2xl text-own-text-light cursor-pointer"
+                        : "text-2xl text-own-primary cursor-pointer"
                     }
                   />
                 </span>
@@ -179,8 +173,8 @@ const Shoops = () => {
                   <BsList
                     className={
                       shopView
-                        ? "text-2xl  text-own-primary"
-                        : "text-2xl text-own-text-light"
+                        ? "text-2xl  text-own-primary cursor-pointer"
+                        : "text-2xl text-own-text-light cursor-pointer"
                     }
                   />
                 </span>
@@ -204,27 +198,42 @@ const Shoops = () => {
               </div>
             </div>
             <div>
-              <div className="  ">
-                {!data?.length <= 0 ? (
-                  shopView ? (
-                    <RowView data={data} />
+              {shopDataLoading ? (
+                <div className="flex items-center justify-center h-[400px]">
+                  <MagnifyingGlass
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="MagnifyingGlass-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="MagnifyingGlass-wrapper"
+                    glassColor="#c0efff"
+                    color="#e15b64"
+                  />
+                </div>
+              ) : (
+                <div className="  ">
+                  {!data?.length <= 0 ? (
+                    shopView ? (
+                      <RowView data={data} />
+                    ) : (
+                      <GridView
+                        data={data}
+                        handleAddToBookmark={handleAddToBookmark}
+                      />
+                    )
                   ) : (
-                    <GridView
-                      data={data}
-                      handleAddToBookmark={handleAddToBookmark}
-                    />
-                  )
-                ) : (
-                  <div className="flex items-center justify-center flex-col h-[400px]">
-                    <h2 className="text-own-primary font-bold text-2xl mb-1 ">
-                      Product Not Found
-                    </h2>
-                    <button className="bg-own-primary text-own-white font-bold px-3 py-1 rounded-md">
-                      Reset Filtering
-                    </button>
-                  </div>
-                )}
-              </div>
+                    <div className="flex items-center justify-center flex-col h-[400px]">
+                      <h2 className="text-own-primary font-bold text-2xl mb-1 ">
+                        Product Not Found
+                      </h2>
+                      <button className="bg-own-primary text-own-white font-bold px-3 py-1 rounded-md">
+                        Reset Filtering
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-center mt-10">
               <div className="btn-group">

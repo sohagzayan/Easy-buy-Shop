@@ -18,6 +18,7 @@ const OurParts = () => {
         `https://easy-buy-shop-server.onrender.com/api/v1/tools/getToolswithOutAuth/?limit=6`
       )
       .then((res) => {
+        // console.log(res);
         setData(res.data);
       })
       .catch((err) => console.log(err));

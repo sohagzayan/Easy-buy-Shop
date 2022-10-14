@@ -10,6 +10,7 @@ import { Puff } from "react-loader-spinner";
 import { useLayoutEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton/BackButton";
 const AddNewProducts = () => {
   /** Hocks */
   const [name, setName] = useState("");
@@ -145,7 +146,8 @@ const AddNewProducts = () => {
             />
           </div>
         )}
-        <div className="container mx-auto sm:px-0 px-6">
+        <div className="container_c mx-auto sm:px-0 px-6">
+          <BackButton text="Add New Product" />
           <div className="py-5 ">
             <AddNewProductControllers resetHandleForm={resetHandleForm} />
             <div className="flex justify-center md:w-[80%] w-[98%] mx-auto md:flex-row  flex-col-reverse gap-6 items-start">

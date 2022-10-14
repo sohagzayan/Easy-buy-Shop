@@ -171,7 +171,7 @@ const ProductReview = ({ id, category }) => {
             Related Products
           </h2>
           <div>
-            {suggetion?.map((s) => (
+            {suggetion?.slice(0, 4)?.map((s) => (
               <div className="flex items-center gap-4 bg-own-white-special dark:bg-own-dark-bg-special rounded-md py-2 mt-3 border-[1px] border-own-primary border-opacity-50">
                 <img className="w-[80px]" src={s?.image} alt="images" />
                 <div className="text-own-secondary dark:text-own-white flex flex-col">

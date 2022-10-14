@@ -9,7 +9,6 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     currentUser: builder.query({
       query: (id) => {
-        console.log("CurrentUser Id", id);
         return {
           url: `currentuser/${id}`,
           method: "GET",

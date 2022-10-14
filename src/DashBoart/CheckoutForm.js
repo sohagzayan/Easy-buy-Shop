@@ -3,16 +3,17 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
+import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
 
-const CheckoutForm = ({ data }) => {
+const CheckoutForm = ({ data, setProcessing, processing }) => {
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
-  const [processing, setProcessing] = useState(false);
   const [succesTransationId, setSuccesTransationId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
   const token = Cookies.get("token");
+  const [loading, setLoading] = useState(false);
 
   const { _id, price, email, name } = data;
 
@@ -36,11 +37,11 @@ const CheckoutForm = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setSuccess("");
     if (!stripe || !elements) {
       return;
     }
-
     const card = elements.getElement(CardElement);
     if (card === null) {
       return;
@@ -122,7 +123,7 @@ const CheckoutForm = ({ data }) => {
         <p className="text-own-primary">{success}</p>
         {succesTransationId && (
           <h2 className="text-green-500 font-bold text-xl">
-            Your TrazationId {succesTransationId}
+            Your TrazationId : {succesTransationId}
           </h2>
         )}
       </div>

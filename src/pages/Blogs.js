@@ -3,14 +3,13 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import BlogImage1 from "../assets/images/blog-4_239ddfeb-e121-41e1-bda0-5516ce719db3 (1).webp";
-import BlogImage2 from "../assets/images/blog-6_76123683-3079-43db-8bf6-599d685995f2.webp";
-import BlogImage3 from "../assets/images/home2-banner6.webp";
-import BlogImage4 from "../assets/images/home2-banner7.webp";
 import classes from "./Blog.module.css";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const Blogs = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <div>
         <div className="bg-own-ternary py-10">
           <div className="flex items-center flex-col ">

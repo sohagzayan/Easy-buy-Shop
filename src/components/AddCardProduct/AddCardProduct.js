@@ -15,7 +15,6 @@ const AddCardProduct = ({
   subPrice,
   handleBuySingleProduct,
 }) => {
-  //   console.log(data);
   const token = Cookies.get("token");
   const { image, name, category, price, quantity, _id, subTotal, productId } =
     data;
@@ -55,8 +54,8 @@ const AddCardProduct = ({
         <button
           className="cursor-pointer"
           onClick={() => {
-            dispatch(fetchProducts());
             setQuentitys((prev) => prev - 1);
+            dispatch(fetchProducts());
           }}
         >
           <AiOutlineMinus />
@@ -87,7 +86,7 @@ const AddCardProduct = ({
         <label
           onClick={() => handleBuySingleProduct(productId)}
           htmlFor="my-modal-6"
-          className="  rounded-md font-bold px-2 py-1 inline-block modal-button border-transparent  text-sm  text-own-white dark:text-own-white bg-own-primary "
+          className="  rounded-md font-bold px-2 py-1 inline-block modal-button border-transparent  text-sm  text-own-white dark:text-own-white cursor-pointer bg-own-primary "
         >
           Buy Now
         </label>

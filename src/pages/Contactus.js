@@ -3,11 +3,13 @@ import { AiFillLinkedin, AiOutlineTwitter } from "react-icons/ai";
 import { FaFacebookF, FaPinterestP } from "react-icons/fa";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 const Contactus = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <div>
         <div>
           <h2 className="text-3xl text-own-secondary dark:text-own-white font-bold text-center mb-10 py-6">

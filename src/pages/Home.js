@@ -10,9 +10,9 @@ import HowItWorks from "../components/HowItWorks/HowItWorks";
 import ManageYourBusiness from "../components/ManageYourBusiness/ManageYourBusiness";
 import OurParts from "../components/OurParts/OurParts";
 import Repair from "../components/Repair/Repair";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import ShopReview from "../components/ShopReview/ShopReview";
 import StartYourBusiness from "../components/StartYourBusiness/StartYourBusiness";
-
 const Home = () => {
   const [shopReviewModalTrue, setShopReviewModalTrue] = useState(true);
   return (
@@ -41,6 +41,7 @@ const Home = () => {
           {/* <Capabilities /> */}
           <HowItWorks />
           <Footer />
+          <ScrollToTop />
         </div>
       </div>
     </>

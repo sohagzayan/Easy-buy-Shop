@@ -31,7 +31,6 @@ const MyProductsD = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("form MyProdct", data);
         if (
           data?.message === "jwt expired" ||
           data?.message === "jwt malformed"
