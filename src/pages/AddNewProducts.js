@@ -253,7 +253,7 @@ const AddNewProducts = () => {
                         onChange={(e) => setCategory(e.target.value)}
                       >
                         <option value="clock">Clock</option>
-                        <option value="clock">Phone</option>
+                        <option value="phone">Phone</option>
                         <option value="gadget">Gadget</option>
                         <option value="module">Module</option>
                         <option value="others">Others</option>
