@@ -1,8 +1,1 @@
-export const category = [
-  "all",
-  "watch",
-  "mobile",
-  "laptop",
-  "computer",
-  "others",
-];
+export const category = ["all", "clock", "phone", "gadget", "module", "others"];
