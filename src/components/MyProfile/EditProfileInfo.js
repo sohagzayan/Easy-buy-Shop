@@ -2,11 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import swal from "sweetalert";
-import {
-  useCurrentUserQuery,
-  useLazyCurrentUserQuery,
-} from "../../store/API/user";
+import { useCurrentUserQuery } from "../../store/API/user";
 
 const EditProfileInfo = () => {
   /** Hocks  */
@@ -17,10 +13,11 @@ const EditProfileInfo = () => {
   const [file, setFile] = useState(null);
   const imagebbKey = "0b8c4fea4eba3001acb5a66d0574e4b5";
   const [pictureUpdateMode, setPictureUpdateMode] = useState(false);
+
   /** Current User Info */
   const userId = Cookies.get("id");
   const response = useCurrentUserQuery(userId);
-
+  // console.log(response.refetch);
   useEffect(() => {
     setName(response?.data?.currentuser[0].name);
     setLocation(response?.data?.currentuser[0].country);
@@ -74,7 +71,8 @@ const EditProfileInfo = () => {
                 toast.success("success to update your profile", {
                   position: toast.POSITION.TOP_CENTER,
                 });
-                window.location.reload(true);
+                // window.location.reload(true);
+                response?.refetch();
               })
               .catch((err) => {
                 console.log(err);
