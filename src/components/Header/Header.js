@@ -35,7 +35,7 @@ const Header = () => {
   const cardData = useSelector((current) => current.card);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
   }, []);
 
   const handleUserProfile = async () => {

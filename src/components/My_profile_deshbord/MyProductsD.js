@@ -8,8 +8,6 @@ import { Navigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { useCurrentUserQuery } from "../../store/API/user";
-import Loadings from "../Loading/Loading";
-import LoadingSpener from "../LoadingSpener/LoadingSpener";
 import MyProducts from "../MyProducts/MyProducts";
 
 const MyProductsD = () => {
@@ -20,15 +18,12 @@ const MyProductsD = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_Current_user_product`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetch(`http://localhost:5000/api/v1/tools/get_Current_user_product`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (
@@ -39,7 +34,6 @@ const MyProductsD = () => {
           Cookies.remove("id");
           Navigate("/login");
         } else {
-          console.log(data);
           setMyProduct(data);
           setLoading(false);
         }
@@ -59,15 +53,12 @@ const MyProductsD = () => {
           icon: "success",
         });
         axios
-          .delete(
-            `https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          .delete(`http://localhost:5000/api/v1/tools/${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((res) => {
             toast.success("Delete SuccessFull Your Product!", {
               position: toast.POSITION.TOP_CENTER,

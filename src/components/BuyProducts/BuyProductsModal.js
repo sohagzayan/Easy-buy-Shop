@@ -27,7 +27,7 @@ const BuyProductsModal = ({
   const token = Cookies.get("token");
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
   }, []);
 
   const handleProductBy = async (e) => {
@@ -38,7 +38,7 @@ const BuyProductsModal = ({
 
     await axios
       .post(
-        "https://easy-buy-shop-server.onrender.com/api/v1/purchase",
+        "http://localhost:5000/api/v1/purchase",
         {
           name: response?.currentData?.currentuser[0].name,
           email: response?.currentData?.currentuser[0].email,

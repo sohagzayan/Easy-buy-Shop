@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AiFillDelete, AiOutlineMinus } from "react-icons/ai";
 import { HiPlus } from "react-icons/hi";
 import { useDispatch } from "react-redux";
+import { useCurrentUserQuery } from "../../store/API/user";
 import { fetchProducts } from "../../store/slices/cardSlice";
 import BuyProductsModal from "../BuyProducts/BuyProductsModal";
 
@@ -20,22 +21,23 @@ const AddCardProduct = ({
     data;
   const [quentitys, setQuentitys] = useState(quantity);
   const dispatch = useDispatch();
+  const userid = Cookies.get("id");
+  const response = useCurrentUserQuery(userid);
+
   useEffect(() => {
-    axios
-      .put(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${_id}`,
-        {
-          quantity: quentitys,
-          subTotal: parseInt(price) * parseInt(quentitys),
+    axios.put(
+      `http://localhost:5000/api/v1/addToCard/${_id}`,
+      {
+        quantity: quentitys,
+        subTotal: parseInt(price) * parseInt(quentitys),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => console.log(res));
+      }
+    );
   }, [quentitys]);
 
   return (
@@ -55,7 +57,7 @@ const AddCardProduct = ({
           className="cursor-pointer"
           onClick={() => {
             setQuentitys((prev) => prev - 1);
-            dispatch(fetchProducts());
+            dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
           }}
         >
           <AiOutlineMinus />
@@ -65,7 +67,7 @@ const AddCardProduct = ({
           className="cursor-pointer"
           onClick={() => {
             setQuentitys((prev) => prev + 1);
-            dispatch(fetchProducts());
+            dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
           }}
         >
           <HiPlus />

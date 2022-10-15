@@ -1,18 +1,12 @@
 import React from "react";
 import { AiFillStar, AiOutlineArrowRight, AiOutlineLike } from "react-icons/ai";
-import {
-  BsArrowLeftCircle,
-  BsCheckLg,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { BsArrowLeftCircle, BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProductReview } from "../../store/slices/reviewSlice";
 const ProductReview = ({ id, category }) => {
   const token = Cookies.get("token");
   const [suggetion, setSuggetion] = useState([]);
@@ -24,9 +18,7 @@ const ProductReview = ({ id, category }) => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review/review_count?productId=${id}`
-      )
+      .get(`http://localhost:5000/api/v1/review/review_count?productId=${id}`)
       .then((res) => {
         const count = res?.data?.tools_count;
         const page = Math.ceil(count / pageSize);
@@ -39,7 +31,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     const fetchReview = async () => {
       const { data } = await axios.get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+        `http://localhost:5000/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +50,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools/toolsSuggetion?category=${category}`,
+        `http://localhost:5000/api/v1/tools/toolsSuggetion?category=${category}`,
         {
           headers: {
             "Content-Type": "application/json",

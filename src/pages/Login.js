@@ -3,7 +3,6 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
-import swal from "sweetalert";
 import * as yup from "yup";
 import axios from "axios";
 import cookie from "js-cookie";
@@ -14,8 +13,6 @@ import React, { useState } from "react";
 import Headers from "../components/Header/Header";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
-import { GrFacebookOption } from "react-icons/gr";
-import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { TailSpin } from "react-loader-spinner";
 
@@ -53,7 +50,7 @@ const SignUp = () => {
     setLoading(true);
     console.log("tart");
     const { email, password } = data;
-    const url = "https://easy-buy-shop-server.onrender.com/api/v1/user/login";
+    const url = "http://localhost:5000/api/v1/user/login";
     try {
       await axios
         .post(url, { email, password })
@@ -105,10 +102,10 @@ const SignUp = () => {
     }
   };
 
-  const handleLoginWithGoogle = async () => {
-    // await googleLogin();
-    // navigate(from , {replace : true})
-  };
+  // const handleLoginWithGoogle = async () => {
+  //   // await googleLogin();
+  //   // navigate(from , {replace : true})
+  // };
 
   if (token) {
     navigate(from, { replace: true });

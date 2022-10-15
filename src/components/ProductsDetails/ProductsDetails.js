@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { TbShoppingCartDiscount } from "react-icons/tb";
 import axios from "axios";
-import discountimage from "../../assets/discount.png";
 import ProductReview from "../ProductReview/ProductReview";
 import BuyProductsModal from "../BuyProducts/BuyProductsModal";
 import Cookies from "js-cookie";
 import { useCurrentUserQuery } from "../../store/API/user";
 import ReviewAddOnProducts from "./ReviewAddOnProducts";
-import { MdOutlineRemove, MdTextRotationAngleup } from "react-icons/md";
-import Reviews from "../Reviews/Reviews";
-import { AiOutlineEye, AiOutlinePlus } from "react-icons/ai";
+import { MdOutlineRemove } from "react-icons/md";
 import { toast } from "react-toastify";
 import { fetchProducts } from "../../store/slices/cardSlice";
 import { useDispatch } from "react-redux";
-import LoadingSpener from "../LoadingSpener/LoadingSpener";
-import { FaBackward } from "react-icons/fa";
-import swal from "sweetalert";
 import { HiPlusSm } from "react-icons/hi";
 import { MagnifyingGlass } from "react-loader-spinner";
 import BackButton from "../BackButton/BackButton";
@@ -43,7 +36,7 @@ const ProductsDetails = () => {
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const url = `https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`;
+      const url = `http://localhost:5000/api/v1/tools/${id}`;
       await axios
         .get(url)
         .then((res) => {
@@ -62,7 +55,7 @@ const ProductsDetails = () => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/purchase/alredy_purchase?productId=${id}`,
+        `http://localhost:5000/api/v1/purchase/alredy_purchase?productId=${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -90,7 +83,7 @@ const ProductsDetails = () => {
     } else {
       await axios
         .post(
-          `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
+          `http://localhost:5000/api/v1/addToCard/${id}`,
           { quantity: quentity, subTotal: subTotalPrice },
           {
             headers: {
@@ -112,7 +105,7 @@ const ProductsDetails = () => {
               position: toast.POSITION.TOP_CENTER,
             });
             navigate("/card");
-            dispatch(fetchProducts());
+            dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
           }
         })
         .catch((err) => console.log(err));
@@ -123,7 +116,7 @@ const ProductsDetails = () => {
     console.log("adding continew bookmark");
     axios
       .post(
-        `https://easy-buy-shop-server.onrender.com/api/v1/bookmark/${id}`,
+        `http://localhost:5000/api/v1/bookmark/${id}`,
         {},
         {
           headers: {

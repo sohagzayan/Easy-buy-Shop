@@ -1,9 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useCurrentUserQuery } from "../API/user";
 const token = Cookies.get("token");
-const userId = Cookies.get("id");
 
 const initialState = {
   review: [],
@@ -39,7 +37,7 @@ export function fetchProductReview(id, currentPage, pageSize) {
     dispatch(setMyStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+        `http://localhost:5000/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",

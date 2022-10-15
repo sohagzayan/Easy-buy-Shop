@@ -1,28 +1,16 @@
 import React from "react";
-import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { FcLike, FcLikePlaceholder } from "react-icons/fc";
-import discountimage from "../../assets/discount.png";
-import { MdTitle } from "react-icons/md";
+import { AiOutlineDelete } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 const MyProducts = ({ data, handleRemoveTools }) => {
   const {
     name,
     image,
-    details,
     price,
-    quantity,
-    minimumOrder,
-    discount,
-    country,
     _id,
-    users,
+
     availability,
-    view,
   } = data;
-  const token = Cookies.get("token");
 
   return (
     <div>

@@ -25,47 +25,41 @@ const Card = () => {
   const cardData = useSelector((current) => current.card);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
+  }, [response?.currentData?.currentuser[0]?._id]);
 
   const deleteFormCard = async (id) => {
     await axios
-      .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .delete(`http://localhost:5000/api/v1/addToCard/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         toast.success("Remove Form Your Card", {
           position: toast.POSITION.TOP_CENTER,
         });
-        dispatch(fetchProducts());
+        dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
       });
   };
 
   const ResetCard = async () => {
     await axios
-      .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/23232`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            removeAll: true,
-          },
-        }
-      )
+      .delete(`http://localhost:5000/api/v1/addToCard/23232`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          removeAll: true,
+        },
+      })
       .then((res) => {
         toast.success("Remove Form Your Card", {
           position: toast.POSITION.TOP_CENTER,
         });
-        dispatch(fetchProducts());
+        dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
       });
   };
 
@@ -122,9 +116,10 @@ const Card = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {cardData?.cardProduct?.map((c) => {
+                    {cardData?.cardProduct?.map((c, index) => {
                       return (
                         <AddCardProduct
+                          key={index}
                           handleBuySingleProduct={handleBuySingleProduct}
                           data={c}
                           setSubTotal={setSubTotal}
