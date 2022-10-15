@@ -30,7 +30,7 @@ const Shoops = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/tools/tools_count")
+      .get("https://easy-buy-shop-server.onrender.com/api/v1/tools/tools_count")
       .then((res) => {
         const count = res?.data?.tools_count;
         const page = Math.ceil(count / pageSize);
@@ -43,7 +43,7 @@ const Shoops = () => {
     setShopDataLoading(true);
     axios
       .post(
-        `http://localhost:5000/api/v1/tools/get_all_tools?page=${currentPage}&size=${pageSize}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_all_tools?page=${currentPage}&size=${pageSize}`,
         {
           priceRange: priceRange == 0 ? undefined : priceRange,
           category: activeCategory === "all" ? undefined : activeCategory,
@@ -85,7 +85,7 @@ const Shoops = () => {
     console.log("adding continew bookmark");
     axios
       .post(
-        `http://localhost:5000/api/v1/bookmark/${id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/bookmark/${id}`,
         {},
         {
           headers: {

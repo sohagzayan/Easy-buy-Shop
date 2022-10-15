@@ -4,7 +4,7 @@ import ManageAllOrderRow from "./ManageAllOrderRow";
 const ManageAllOrder = () => {
   const [manageOrder, setManageOrder] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/purchase`, {
+    fetch(`https://easy-buy-shop-server.onrender.com/api/purchase`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

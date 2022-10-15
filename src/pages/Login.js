@@ -50,7 +50,7 @@ const SignUp = () => {
     setLoading(true);
     console.log("tart");
     const { email, password } = data;
-    const url = "http://localhost:5000/api/v1/user/login";
+    const url = "https://easy-buy-shop-server.onrender.com/api/v1/user/login";
     try {
       await axios
         .post(url, { email, password })

@@ -24,14 +24,8 @@ const MyProfile = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:5000/api/v1/tools/get_Current_user_product`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
       fetch(
-        `http://localhost:5000/api/v1/purchase?email=${response?.currentData?.currentuser[0]?.email}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_Current_user_product`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -39,14 +33,8 @@ const MyProfile = () => {
           },
         }
       ),
-      fetch(`http://localhost:5000/api/v1/bookmark`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
       fetch(
-        "http://localhost:5000/api/v1/user/user/follow_user?getMyFolloer=12",
+        `https://easy-buy-shop-server.onrender.com/api/v1/purchase?email=${response?.currentData?.currentuser[0]?.email}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -54,12 +42,30 @@ const MyProfile = () => {
           },
         }
       ),
-      fetch("http://localhost:5000/api/v1/purchase/my_product_order", {
+      fetch(`https://easy-buy-shop-server.onrender.com/api/v1/bookmark`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }),
+      fetch(
+        "https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?getMyFolloer=12",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+      fetch(
+        "https://easy-buy-shop-server.onrender.com/api/v1/purchase/my_product_order",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
     ])
       .then((responses) => {
         return Promise.all(

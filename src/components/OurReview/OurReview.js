@@ -9,7 +9,7 @@ const OurReview = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/v1/review`)
+      .get(`https://easy-buy-shop-server.onrender.com/api/v1/review`)
       .then((data) => console.log(data));
   }, []);
 
