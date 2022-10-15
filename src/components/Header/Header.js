@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../store/slices/cardSlice";
+import { MdMenu } from "react-icons/md";
+import MobileView from "./MobileView";
 
 const Header = () => {
   /** Hocks  */
@@ -23,7 +25,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const token = Cookies.get("token");
   const dispatch = useDispatch();
-
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   /** Variable  */
   const userid = Cookies.get("id");
   const response = useCurrentUserQuery(userid);
@@ -65,132 +67,135 @@ const Header = () => {
   };
 
   return (
-    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-1">
-      <div className="navbar   container_c  mx-auto">
-        <div className="navbar-start ">
-          <NavLink
-            to="/"
-            className=" text-own-primary dark:text-own-white font-bold flex items-center "
-          >
-            <img className="w-[30px] mr-3" src={logo} alt="" />
-            Easy Buy
-          </NavLink>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          {response?.data?.status === "success" &&
-            response?.data?.currentuser?.length > 0 && (
-              <ul className="  menu-horizontal p-0">
-                <li className="text-[#62759d]  px-3 font-semibold ">
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      location.pathname === "/" ? "text-own-primary" : " "
-                    }
-                  >
-                    Home
-                  </NavLink>
-                </li>
-                <li className="text-[#62759d]  px-3 font-semibold ">
-                  <NavLink
-                    to="/shops"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    Shops
-                  </NavLink>
-                </li>
-                <li className="text-[#62759d] px-3 font-semibold ">
-                  <NavLink
-                    to="/blogs"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    Blogs
-                  </NavLink>{" "}
-                </li>
-                <li className="text-[#62759d]  px-3 font-semibold ">
-                  <NavLink
-                    to="/service"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    Service
-                  </NavLink>
-                </li>
-                <li className="text-[#62759d]   px-3 font-semibold ">
-                  <NavLink
-                    to="/Contactus"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    Contact Us
-                  </NavLink>
-                </li>
+    <div className=" shadow1  sticky top-0 z-50 bg-own-white dark:bg-own-dark-bg-special py-1 ">
+      <div className="relative">
+        {showMobileMenu && <MobileView setShowMobileMenu={setShowMobileMenu} />}
 
-                <li className="text-[#62759d]  px-3 font-semibold ">
-                  <NavLink
-                    to="/aboutus"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    About Us
-                  </NavLink>
-                </li>
-                <li className="text-[#62759d]  px-3 font-semibold ">
-                  <NavLink
-                    to="/leaderboard"
-                    className={({ isActive }) =>
-                      isActive ? "text-own-primary" : " "
-                    }
-                  >
-                    Leaderboard
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-        </div>
-        <div className="navbar-end">
-          {response?.data?.status === "success" &&
-          response?.data?.currentuser?.length > 0 ? (
-            <div>
-              <div className="flex items-center gap-5">
-                <ThemeToggle />
-                <Profile handleUserProfile={handleUserProfile} />
+        <div className="navbar container_c mx-auto">
+          <div className="navbar-start ">
+            <NavLink
+              to="/"
+              className=" text-own-primary dark:text-own-white font-bold flex items-center "
+            >
+              <img className="w-[30px] mr-3" src={logo} alt="" />
+              Easy Buy
+            </NavLink>
+          </div>
+          <div className="navbar-center hidden lg:flex">
+            <ul className="  menu-horizontal p-0">
+              <li className="text-[#62759d]  px-3 font-semibold ">
                 <NavLink
-                  to="/add_new_products"
+                  to="/"
                   className={({ isActive }) =>
-                    isActive
-                      ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-1 py-1 rounded-md font-bold transition-all ease-in text-sm"
-                      : " text-own-white bg-own-primary  px-1 py-1 border-[1px] border-transparent rounded-md font-bold transition-all ease-in text-sm"
+                    location.pathname === "/" ? "text-own-primary" : " "
                   }
                 >
-                  Upload
+                  Home
                 </NavLink>
-                <div className="text-own-secondary dark:text-own-white  py-2 rounded-md font-semibold relative">
-                  <NavLink to="/card" className="cursor-pointer">
-                    <AiOutlineShoppingCart className="text-3xl  text-own-primary" />
-                    {cardData?.cardProduct?.length ? (
-                      <span className="bg-own-primary  absolute top-0 right-3  dark:text-own-white w-[25px] h-[25px] flex items-center justify-center text-own-white  rounded-full text-sm">
-                        {cardData?.cardProduct?.length}
-                      </span>
-                    ) : null}
+              </li>
+              <li className="text-[#62759d]  px-3 font-semibold ">
+                <NavLink
+                  to="/shops"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Shops
+                </NavLink>
+              </li>
+              <li className="text-[#62759d] px-3 font-semibold ">
+                <NavLink
+                  to="/blogs"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Blogs
+                </NavLink>{" "}
+              </li>
+              <li className="text-[#62759d]  px-3 font-semibold ">
+                <NavLink
+                  to="/service"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Service
+                </NavLink>
+              </li>
+              <li className="text-[#62759d]   px-3 font-semibold ">
+                <NavLink
+                  to="/Contactus"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Contact Us
+                </NavLink>
+              </li>
+              <li className="text-[#62759d]  px-3 font-semibold ">
+                <NavLink
+                  to="/aboutus"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  About Us
+                </NavLink>
+              </li>
+              <li className="text-[#62759d]  px-3 font-semibold ">
+                <NavLink
+                  to="/leaderboard"
+                  className={({ isActive }) =>
+                    isActive ? "text-own-primary" : " "
+                  }
+                >
+                  Leaderboard
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+          <div className="navbar-end">
+            {response?.data?.status === "success" &&
+            response?.data?.currentuser?.length > 0 ? (
+              <div>
+                <div className="flex items-center gap-5">
+                  <ThemeToggle />
+                  <Profile handleUserProfile={handleUserProfile} />
+                  <NavLink
+                    to="/add_new_products"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-own-primary bg-transparent border-[1px] border-own-primary  px-1 py-1 rounded-md font-bold transition-all ease-in text-sm"
+                        : " text-own-white bg-own-primary  px-1 py-1 border-[1px] border-transparent rounded-md font-bold transition-all ease-in text-sm"
+                    }
+                  >
+                    Upload
                   </NavLink>
+                  <div className="text-own-secondary dark:text-own-white  py-2 rounded-md font-semibold relative">
+                    <NavLink to="/card" className="cursor-pointer">
+                      <AiOutlineShoppingCart className="text-3xl  text-own-primary" />
+                      {cardData?.cardProduct?.length ? (
+                        <span className="bg-own-primary  absolute top-0 right-3  dark:text-own-white w-[25px] h-[25px] flex items-center justify-center text-own-white  rounded-full text-sm">
+                          {cardData?.cardProduct?.length}
+                        </span>
+                      ) : null}
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="relative">
+                  {showMenu && (
+                    <Menu
+                      handleLogOut={handleLogOut}
+                      setShowMenu={setShowMenu}
+                    />
+                  )}
                 </div>
               </div>
-              <div className="relative">
-                {showMenu && (
-                  <Menu handleLogOut={handleLogOut} setShowMenu={setShowMenu} />
-                )}
-              </div>
-            </div>
-          ) : (
-            <WithOutLoginMenu />
-          )}
+            ) : (
+              <WithOutLoginMenu setShowMobileMenu={setShowMobileMenu} />
+            )}
+          </div>
         </div>
       </div>
     </div>

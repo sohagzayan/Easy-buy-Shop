@@ -9,6 +9,7 @@ import { GrFacebookOption, GrLinkedinOption } from "react-icons/gr";
 import { HiCheck } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import BackButton from "../components/BackButton/BackButton";
 import Header from "../components/Header/Header";
 import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
 import OurPartsProducts from "../components/OurPartsProducts/OurPartsProducts";
@@ -36,7 +37,7 @@ const UserProfile = () => {
         }
       ),
       fetch(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser=${id}`,
+        `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_Current_user_product`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,6 +54,7 @@ const UserProfile = () => {
         );
       })
       .then((data) => {
+        console.log(data);
         if (data[1].status === 500 || data[1].message === "jwt expired") {
           Cookies.remove("token");
           Cookies.remove("id");
@@ -119,12 +121,7 @@ const UserProfile = () => {
       <div className="min-h-screen mx-h-[100%]">
         <div className="container_c mx-auto">
           <div className="mb-2">
-            <span
-              className="text-own-primary underline font-bold text-lg cursor-pointer"
-              onClick={() => navigate(-1)}
-            >
-              <FaBackward className="text-3xl" />
-            </span>
+            <BackButton text="User Profile" />
           </div>
           <div className=" border-b-[1px] dark:bg-own-dark-bg-special bg-own-white-special px-3 rounded-md border-[1px] border-own-text-light border-opacity-20  mb-5 md:py-0 py-5 relative">
             <div className=" flex sm:flex-row flex-col sm:justify-start justify-center items-center   gap-5 py-10 ">

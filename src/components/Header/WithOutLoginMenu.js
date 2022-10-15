@@ -1,12 +1,19 @@
 import React from "react";
+import { MdMenu } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 
-const WithOutLoginMenu = () => {
+const WithOutLoginMenu = ({ setShowMobileMenu }) => {
   const location = useLocation();
   return (
     <>
       <div className="flex items-center gap-6">
+        <span className="lg:hidden block">
+          <MdMenu
+            onClick={() => setShowMobileMenu((prev) => !prev)}
+            className="text-own-secondary text-2xl cursor-pointer"
+          />
+        </span>
         <ThemeToggle />
         <NavLink
           to="/"

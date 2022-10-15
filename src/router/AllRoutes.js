@@ -37,7 +37,14 @@ const AllRoutes = () => {
       {/* Our Page Route  */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/ProductsDetails/:id" element={<ProductsDetails />} />
+      <Route
+        path="/ProductsDetails/:id"
+        element={
+          <PrivateRoute>
+            <ProductsDetails />
+          </PrivateRoute>
+        }
+      />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/payment/:id" element={<Payment />} />
@@ -49,36 +56,13 @@ const AllRoutes = () => {
       <Route path="/service" element={<ServicesDetails />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
 
-      <Route
-        path="/blogs"
-        element={
-          <PrivateRoute>
-            <Blogs />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/shops"
-        element={
-          <PrivateRoute>
-            <Shoops />
-          </PrivateRoute>
-        }
-      />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/shops" element={<Shoops />} />
       <Route
         path="/add_new_products"
         element={
           <PrivateRoute>
             <AddNewProducts />
-          </PrivateRoute>
-        }
-      />
-
-      <Route
-        path="/bookmark"
-        element={
-          <PrivateRoute>
-            <BookMark />
           </PrivateRoute>
         }
       />

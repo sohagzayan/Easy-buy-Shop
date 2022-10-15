@@ -11,7 +11,7 @@ const BackButton = ({ text }) => {
       <div>
         <button
           onClick={() => navigate(-1)}
-          className="dark:bg-own-soft-red px-4 rounded-md py-1 dark:text-own-white font-bold"
+          className="bg-own-soft-red px-4 rounded-md py-1 text-own-white  font-bold"
         >
           Back
         </button>

@@ -113,7 +113,6 @@ const ProductsDetails = () => {
   };
 
   const handleAddToBookmark = (id) => {
-    console.log("adding continew bookmark");
     axios
       .post(
         `https://easy-buy-shop-server.onrender.com/api/v1/bookmark/${id}`,
@@ -126,7 +125,6 @@ const ProductsDetails = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         if (res?.data?.status === 500) {
           toast.warning("Already have this product your bookmark list!", {
             position: toast.POSITION.TOP_CENTER,
@@ -137,7 +135,7 @@ const ProductsDetails = () => {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
-          navigate("/card");
+          navigate("/myProfile/my_bookmark");
         }
       });
   };
@@ -285,7 +283,6 @@ const ProductsDetails = () => {
                   <h3 className="font-bold">
                     SubTotal:{" "}
                     <span className="text-own-primary text-xl">
-                      {/* {parseInt(quentity) * parseInt(detailsProduct?.price)} */}
                       {subTotalPrice}
                     </span>
                   </h3>

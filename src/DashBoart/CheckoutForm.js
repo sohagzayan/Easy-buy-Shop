@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
@@ -12,6 +13,7 @@ const CheckoutForm = ({ data, setProcessing, processing }) => {
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   const token = Cookies.get("token");
   const [loading, setLoading] = useState(false);
 
@@ -102,6 +104,7 @@ const CheckoutForm = ({ data, setProcessing, processing }) => {
             position: toast.POSITION.TOP_CENTER,
             autoClose: "5000",
           });
+          navigate("/myProfile/my_ordered");
         });
     }
   };
