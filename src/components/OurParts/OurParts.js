@@ -1,29 +1,10 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import swal from "sweetalert";
-import Loading from "../Loading/Loading";
+import { NavLink } from "react-router-dom";
 import OurPartsProducts from "../OurPartsProducts/OurPartsProducts";
-import { addToCardPost } from "../../Querys/BookmarkQuery";
+import { useToolsQuery } from "../../store/API/tools";
+import { TailSpin } from "react-loader-spinner";
 
 const OurParts = () => {
-  const [data, setData] = useState([]);
-  const token = Cookies.get("token");
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools/getToolswithOutAuth/?limit=6`
-      )
-      .then((res) => {
-        // console.log(res);
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [data]);
-
+  const { data, isLoading } = useToolsQuery();
   return (
     <div className="mt-10  overflow-x-hidden dark:bg-own-dark-bg-special py-5 bg-own-white-special">
       <div>
@@ -33,11 +14,24 @@ const OurParts = () => {
         <span className="text-own-secondary dark:text-own-white   text-center block tracking-widest font-semibold mb-6">
           Popular Items
         </span>
-        <div className=" container_c mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 ">
-          {data?.map((item, index) => (
-            <OurPartsProducts key={index} item={item} />
-          ))}
-        </div>
+        {isLoading ? (
+          <TailSpin
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        ) : (
+          <div className=" container_c mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 ">
+            {data?.map((item, index) => (
+              <OurPartsProducts key={index} item={item} />
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex justify-center ">
         <NavLink
