@@ -29,6 +29,10 @@ const Shoops = () => {
   const [shopDataLoading, setShopDataLoading] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     axios
       .get("https://easy-buy-shop-backend.vercel.app/api/v1/tools/tools_count")
       .then((res) => {
