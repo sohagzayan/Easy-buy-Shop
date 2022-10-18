@@ -55,7 +55,7 @@ const AddNewProducts = () => {
           if (result?.data?.success) {
             axios
               .post(
-                `https://easy-buy-shop-server.onrender.com/api/v1/tools`,
+                `https://easy-buy-shop-backend.vercel.app/api/v1/tools`,
                 {
                   name,
                   details,

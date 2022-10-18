@@ -52,7 +52,7 @@ const AddTools = () => {
           };
           try {
             axios.post(
-              "https://easy-buy-shop-server.onrender.com/api/tools",
+              "https://easy-buy-shop-backend.vercel.app/api/tools",
               newPost
             );
             console.log("success");

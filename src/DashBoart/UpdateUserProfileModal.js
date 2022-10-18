@@ -34,7 +34,7 @@ const UpdateUserProfileModal = ({
 
     try {
       await fetch(
-        `https://easy-buy-shop-server.onrender.com/api/user/${username.email}`,
+        `https://easy-buy-shop-backend.vercel.app/api/user/${username.email}`,
         {
           method: "PUT",
           body: JSON.stringify(newPost),
@@ -67,7 +67,7 @@ const UpdateUserProfileModal = ({
           if (result.success) {
             console.log(result);
             fetch(
-              `https://easy-buy-shop-server.onrender.com/api/user/${username.email}`,
+              `https://easy-buy-shop-backend.vercel.app/api/user/${username.email}`,
               {
                 method: "PUT",
                 body: JSON.stringify({

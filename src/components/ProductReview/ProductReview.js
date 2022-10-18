@@ -19,7 +19,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review/review_count?productId=${id}`
+        `https://easy-buy-shop-backend.vercel.app/api/v1/review/review_count?productId=${id}`
       )
       .then((res) => {
         const count = res?.data?.tools_count;
@@ -33,7 +33,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     const fetchReview = async () => {
       const { data } = await axios.get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools/toolsSuggetion?category=${category}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/tools/toolsSuggetion?category=${category}`,
         {
           headers: {
             "Content-Type": "application/json",

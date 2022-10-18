@@ -31,7 +31,7 @@ const Card = () => {
   const deleteFormCard = async (id) => {
     await axios
       .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const Card = () => {
   const ResetCard = async () => {
     await axios
       .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/23232`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/23232`,
         {
           headers: {
             "Content-Type": "application/json",

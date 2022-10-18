@@ -29,7 +29,7 @@ const EditProfile = () => {
         });
         axios
           .delete(
-            `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
+            `https://easy-buy-shop-backend.vercel.app/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
           )
           .then((res) => {
             alert("success");

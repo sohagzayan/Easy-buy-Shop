@@ -20,7 +20,7 @@ const MyOrder = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy-shop-server.onrender.com/api/v1/purchase/my_product_order`,
+      `https://easy-buy-shop-backend.vercel.app/api/v1/purchase/my_product_order`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const MyOrder = () => {
 
   const handleDeleteMyOrder = async (id) => {
     await axios
-      .delete(`https://easy-buy-shop-server.onrender.com/api/v1/purchase/${id}`)
+      .delete(`https://easy-buy-shop-backend.vercel.app/api/v1/purchase/${id}`)
       .then((res) => console.log(res));
   };
 

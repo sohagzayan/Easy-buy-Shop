@@ -6,17 +6,14 @@ const MakeAdminRow = ({ user, refetch }) => {
   const { email, date, role, _id } = user;
 
   const makeAdmin = async () => {
-    await fetch(
-      `https://easy-buy-shop-server.onrender.com/api/admin/${email}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ role: role === "user" ? "admin" : "user" }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+    await fetch(`https://easy-buy-shop-backend.vercel.app/api/admin/${email}`, {
+      method: "PUT",
+      body: JSON.stringify({ role: role === "user" ? "admin" : "user" }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => console.log(res))
       .then((data) => {
         swal(`Yah Success !",`, "success");
@@ -37,7 +34,7 @@ const MakeAdminRow = ({ user, refetch }) => {
           icon: "success",
         });
         axios.delete(
-          `https://easy-buy-shop-server.onrender.com/api/user/${_id}`
+          `https://easy-buy-shop-backend.vercel.app/api/user/${_id}`
         );
         refetch();
       } else {

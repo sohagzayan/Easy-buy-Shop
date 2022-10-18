@@ -27,7 +27,7 @@ const UpdateProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`)
+      .get(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`)
       .then((res) => {
         setCurrentProduct(res.data);
       });
@@ -46,7 +46,7 @@ const UpdateProducts = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     await axios
-      .put(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`, {
+      .put(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`, {
         name,
         details,
         InStock: availability === "in-stock" ? inStock : 0,

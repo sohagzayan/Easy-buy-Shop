@@ -19,7 +19,7 @@ const MyProductsD = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_Current_user_product`,
+      `https://easy-buy-shop-backend.vercel.app/api/v1/tools/get_Current_user_product`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const MyProductsD = () => {
         });
         axios
           .delete(
-            `https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`,
+            `https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",

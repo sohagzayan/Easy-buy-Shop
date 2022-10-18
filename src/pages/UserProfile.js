@@ -27,17 +27,14 @@ const UserProfile = () => {
 
   useEffect(() => {
     Promise.all([
+      fetch(`https://easy-buy-shop-backend.vercel.app/api/v1/user/user/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       fetch(
-        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      ),
-      fetch(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools/get_Current_user_product`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/tools/get_Current_user_product`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +70,7 @@ const UserProfile = () => {
   const handleFollowUser = async (id) => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?add=${id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/user/user/follow_user?add=${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -96,7 +93,7 @@ const UserProfile = () => {
   const handleUnFollowUser = async (id) => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/user/user/follow_user?remove=${id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/user/user/follow_user?remove=${id}`,
         {
           headers: {
             "Content-Type": "application/json",

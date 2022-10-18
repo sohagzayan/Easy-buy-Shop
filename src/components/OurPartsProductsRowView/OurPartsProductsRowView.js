@@ -33,7 +33,7 @@ const OurPartsProducts = ({ item }) => {
     console.log("addToCardProduct");
     await axios
       .post(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`,
         {},
         {
           headers: {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import swal from "sweetalert";
-const MF = "https://easy-buy-shop-server.onrender.com/upload/";
+const MF = "https://easy-buy-shop-backend.vercel.app/upload/";
 const ManageAllProdutsCard = ({ data }) => {
   const { image, name, price, details, minimumOrder, quantity, _id } = data;
   console.log(data);
@@ -19,7 +19,7 @@ const ManageAllProdutsCard = ({ data }) => {
           icon: "success",
         });
         axios.delete(
-          `https://easy-buy-shop-server.onrender.com/api/tools/${_id}`
+          `https://easy-buy-shop-backend.vercel.app/api/tools/${_id}`
         );
       } else {
         swal("Your imaginary file is safe!");

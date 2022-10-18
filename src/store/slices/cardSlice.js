@@ -43,7 +43,7 @@ export function fetchProducts(id) {
     dispatch(setStatus(STATUS.LOADING));
     try {
       const data = await axios.get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`
       );
       // console.log(data.data.product);
       dispatch(setProduct(data?.data?.product));

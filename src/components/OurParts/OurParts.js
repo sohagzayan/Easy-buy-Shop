@@ -15,16 +15,18 @@ const OurParts = () => {
           Popular Items
         </span>
         {isLoading ? (
-          <TailSpin
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
+          <div className="flex items-center justify-center h-[200px]">
+            <TailSpin
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
         ) : (
           <div className=" container_c mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 ">
             {data?.map((item, index) => (
@@ -34,16 +36,18 @@ const OurParts = () => {
         )}
       </div>
       <div className="flex justify-center ">
-        <NavLink
-          to="/shops"
-          className="btn-animation flex justify-center items-center"
-        >
-          All Products
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </NavLink>
+        {!isLoading && (
+          <NavLink
+            to="/shops"
+            className="btn-animation flex justify-center items-center"
+          >
+            All Products
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </NavLink>
+        )}
       </div>
     </div>
   );

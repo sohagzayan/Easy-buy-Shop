@@ -21,7 +21,7 @@ const Payment = () => {
   const token = Cookies.get("token");
 
   const { isLoading, error, data } = useQuery(["orderSingle", id], () =>
-    fetch(`https://easy-buy-shop-server.onrender.com/api/v1/purchase/${id}`, {
+    fetch(`https://easy-buy-shop-backend.vercel.app/api/v1/purchase/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

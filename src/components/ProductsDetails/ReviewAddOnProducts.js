@@ -40,7 +40,7 @@ const ReviewAddOnProducts = ({
     } else {
       await axios
         .post(
-          "https://easy-buy-shop-server.onrender.com/api/v1/review",
+          "https://easy-buy-shop-backend.vercel.app/api/v1/review",
           {
             heading: title,
             rating: reviewValue,
