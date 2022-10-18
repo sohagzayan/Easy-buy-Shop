@@ -37,7 +37,7 @@ export function fetchProducts() {
     dispatch(setMyStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/v1/tools?currentUser/`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/tools?currentUser/`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -7,7 +7,7 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user?.email;
     if (email) {
-      fetch(`http://localhost:5000/api/admin/${email}`, {
+      fetch(`https://easy-buy-shop-backend.vercel.app/api/admin/${email}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

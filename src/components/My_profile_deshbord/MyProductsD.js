@@ -18,12 +18,15 @@ const MyProductsD = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/tools/get_Current_user_product`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `https://easy-buy-shop-backend.vercel.app/api/v1/tools/get_Current_user_product`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (
@@ -53,12 +56,15 @@ const MyProductsD = () => {
           icon: "success",
         });
         axios
-          .delete(`http://localhost:5000/api/v1/tools/${id}`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .delete(
+            `https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((res) => {
             toast.success("Delete SuccessFull Your Product!", {
               position: toast.POSITION.TOP_CENTER,

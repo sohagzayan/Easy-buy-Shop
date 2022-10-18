@@ -20,7 +20,7 @@ const CheckoutForm = ({ data, setProcessing, processing }) => {
   const { _id, price, email, name } = data;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/payment", {
+    fetch("https://easy-buy-shop-backend.vercel.app/api/v1/payment", {
       method: "POST",
       body: JSON.stringify({
         price,
@@ -84,7 +84,7 @@ const CheckoutForm = ({ data, setProcessing, processing }) => {
         transactionId: paymentIntent.id,
         productId: _id,
       };
-      fetch(`http://localhost:5000/api/v1/payment/${_id}`, {
+      fetch(`https://easy-buy-shop-backend.vercel.app/api/v1/payment/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

@@ -15,7 +15,7 @@ const MyBookMarkD = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/v1/bookmark`, {
+      .get(`https://easy-buy-shop-backend.vercel.app/api/v1/bookmark`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -40,12 +40,15 @@ const MyBookMarkD = () => {
 
   const handleRemoveBookmark = async (id) => {
     await axios
-      .delete(`http://localhost:5000/api/v1/bookmark/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `https://easy-buy-shop-backend.vercel.app/api/v1/bookmark/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => console.log(res));
   };
 

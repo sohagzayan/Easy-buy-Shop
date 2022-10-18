@@ -24,7 +24,7 @@ const MyProductOrderTableRow = ({ order }) => {
   const handleStatusUpdate = (text) => {
     axios
       .put(
-        `http://localhost:5000/api/v1/purchase/${_id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/purchase/${_id}`,
         { status: text },
         {
           headers: {

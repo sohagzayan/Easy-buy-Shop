@@ -40,7 +40,7 @@ const ReviewAddOnProducts = ({
     } else {
       await axios
         .post(
-          "http://localhost:5000/api/v1/review",
+          "https://easy-buy-shop-backend.vercel.app/api/v1/review",
           {
             heading: title,
             rating: reviewValue,

@@ -26,9 +26,11 @@ const UpdateProducts = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/v1/tools/${id}`).then((res) => {
-      setCurrentProduct(res.data);
-    });
+    axios
+      .get(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`)
+      .then((res) => {
+        setCurrentProduct(res.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const UpdateProducts = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     await axios
-      .put(`http://localhost:5000/api/v1/tools/${id}`, {
+      .put(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`, {
         name,
         details,
         InStock: availability === "in-stock" ? inStock : 0,

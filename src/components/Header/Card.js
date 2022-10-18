@@ -9,12 +9,15 @@ const Card = ({ card }) => {
 
   const deleteFormCard = async (id) => {
     await axios
-      .delete(`http://localhost:5000/api/v1/addToCard/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         toast.success("Remove Form Your Card", {
           position: toast.POSITION.TOP_CENTER,

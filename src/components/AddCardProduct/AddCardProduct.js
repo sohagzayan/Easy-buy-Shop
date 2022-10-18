@@ -26,7 +26,7 @@ const AddCardProduct = ({
 
   useEffect(() => {
     axios.put(
-      `http://localhost:5000/api/v1/addToCard/${_id}`,
+      `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${_id}`,
       {
         quantity: quentitys,
         subTotal: parseInt(price) * parseInt(quentitys),
