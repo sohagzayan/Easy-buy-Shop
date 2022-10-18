@@ -11,7 +11,7 @@ const Blogs = () => {
       <Header />
       <ScrollToTop />
       <div>
-        <div className="bg-own-ternary py-10">
+        <div className="bg-own-white-special dark:bg-own-dark-bg-special py-10">
           <div className="flex items-center flex-col ">
             <h3 className="text-own-secondary dark:text-own-white text-3xl mb-2  ">
               Our Products blog
@@ -19,14 +19,14 @@ const Blogs = () => {
             <h4 className="text-own-secondary dark:text-own-white text-xl mb-2 ">
               20 Blog
             </h4>
-            <button className="px-7 py-2 text-own-secondary dark:text-own-white rounded-md cursor-pointer mb-5 bg-own-primary">
+            <button className="px-7 py-2 text-own-white rounded-md cursor-pointer mb-5 bg-own-primary">
               Add Your Own Blog
             </button>
           </div>
           <div className="">
             <form
               action=""
-              className="relative flex items-center justify-center bg-[#101126] sm:w-[50%] mx-auto w-[90%]"
+              className="relative flex items-center justify-center bg-own-white-special border-[1px] border-own-text-light rounded-md dark:bg-own-dark-bg-special sm:w-[50%] mx-auto w-[90%]"
             >
               <input
                 type="text"
@@ -41,9 +41,13 @@ const Blogs = () => {
         </div>
         <div>
           <div className="container mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 mt-20">
-            <div className="border-2 border-[#1E2738] rounded-sm">
+            <div className="bg-own-white-special shadow-md rounded-md dark:bg-own-dark-bg-special">
               <div className={`${classes.blogCard} ${classes.blogCard1}`}>
-                <img src={BlogImage1} alt="" className="invisible" />
+                <img
+                  src={BlogImage1}
+                  alt="rounded"
+                  className="invisible rounded-none"
+                />
               </div>
               <div className="text-own-secondary dark:text-own-white p-3">
                 <span className="text-own-primary mb-3 block">
@@ -54,12 +58,12 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button className="bg-own-primary text-own-secondary dark:text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary  text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
             </div>
-            <div className="border-2 border-[#1E2738] rounded-sm">
+            <div className="bg-own-white-special shadow-md rounded-md dark:bg-own-dark-bg-special">
               <div className={`${classes.blogCard} ${classes.blogCard2}`}>
                 <img src={BlogImage1} alt="" className="invisible" />
               </div>
@@ -72,12 +76,12 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button className="bg-own-primary text-own-secondary dark:text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary  text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
             </div>
-            <div className="border-2 border-[#1E2738] rounded-sm">
+            <div className="bg-own-white-special shadow-md rounded-md dark:bg-own-dark-bg-special">
               <div className={`${classes.blogCard} ${classes.blogCard3}`}>
                 <img src={BlogImage1} alt="" className="invisible" />
               </div>
@@ -90,12 +94,12 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button className="bg-own-primary text-own-secondary dark:text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary  text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>
             </div>
-            <div className="border-2 border-[#1E2738] rounded-sm">
+            <div className="bg-own-white-special shadow-md rounded-md dark:bg-own-dark-bg-special">
               <div className={`${classes.blogCard} ${classes.blogCard4}`}>
                 <img src={BlogImage1} alt="" className="invisible" />
               </div>
@@ -108,7 +112,7 @@ const Blogs = () => {
                   It is a long established fact that a reader will be distracted
                   by the readable ...{" "}
                 </p>
-                <button className="bg-own-primary text-own-secondary dark:text-own-white px-7 py-1 rounded-md mt-4">
+                <button className="bg-own-primary  text-own-white px-7 py-1 rounded-md mt-4">
                   Details
                 </button>
               </div>

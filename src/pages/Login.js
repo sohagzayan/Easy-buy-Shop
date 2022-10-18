@@ -50,7 +50,7 @@ const SignUp = () => {
     setLoading(true);
     console.log("tart");
     const { email, password } = data;
-    const url = "https://easy-buy-shop-backend.vercel.app/api/v1/user/login";
+    const url = "http://localhost:5000/api/v1/user/login";
     try {
       await axios
         .post(url, { email, password })

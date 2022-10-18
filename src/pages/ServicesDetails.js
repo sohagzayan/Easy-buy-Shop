@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import bannerImage from "../assets/services-details.jpg";
@@ -8,6 +8,9 @@ import { HiOutlineMail, HiPhone } from "react-icons/hi";
 import { FiCheckCircle } from "react-icons/fi";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const ServicesDetails = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Header />

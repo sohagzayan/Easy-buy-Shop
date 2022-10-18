@@ -8,7 +8,7 @@ const useToken = (user) => {
     const currentUser = { email: email };
 
     if (email) {
-      fetch(`https://easy-buy-shop-backend.vercel.app/api/user/${email}`, {
+      fetch(`http://localhost:5000/api/user/${email}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

@@ -55,7 +55,7 @@ const AddNewProducts = () => {
           if (result?.data?.success) {
             axios
               .post(
-                `https://easy-buy-shop-backend.vercel.app/api/v1/tools`,
+                `http://localhost:5000/api/v1/tools`,
                 {
                   name,
                   details,

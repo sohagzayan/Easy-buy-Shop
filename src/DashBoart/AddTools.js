@@ -51,10 +51,7 @@ const AddTools = () => {
             image: result.data.url,
           };
           try {
-            axios.post(
-              "https://easy-buy-shop-backend.vercel.app/api/tools",
-              newPost
-            );
+            axios.post("http://localhost:5000/api/tools", newPost);
             console.log("success");
             swal("Good job!", "Your New Tools Added SuccessFully", "success");
             reset();

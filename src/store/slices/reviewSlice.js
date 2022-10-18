@@ -37,7 +37,7 @@ export function fetchProductReview(id, currentPage, pageSize) {
     dispatch(setMyStatus(STATUS.LOADING));
     try {
       const { data } = await axios.get(
-        `https://easy-buy-shop-backend.vercel.app/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+        `http://localhost:5000/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",

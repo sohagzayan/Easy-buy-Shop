@@ -24,7 +24,7 @@ const General = () => {
     e.preventDefault();
     await axios
       .put(
-        `https://easy-buy-shop-backend.vercel.app/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
+        `http://localhost:5000/api/v1/user/user/${response?.data?.currentuser[0]?._id}`,
         {
           username: username,
           email: email,

@@ -33,17 +33,14 @@ const UpdateUserProfileModal = ({
     };
 
     try {
-      await fetch(
-        `https://easy-buy-shop-backend.vercel.app/api/user/${username.email}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(newPost),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
+      await fetch(`http://localhost:5000/api/user/${username.email}`, {
+        method: "PUT",
+        body: JSON.stringify(newPost),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           swal("success to update your profile");
@@ -66,24 +63,19 @@ const UpdateUserProfileModal = ({
         .then((result) => {
           if (result.success) {
             console.log(result);
-            fetch(
-              `https://easy-buy-shop-backend.vercel.app/api/user/${username.email}`,
-              {
-                method: "PUT",
-                body: JSON.stringify({
-                  education,
-                  location,
-                  linkDin,
-                  image: result.data.url,
-                }),
-                headers: {
-                  "Content-type": "application/json; charset=UTF-8",
-                  authorization: `Bearer ${localStorage.getItem(
-                    "accessToken"
-                  )}`,
-                },
-              }
-            )
+            fetch(`http://localhost:5000/api/user/${username.email}`, {
+              method: "PUT",
+              body: JSON.stringify({
+                education,
+                location,
+                linkDin,
+                image: result.data.url,
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            })
               .then((res) => res.json())
               .then((data) => {
                 swal("success to update your profile");

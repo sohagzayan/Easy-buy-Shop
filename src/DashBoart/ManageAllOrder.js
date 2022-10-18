@@ -4,7 +4,7 @@ import ManageAllOrderRow from "./ManageAllOrderRow";
 const ManageAllOrder = () => {
   const [manageOrder, setManageOrder] = useState([]);
   useEffect(() => {
-    fetch(`https://easy-buy-shop-backend.vercel.app/api/purchase`, {
+    fetch(`http://localhost:5000/api/purchase`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

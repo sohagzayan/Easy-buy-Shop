@@ -15,7 +15,7 @@ const MakeAdmin = () => {
     error,
     data: allUser,
   } = useQuery("userData", () =>
-    fetch(`https://easy-buy-shop-backend.vercel.app/api/user`, {
+    fetch(`http://localhost:5000/api/user`, {
       method: "GET",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
