@@ -11,7 +11,7 @@ const MyProducts = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy-shop-server.onrender.com/api/purchase?email=gdsohag360`,
+      `https://easy-buy-shop-backend.vercel.app/api/purchase?email=gdsohag360`,
       {
         method: "GET",
         headers: {

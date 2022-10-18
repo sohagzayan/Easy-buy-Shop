@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AiFillDelete, AiOutlineMinus } from "react-icons/ai";
 import { HiPlus } from "react-icons/hi";
 import { useDispatch } from "react-redux";
+import { useCurrentUserQuery } from "../../store/API/user";
 import { fetchProducts } from "../../store/slices/cardSlice";
 import BuyProductsModal from "../BuyProducts/BuyProductsModal";
 
@@ -15,28 +16,28 @@ const AddCardProduct = ({
   subPrice,
   handleBuySingleProduct,
 }) => {
-  //   console.log(data);
   const token = Cookies.get("token");
   const { image, name, category, price, quantity, _id, subTotal, productId } =
     data;
   const [quentitys, setQuentitys] = useState(quantity);
   const dispatch = useDispatch();
+  const userid = Cookies.get("id");
+  const response = useCurrentUserQuery(userid);
+
   useEffect(() => {
-    axios
-      .put(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${_id}`,
-        {
-          quantity: quentitys,
-          subTotal: parseInt(price) * parseInt(quentitys),
+    axios.put(
+      `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${_id}`,
+      {
+        quantity: quentitys,
+        subTotal: parseInt(price) * parseInt(quentitys),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => console.log(res));
+      }
+    );
   }, [quentitys]);
 
   return (
@@ -55,8 +56,8 @@ const AddCardProduct = ({
         <button
           className="cursor-pointer"
           onClick={() => {
-            dispatch(fetchProducts());
             setQuentitys((prev) => prev - 1);
+            dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
           }}
         >
           <AiOutlineMinus />
@@ -66,7 +67,7 @@ const AddCardProduct = ({
           className="cursor-pointer"
           onClick={() => {
             setQuentitys((prev) => prev + 1);
-            dispatch(fetchProducts());
+            dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
           }}
         >
           <HiPlus />
@@ -87,7 +88,7 @@ const AddCardProduct = ({
         <label
           onClick={() => handleBuySingleProduct(productId)}
           htmlFor="my-modal-6"
-          className="  rounded-md font-bold px-2 py-1 inline-block modal-button border-transparent  text-sm  text-own-white dark:text-own-white bg-own-primary "
+          className="  rounded-md font-bold px-2 py-1 inline-block modal-button border-transparent  text-sm  text-own-white dark:text-own-white cursor-pointer bg-own-primary "
         >
           Buy Now
         </label>

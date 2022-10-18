@@ -10,6 +10,7 @@ import { Puff } from "react-loader-spinner";
 import { useLayoutEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton/BackButton";
 const AddNewProducts = () => {
   /** Hocks */
   const [name, setName] = useState("");
@@ -54,7 +55,7 @@ const AddNewProducts = () => {
           if (result?.data?.success) {
             axios
               .post(
-                `https://easy-buy-shop-server.onrender.com/api/v1/tools`,
+                `https://easy-buy-shop-backend.vercel.app/api/v1/tools`,
                 {
                   name,
                   details,
@@ -145,7 +146,8 @@ const AddNewProducts = () => {
             />
           </div>
         )}
-        <div className="container mx-auto sm:px-0 px-6">
+        <div className="container_c mx-auto sm:px-0 px-6">
+          <BackButton text="Add New Product" />
           <div className="py-5 ">
             <AddNewProductControllers resetHandleForm={resetHandleForm} />
             <div className="flex justify-center md:w-[80%] w-[98%] mx-auto md:flex-row  flex-col-reverse gap-6 items-start">
@@ -253,7 +255,7 @@ const AddNewProducts = () => {
                         onChange={(e) => setCategory(e.target.value)}
                       >
                         <option value="clock">Clock</option>
-                        <option value="clock">Phone</option>
+                        <option value="phone">Phone</option>
                         <option value="gadget">Gadget</option>
                         <option value="module">Module</option>
                         <option value="others">Others</option>

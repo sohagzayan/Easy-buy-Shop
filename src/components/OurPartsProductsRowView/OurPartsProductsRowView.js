@@ -70,19 +70,17 @@ const OurPartsProducts = ({ item }) => {
         to={`/ProductsDetails/${_id}`}
         className="transition-all ease-in"
       >
-        <div className="bg-own-white border-[1px] border-own-text-light border-opacity-10 dark:bg-own-dark-bg rounded-md relative shadow-md overflow-hidden group">
-          <div className="">
-            <div
-              className="flex items-center justify-center 
-                rounded-lg relative "
-            >
+        <div className="bg-own-white border-[1px] border-own-text-light border-opacity-10 dark:bg-own-dark-bg rounded-md relative shadow-md overflow-hidden group  px-2">
+          <div className="md:grid md:grid-cols-12 grid-cols-1 items-center ">
+            <div className="md:col-span-3 ">
               <img className="  " src={image} alt="" />
             </div>
 
-            <div className="flex flex-col px-5 py-4 ">
-              <h2 className="text-own-primary font-bold dark:text-own-white mb-1 text-2xl ">
+            <div className="flex flex-col px-5 py-4 md:col-span-9 ">
+              <h2 className="text-own-primary font-bold dark:text-own-white mb-1 md:text-2xl text-xl ">
                 {name}
               </h2>
+              <p className="text-own-white">{details.slice(0, 150)}....</p>
               <div className="flex  justify-between">
                 <div className="flex flex-col">
                   <span className="text-xl text-own-soft-red font-bold mb-1">

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookies from "js-cookie";
-const token = Cookies.get("token");
+import { toast } from "react-toastify";
 
 const initialState = {
   cardProduct: [],
@@ -22,13 +21,13 @@ export const cardSlice = createSlice({
     setProduct(state, action) {
       state.subTotal = 0;
       state.productIds = [];
+      // console.log("action.payload", state.cardProducts);
       state.cardProduct = action.payload;
-      if (state.cardProduct.length > 0) {
-        state.cardProduct.map((r) => {
-          state.subTotal = state.subTotal + r.subTotal;
-          state.productIds.push(r?.productId);
-        });
-      }
+      // console.log(cardProducts.length);
+      state?.cardProduct?.map((r) => {
+        state.subTotal = state.subTotal + r.subTotal;
+        state.productIds.push(r?.productId);
+      });
     },
     setStatus(state, action) {
       state.status = action.payload;
@@ -39,26 +38,20 @@ export const cardSlice = createSlice({
 export const { setProduct, setStatus } = cardSlice.actions;
 export default cardSlice.reducer;
 
-export function fetchProducts() {
+export function fetchProducts(id) {
   return async function fetchProductThunk(dispatch, getState) {
     dispatch(setStatus(STATUS.LOADING));
     try {
-      const { data } = await axios.get(
-        "https://easy-buy-shop-server.onrender.com/api/v1/addToCard",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const data = await axios.get(
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`
       );
-      dispatch(setProduct(data));
+      // console.log(data.data.product);
+      dispatch(setProduct(data?.data?.product));
       dispatch(setStatus(STATUS.IDLE));
     } catch (error) {
-      console.log(error);
-      console.log(
-        `Error Form our Card reducer Slice error is ${error.message}`
-      );
+      toast.error(error.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
       dispatch(setStatus(STATUS.ERROR));
     }
   };

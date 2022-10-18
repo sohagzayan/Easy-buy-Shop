@@ -1,18 +1,12 @@
 import React from "react";
 import { AiFillStar, AiOutlineArrowRight, AiOutlineLike } from "react-icons/ai";
-import {
-  BsArrowLeftCircle,
-  BsCheckLg,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { BsArrowLeftCircle, BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProductReview } from "../../store/slices/reviewSlice";
 const ProductReview = ({ id, category }) => {
   const token = Cookies.get("token");
   const [suggetion, setSuggetion] = useState([]);
@@ -25,7 +19,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review/review_count?productId=${id}`
+        `https://easy-buy-shop-backend.vercel.app/api/v1/review/review_count?productId=${id}`
       )
       .then((res) => {
         const count = res?.data?.tools_count;
@@ -39,7 +33,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     const fetchReview = async () => {
       const { data } = await axios.get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/review?productId=${id}&page=${currentPage}&size=${pageSize}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +52,7 @@ const ProductReview = ({ id, category }) => {
   useEffect(() => {
     axios
       .get(
-        `https://easy-buy-shop-server.onrender.com/api/v1/tools/toolsSuggetion?category=${category}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/tools/toolsSuggetion?category=${category}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -171,7 +165,7 @@ const ProductReview = ({ id, category }) => {
             Related Products
           </h2>
           <div>
-            {suggetion?.map((s) => (
+            {suggetion?.slice(0, 4)?.map((s) => (
               <div className="flex items-center gap-4 bg-own-white-special dark:bg-own-dark-bg-special rounded-md py-2 mt-3 border-[1px] border-own-primary border-opacity-50">
                 <img className="w-[80px]" src={s?.image} alt="images" />
                 <div className="text-own-secondary dark:text-own-white flex flex-col">

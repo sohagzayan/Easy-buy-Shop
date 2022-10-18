@@ -27,7 +27,7 @@ const MyOrderRow = ({ order }) => {
         swal("Poof! Your imaginary file has been deleted!", {
           icon: "success",
         });
-        fetch(`https://easy-buy-shop-server.onrender.com/api/purchase/${_id}`, {
+        fetch(`https://easy-buy-shop-backend.vercel.app/api/purchase/${_id}`, {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,

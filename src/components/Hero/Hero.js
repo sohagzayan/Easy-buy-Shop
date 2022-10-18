@@ -104,7 +104,7 @@ const Hero = () => {
                   {response?.data?.currentuser[0]?.name}
                 </h3>
                 <span className="text-own-text-light text-[12px] dark:text-own-text-dark">
-                  CEO @{response?.data?.currentuser[0]?.username}
+                  @{response?.data?.currentuser[0]?.username}
                 </span>
               </div>
             </div>

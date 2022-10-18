@@ -12,7 +12,7 @@ const OurReviewPart = () => {
   const token = Cookies.get("token");
   const [reviewsData, setReviewsData] = useState([]);
   useEffect(() => {
-    fetch(`https://easy-buy-shop-server.onrender.com/api/v1/review`, {
+    fetch(`https://easy-buy-shop-backend.vercel.app/api/v1/review`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

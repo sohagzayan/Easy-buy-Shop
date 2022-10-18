@@ -9,6 +9,7 @@ import TransferImage from "../assets/3diocns.png";
 import { FaBackward } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useCurrentUserQuery } from "../store/API/user";
+import BackButton from "../components/BackButton/BackButton";
 
 const UpdateProducts = () => {
   const [name, setName] = useState("");
@@ -26,7 +27,7 @@ const UpdateProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`)
+      .get(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`)
       .then((res) => {
         setCurrentProduct(res.data);
       });
@@ -45,7 +46,7 @@ const UpdateProducts = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     await axios
-      .put(`https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`, {
+      .put(`https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`, {
         name,
         details,
         InStock: availability === "in-stock" ? inStock : 0,
@@ -71,13 +72,10 @@ const UpdateProducts = () => {
   return (
     <>
       <Header />
+      <div className="container_c mx-auto">
+        <BackButton text="Update your Product" />
+      </div>
       <div className="lg:w-[70%] lg:flex-row flex-col-reverse  mx-auto flex gap-6 lg:items-start w-[95%] mt-10">
-        <span
-          className="text-own-primary underline font-bold text-lg cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
-          <FaBackward className="text-3xl" />
-        </span>
         <div>
           <div className="">
             <div className="bg-own-white-special dark:bg-own-dark-bg-special shadow-md p-7 rounded-md">
@@ -174,7 +172,7 @@ const UpdateProducts = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <option value="clock">Clock</option>
-                    <option value="clock">Phone</option>
+                    <option value="phone">Phone</option>
                     <option value="gadget">Gadget</option>
                     <option value="module">Module</option>
                     <option value="others">Others</option>

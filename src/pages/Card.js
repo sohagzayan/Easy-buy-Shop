@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import AddCardProduct from "../components/AddCardProduct/AddCardProduct";
+import BackButton from "../components/BackButton/BackButton";
 import BuyProductsModal from "../components/BuyProducts/BuyProductsModal";
 import Header from "../components/Header/Header";
+import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
 import { useCurrentUserQuery } from "../store/API/user";
 import { fetchProducts } from "../store/slices/cardSlice";
 
@@ -20,17 +22,16 @@ const Card = () => {
   const response = useCurrentUserQuery(userid);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
-  let subPrice = 0;
   const cardData = useSelector((current) => current.card);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
+  }, [response?.currentData?.currentuser[0]?._id]);
 
   const deleteFormCard = async (id) => {
     await axios
       .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/${id}`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,14 +43,14 @@ const Card = () => {
         toast.success("Remove Form Your Card", {
           position: toast.POSITION.TOP_CENTER,
         });
-        dispatch(fetchProducts());
+        dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
       });
   };
 
   const ResetCard = async () => {
     await axios
       .delete(
-        `https://easy-buy-shop-server.onrender.com/api/v1/addToCard/23232`,
+        `https://easy-buy-shop-backend.vercel.app/api/v1/addToCard/23232`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -64,7 +65,7 @@ const Card = () => {
         toast.success("Remove Form Your Card", {
           position: toast.POSITION.TOP_CENTER,
         });
-        dispatch(fetchProducts());
+        dispatch(fetchProducts(response?.currentData?.currentuser[0]?._id));
       });
   };
 
@@ -75,13 +76,13 @@ const Card = () => {
       setCurrentModalData(current);
     }
   };
-
   return (
     <>
       <Header />
-      <div className="min-h-screen">
+      <div className="min-h-screen container_c mx-auto">
+        <BackButton text="Product buy Card" />
         <div>
-          <div className="container_c mx-auto ">
+          <div className="  ">
             <div className="flex items-center gap-5">
               <img
                 className="w-[50px] rounded-full"
@@ -121,16 +122,14 @@ const Card = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {cardData?.cardProduct.map((c) => {
-                      subPrice = subPrice + c?.subTotal;
-
+                    {cardData?.cardProduct?.map((c, index) => {
                       return (
                         <AddCardProduct
+                          key={index}
                           handleBuySingleProduct={handleBuySingleProduct}
                           data={c}
                           setSubTotal={setSubTotal}
                           deleteFormCard={deleteFormCard}
-                          subPrice={subPrice}
                           setTotal={setTotal}
                         />
                       );
@@ -138,7 +137,7 @@ const Card = () => {
                   </tbody>
                 </table>
               </div>
-              {cardData?.cardProduct.length <= 0 ? (
+              {cardData?.cardProduct?.length <= 0 ? (
                 <div className="text-own-text-light text-2xl text-center py-10">
                   <h2 className="font-bold">Card Empty</h2>
                   <p>Add you product on card</p>
@@ -170,6 +169,7 @@ const Card = () => {
             </div>
           </div>
         </div>
+
         {currentModalData && (
           <BuyProductsModal
             setCurrentModalData={setCurrentModalData}

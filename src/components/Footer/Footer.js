@@ -7,11 +7,10 @@ const Footer = () => {
       <div>
         <span className=" text-own-primary">
           <a
-            className="btn btn-ghost normal-case text-xl text-own-secondary dark:text-own-white font-semibold"
+            className=" text-own-primary normal-case text-xl  font-semibold"
             href="/"
           >
-            <img width="25px" className="mr-2" src={Icons} alt="icons" /> Easy
-            Buy
+            Easy Buy
           </a>
         </span>
         <a

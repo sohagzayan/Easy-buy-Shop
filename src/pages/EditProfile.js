@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
-import demouser from ".././assets/demouser.png";
 import { NavLink, Outlet } from "react-router-dom";
 import { useCurrentUserQuery } from "../store/API/user";
 import Cookies from "js-cookie";
@@ -30,7 +29,7 @@ const EditProfile = () => {
         });
         axios
           .delete(
-            `https://easy-buy-shop-server.onrender.com/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
+            `https://easy-buy-shop-backend.vercel.app/api/v1/user/user/${response?.data?.currentuser[0]?._id}`
           )
           .then((res) => {
             alert("success");

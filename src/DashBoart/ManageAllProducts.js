@@ -4,7 +4,7 @@ const ManageAllProducts = () => {
   const [manageAllData, setmMnageAllData] = useState();
 
   useEffect(() => {
-    fetch(`https://easy-buy-shop-server.onrender.com/api/tools`)
+    fetch(`https://easy-buy-shop-backend.vercel.app/api/tools`)
       .then((res) => res.json())
       .then((data) => setmMnageAllData(data));
   }, [manageAllData]);

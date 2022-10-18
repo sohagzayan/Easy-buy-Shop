@@ -8,8 +8,6 @@ import { Navigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { useCurrentUserQuery } from "../../store/API/user";
-import Loadings from "../Loading/Loading";
-import LoadingSpener from "../LoadingSpener/LoadingSpener";
 import MyProducts from "../MyProducts/MyProducts";
 
 const MyProductsD = () => {
@@ -21,7 +19,7 @@ const MyProductsD = () => {
 
   useEffect(() => {
     fetch(
-      `https://easy-buy-shop-server.onrender.com/api/v1/tools?currentUser=${response?.data?.currentuser[0]?._id}`,
+      `https://easy-buy-shop-backend.vercel.app/api/v1/tools/get_Current_user_product`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -33,14 +31,12 @@ const MyProductsD = () => {
       .then((data) => {
         if (
           data?.message === "jwt expired" ||
-          data?.status === 500 ||
           data?.message === "jwt malformed"
         ) {
           Cookies.remove("token");
           Cookies.remove("id");
           Navigate("/login");
         } else {
-          console.log(data);
           setMyProduct(data);
           setLoading(false);
         }
@@ -61,7 +57,7 @@ const MyProductsD = () => {
         });
         axios
           .delete(
-            `https://easy-buy-shop-server.onrender.com/api/v1/tools/${id}`,
+            `https://easy-buy-shop-backend.vercel.app/api/v1/tools/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",

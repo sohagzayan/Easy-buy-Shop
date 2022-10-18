@@ -1,23 +1,26 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
+import LoadingSpener from "../components/LoadingSpener/LoadingSpener";
 
-const CheckoutForm = ({ data }) => {
+const CheckoutForm = ({ data, setProcessing, processing }) => {
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
-  const [processing, setProcessing] = useState(false);
   const [succesTransationId, setSuccesTransationId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   const token = Cookies.get("token");
+  const [loading, setLoading] = useState(false);
 
   const { _id, price, email, name } = data;
 
   useEffect(() => {
-    fetch("https://easy-buy-shop-server.onrender.com/api/v1/payment", {
+    fetch("https://easy-buy-shop-backend.vercel.app/api/v1/payment", {
       method: "POST",
       body: JSON.stringify({
         price,
@@ -36,11 +39,11 @@ const CheckoutForm = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setSuccess("");
     if (!stripe || !elements) {
       return;
     }
-
     const card = elements.getElement(CardElement);
     if (card === null) {
       return;
@@ -81,7 +84,7 @@ const CheckoutForm = ({ data }) => {
         transactionId: paymentIntent.id,
         productId: _id,
       };
-      fetch(`https://easy-buy-shop-server.onrender.com/api/v1/payment/${_id}`, {
+      fetch(`https://easy-buy-shop-backend.vercel.app/api/v1/payment/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -101,6 +104,7 @@ const CheckoutForm = ({ data }) => {
             position: toast.POSITION.TOP_CENTER,
             autoClose: "5000",
           });
+          navigate("/myProfile/my_ordered");
         });
     }
   };
@@ -122,7 +126,7 @@ const CheckoutForm = ({ data }) => {
         <p className="text-own-primary">{success}</p>
         {succesTransationId && (
           <h2 className="text-green-500 font-bold text-xl">
-            Your TrazationId {succesTransationId}
+            Your TrazationId : {succesTransationId}
           </h2>
         )}
       </div>
