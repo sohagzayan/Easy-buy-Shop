@@ -1,4 +1,4 @@
-# Exclusive Computer Hardware Fair
+# Exclusive Computer Hardware Fairs
 
 This project was bootstrapped with [Create React App](https://assinment-12-6ac8f.web.app/).
 
